@@ -1,8 +1,6 @@
 ---
 title: "BOHEMIA 2024"
-author: "Sam"
-date: "2024-06-17"
-output: html_document
+output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
