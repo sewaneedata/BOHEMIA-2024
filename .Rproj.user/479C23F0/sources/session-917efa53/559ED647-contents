@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #2C3E50;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em; /* Reduced space */
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #34495E;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em; /* Reduced space */
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #16A085;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em; /* Reduced space */
+}
+
+h4 {
+    font-size: 1.2em;
+    color: #8E44AD;
+    text-align: left;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em; /* Reduced space */
+}
+
+ul {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+img.centered {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.custom-box {
+    border: 1px solid #16A085;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    color: #7F8C8D;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1em;
+}
+
+h1, h2, h3, h4, h5, h6, h7 {
+    font-family: "Times New Roman";
+    margin-top: 0.5em;
+    margin-bottom: 0.2em; 
+}
+
+.subtext {
+    font-size: 0.7em;
+    padding: 0;
+    margin: 0; 
+}
+.big{
+  font-size:1.2em;
+}
+.hide{
+  display: none;
+}
+
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+.treatment-container {
+  display: flex;
+  justify-content: space-around; 
+  gap: 20px; 
+}
+
+.treatment {
+  width: 45%; 
+  text-align: center; 
+}
+
+.treatment img {
+  display: block; 
+  margin: 10px auto;
+}
+
+h3{
+  color: black;
+}
+.propsol{
+  font-size:.4;
+}

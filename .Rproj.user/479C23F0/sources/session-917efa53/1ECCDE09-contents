@@ -1,0 +1,18 @@
+*.html
+**/*.html
+**/*.DS_Store
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+**/*.html
+
+#csv files
+**/*.csv
+**/*.xlsx
+**/*.json
+**/*.db
+**/*.js
+**/*.css
+
+
