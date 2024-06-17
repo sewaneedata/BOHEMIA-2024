@@ -1,5 +1,6 @@
 *.html
 **/*.html
+**/*.DS_Store
 .Rproj.user
 .Rhistory
 .RData
