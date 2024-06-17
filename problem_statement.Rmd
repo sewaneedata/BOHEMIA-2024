@@ -1,0 +1,14 @@
+---
+title: "BOHEMIA 2024"
+author: "Sam"
+date: "2024-06-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+```
+
+### <u> Problem Statement </u>
+
+We will analyze data collected by the Broad One Health Endectocide-based Malaria Intervention in Africa and examine the efficacy of bed nets as a means to reduce malaria cases in Kenya and Mozambique.
