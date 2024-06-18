@@ -31,7 +31,7 @@ The world is not on track to achieve the goals proposed by WHO in the Global Tec
 **Causes, Symptoms, and High Risk Areas**
 </div>
 
-<img src="https://images.squarespace-cdn.com/content/v1/5bb4c781a09a7e6ef9e45956/1541732753254-5L6SCI9FH1NMG0QBTPIU/Malaria_CDC.png" alt="Bohemia Project" class="left" width="350px" height="300px"/>
+<img src="https://images.squarespace-cdn.com/content/v1/5bb4c781a09a7e6ef9e45956/1541732753254-5L6SCI9FH1NMG0QBTPIU/Malaria_CDC.png" alt="Bohemia Project" class="left" width="420px" height="300px"/>
 
 <img src="https://static.toiimg.com/thumb/msid-109578556,width-400,resizemode-4/109578556.jpg" alt="Bohemia Project" class="right" width="350px" height="300px"/>
 
@@ -79,6 +79,7 @@ The five-year Bohemia project funded by Unitaid will conduct a clinical trial in
 <div class='subtext'>
 - Semi-synthetic antiparasitic medication derived from avermectins, a compound isolated from the Streptomyces avermitilis bacteria .
 </div>
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Ivermectin_skeletal.svg" alt="Bohemia Project" class="centered" width="400px" height="350px"/>
 
 
