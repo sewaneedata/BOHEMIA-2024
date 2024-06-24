@@ -11,4 +11,3 @@
 **/*.js
 **/*.css
 #the line below ignores all datasets
-/dataset
