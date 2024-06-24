@@ -10,5 +10,4 @@
 **/*.html
 **/*.js
 **/*.css
-#the line below ignores all dataset
-dataset/
+#the line below ignores all datasets
