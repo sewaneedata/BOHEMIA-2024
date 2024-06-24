@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+**/*.csv
 **/.DS_Store
 **/*.xlsx
 **/*.json
@@ -10,3 +11,4 @@
 **/*.js
 **/*.css
 #the line below ignores all datasets
+./dataset
