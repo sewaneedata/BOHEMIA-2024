@@ -4,6 +4,7 @@ library(tidyverse)
 library(dplyr)
 #Load data
 
+write.csv('data/kenya_efficacy.csv', 'kenya_efficacy.csv')
 
 kenya_safetynew<- read_csv('dataset/kenya_safetynew.csv')
 kenya_efficacy<- read_csv('dataset/kenya_efficacy.csv')
