@@ -54,6 +54,11 @@ tryCatch({
     key = glue::glue('{PROJECT_SOURCE}/sanitized-form/safety/safety-repeat_individual.csv')) %>%
     pad_hhid()
   
+  safety_ae <- cloudbrewr::aws_s3_get_table(
+    bucket = DATA_STAGING_BUCKET_NAME,
+    key = glue::glue('{PROJECT_SOURCE}/sanitized-form/safety/safety-repeat_ae_symptom.csv')) %>%
+    pad_hhid()
+  
   safetynew <- cloudbrewr::aws_s3_get_table(
     bucket =DATA_STAGING_BUCKET_NAME,
     key = glue::glue('{PROJECT_SOURCE}/sanitized-form/safetynew/safetynew.csv')) %>%
@@ -75,6 +80,7 @@ tryCatch({
     dropped_hhid$dropped_hhid <- sprintf("%05d", dropped_hhid$dropped_hhid)
   
   # create the safety dataset
+    
   safety_dataset <- left_join(safety, safety_repeat_individual, by=c('KEY' = 'PARENT_KEY')) %>% 
     filter(!(hhid %in% dropped_hhid$dropped_hhid), # remove dropped households
            extid != '2437-61', # erroneous entry
@@ -90,6 +96,7 @@ tryCatch({
   # save the csv files
   write_csv(safety_dataset, file = 'kenya_safety.csv')
   write_csv(safetynew_dataset, file = 'kenya_safetynew.csv')
+  write_csv(safety_ae, file = 'kenya_safety_adverse_events.csv')
 
 
 
@@ -188,5 +195,4 @@ tryCatch({
   
   # health econ baseline
   write_csv(healthecon_baseline_dataset, file = 'kenya_healthecon_baseline.csv')
-  
   
