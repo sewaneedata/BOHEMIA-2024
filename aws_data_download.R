@@ -1,3 +1,4 @@
+# DO NOT TOUCH THIS SCRIPT AT ALL
 # PURPOSE: this RScript serves to access the original data from AWS and create datasets necessary for the BOHEMIA & DataLab collaboration. This dataset will be anonymized and have removed all necessary hhhids and extids that should not be used for analysis
 
 #load libraries

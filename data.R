@@ -2,6 +2,7 @@
 library(gsheet)
 library(tidyverse)
 library(dplyr)
+library(gsheet)
 #Load data
 
 kenya_safetynew<- read_csv('dataset/kenya_safetynew.csv')
@@ -11,6 +12,7 @@ kenya_demography<- read_csv('dataset/kenya_demography.csv')
 healthecon_monthly<- read_csv('dataset/healthecon_monthly.csv')
 kenya_healthecon_baseline<- read_csv('dataset/kenya_healthecon_baseline.csv')
 kenya_safety<- read_csv('dataset/kenya_safety.csv')
+kenya_ae<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1dsc5m5abfSbttIgwPvukzi7ca-zA9iU2RpPifZsWA1Y/edit?usp=sharing')
 
 #creating new dataset with columns required from safety
 kenya_nsafety<-kenya_safety %>% 
@@ -44,9 +46,10 @@ kenya_ndemography<-kenya_demography %>%
 kenya_safety_total<- rbind(kenya_nsafety, kenya_nsafetynew)  %>% 
   left_join(kenya_ndemography, by='extid')
 
+# creating a dataset for adverse events in safety
+safety_nae <- left_join(kenya_safety_total, kenya_ae, by = c('KEY' = 'PARENT_KEY'))
 
-
-
+#selecting columns from healthecon baseline
 kenya_nhealthecon<-kenya_healthecon_baseline %>% 
   mutate(type='og') %>% #type of dataset (baseline v new)
   select(extid, #
@@ -100,6 +103,7 @@ kenya_nhealthecon<-kenya_healthecon_baseline %>%
          seek_care_other_ill_malaria_treatment_kes,
          seek_care_other_ill_other_kes)
 
+#selecting columns from healthecon_new
 kenya_nhealtheconnew <- kenya_healthecon_baseline_new %>%
   rowwise() %>%
   mutate(num_bed_nets = ifelse(hhid %in% kenya_healthecon_baseline$hhid, 
