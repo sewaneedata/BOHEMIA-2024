@@ -1,4 +1,3 @@
-#For Solomon
 
 #Load Libraries
 library(gsheet)
