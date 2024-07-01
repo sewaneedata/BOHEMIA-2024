@@ -210,6 +210,8 @@ healtheconmonthly_total <- healthecon_monthly %>%
          num_bed_nets, extid, #
          todays_date,  
          num_bed_nets, 
+         new_bednets_past_month,
+         bed_nets_past_month_kes,
          malaria_care_yn,
          malaria_care_where,
          malaria_care_where_specify,
