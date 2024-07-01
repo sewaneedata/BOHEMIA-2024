@@ -1,0 +1,28 @@
+---
+title: "project proposal"
+author: "Sam"
+date: "2024-07-01"
+output: html_document
+---
+# Introduction
+### In this section we will:
+- put down our problem statement 
+- goals for this section 
+- background on defining the issue of bed nets 
+- BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
+
+
+
+
+
+
+
+# Bed Nets
+### In this section we plan to:
+### -  define bednets 
+### - tabulate price in a five number summary 
+### - tabulate # per household in five number summary 
+### - LLIN = Long-lasting insecticide nets 
+### - Age/Source
+### - Stretch goal: most common source of bednets 
+
