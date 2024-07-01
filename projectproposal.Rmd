@@ -11,10 +11,20 @@ output: html_document
 - background on defining the issue of bed nets 
 - BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
+# Relationship between ownership, sufficiency, and usage
+- We will look at households over three months
+- Household data in bar graph form per visit through 41 to V4:
+- Tabulate data for each attribute in five number summary 
 
+- We will look at children over six months
+- Data in bar graph format per visit V1 through V7:
+- Tabulate data for each attribute in five number summary 
 
+# Differences in usage between V1 through V7 within the efficacy cohort
+- Box plot of data between visits
 
-
+# Effects of environmental factors on bed net usage
+-
 
 
 # Bed Nets
