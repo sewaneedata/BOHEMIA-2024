@@ -5,34 +5,50 @@ date: "2024-07-01"
 output: html_document
 ---
 # Introduction
-### In this section we will:
-- put down our problem statement 
-- goals for this section 
-- background on defining the issue of bed nets 
-- BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
-
-# Relationship between ownership, sufficiency, and usage
-- We will look at households over three months
-- Household data in bar graph form per visit through 41 to V4:
-- Tabulate data for each attribute in five number summary 
-
-- We will look at children over six months
-- Data in bar graph format per visit V1 through V7:
-- Tabulate data for each attribute in five number summary 
-
-# Differences in usage between V1 through V7 within the efficacy cohort
-- Box plot of data between visits
-
-# Effects of environmental factors on bed net usage
--
-
+- give our problem statement
+- state our goals for the report
+- introduce bed nets, more specfically LLINs and define issues
+- mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
 # Bed Nets
-### In this section we plan to:
-### -  define bednets 
-### - tabulate price in a five number summary 
-### - tabulate # per household in five number summary 
-### - LLIN = Long-lasting insecticide nets 
-### - Age/Source
-### - Stretch goal: most common source of bednets 
+- tabulate price in a five number summary 
+- tabulate # per household in five number summary 
+- stretch goal: most common source of bed nets
+
+# Ownership, Sufficiency, and Usage
+Within this section, we will have subsections going over each portion of our analysis:
+
+## Relationship between ownership, sufficiency, and usage
+### Safety
+- household data for each attribute over three months 
+- bar graphs for visit V1 through V4 with all three attributes
+- tabulate data for each attribute in five number summary
+
+### Efficacy
+- children ages 5-15 data for each attribute over six months
+- bar graphs for visit V1 through V7 with all three attributes
+- tabulate data for each attribute in five number summary
+
+## Differences in usage between V1 through V7 within the efficacy cohort
+- box plot of efficacy usage data by visit
+- discussion of statistical findings (null hypothesis)
+
+## Effects of environmental factors on bed net usage
+- scatter plot of efficacy data, faceted by visit
+- x = average temperature (of previous month), y = % usage, points = villages
+- discussion of findings 
+
+## Effects of community usage on malaria incidence 
+- scatter plot of safety data, averaging visits into total % usage
+- x = malaria incidence, y = % usage, points = villages
+- discussion of findings
+
+## Possible auto correlations
+### Safety
+- household data over three months 
+- tabulate data showing net usage and changes over time
+
+### Efficacy
+- children ages 5-15 data over six months
+- tabulate data showing net usage and changes over time
 
