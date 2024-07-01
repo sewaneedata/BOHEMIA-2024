@@ -6,7 +6,7 @@ output: html_document
 ---
 # Introduction
 - give our problem statement
-- state our goals for the report
+- state our goals for the reportd
 - introduce bed nets, more specfically LLINs and define issues
 - mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
