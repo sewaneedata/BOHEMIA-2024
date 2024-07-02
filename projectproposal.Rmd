@@ -1,12 +1,12 @@
 ---
-title: "project proposal"
+title: "Project proposal"
 author: "Sam"
 date: "2024-07-01"
 output: html_document
 ---
 # Introduction
 - give our problem statement
-- state our goals for the reportd
+- state our goals for the report
 - introduce bed nets, more specfically LLINs and define issues
 - mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
