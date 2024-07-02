@@ -190,6 +190,7 @@ kenya_efficacy_total<-kenya_efficacy %>%
   select(extid,
          start_time,
          end_time,
+         visit,
          visits_done, 
          malaria_fever_last_month,
          treated_for_malaria_yn,
