@@ -269,5 +269,31 @@ healtheconmonthly_total <- healthecon_monthly %>%
 table(kenya_efficacy_total$num_nights_sleep_under_net)
 
 diff_efficacy_num<-kenya_efficacy_total %>% 
+  mutate(num_nights_sleep_under_net=ifelse(num_nights_sleep_under_net=='dk', NA, num_nights_sleep_under_net)) %>% 
+  drop_na(num_nights_sleep_under_net) %>%
+  mutate( num_nights_sleep_under_net = as.numeric( num_nights_sleep_under_net ) )
+
+
+ggplot( diff_efficacy_num ) + 
+  geom_histogram(aes(x=num_nights_sleep_under_net)) + 
+  facet_wrap(~visit)
+
+ggplot(data=diff_efficacy_num, aes(y=num_nights_sleep_under_net, x=visit))+
+  geom_boxplot()
+
+table(kenya_efficacy_total$sleep_under_net_last_night)
+
+diff_efficacy_ln<-
+  
+kenya_efficacy_total %>% 
   mutate(sleep_under_net_last_night=ifelse(sleep_under_net_last_night=='dk', NA, sleep_under_net_last_night)) %>% 
-  drop_na(sleep_under_net_last_night)
+  drop_na(sleep_under_net_last_night) %>% 
+  group_by(visit, sleep_under_net_last_night) %>% 
+   tally 
+
+# Create the plot
+ggplot(diff_efficacy_long, aes(x = visit, y = value, fill = type)) +
+  geom_col(position = "stack") +
+  scale_fill_manual(values = c("yes" = 'skyblue', "no" = "pink")) +
+  labs(y = "Slept Under Net Last Night", x = "Visit", fill = "Type") +
+  theme_minimal() 
