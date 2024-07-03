@@ -283,3 +283,36 @@ kenya_healtheconn<-kenya_healthecon_total %>%
   tally() %>% 
   drop_na(num_bed_nets)
 summary(kenya_healtheconn$num_bed_nets)
+
+## Avg Age of people based on usage of bednets
+table(kenya_safety_total$nights_sleep_net)
+
+kenya_safety_bn<-kenya_safety_total %>% 
+  mutate(bednetsyn=ifelse(nights_sleep_net>0, 1, 0)) %>% 
+  drop_na(bednetsyn, corrected_age) %>% 
+  select(bednetsyn, corrected_age, sex)
+
+
+
+
+kenya_safety_age_summary <- kenya_safety_bn %>%
+  group_by(bednetsyn) %>%
+  summarize(average_age = mean(corrected_age, na.rm = TRUE)) %>%
+  mutate(bed_nets_yn = if_else(bednetsyn == 1, 'yes', 'no')) %>%
+  select(bed_nets_yn, average_age)
+
+
+# Calculate the average age for 'yes' and 'no' categories
+kenya_safety_sex_summary <- kenya_safety_bn %>%
+  group_by(sex, bednetsyn) %>%
+  summarize(total = n()) %>%
+  mutate(bed_nets_yn = if_else(bednetsyn == 1, 'yes', 'no')) %>%
+  select(sex, bed_nets_yn, total) %>% 
+  pivot_wider(names_from = sex, values_from=total)
+
+kenya_safety_summary<-kenya_safety_sex_summary %>% 
+  left_join(kenya_safety_age_summary, by='bed_nets_yn')
+
+summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
+summary(kenya_healtheconn$num_bed_nets)
+kenya_safety_summary

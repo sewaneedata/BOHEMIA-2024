@@ -259,4 +259,4 @@ healtheconmonthly_total <- healthecon_monthly %>%
          seek_care_other_ill_other_kes) %>% 
   left_join(kenya_ndemography, by='extid')
   
-  
+
