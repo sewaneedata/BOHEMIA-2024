@@ -283,7 +283,7 @@ ggplot(data=diff_efficacy_num, aes(y=num_nights_sleep_under_net, x=visit))+
 
 table(kenya_efficacy_total$sleep_under_net_last_night)
 
-diff_efficacy_ln<-
+diff_efficacy_long<-
   
 kenya_efficacy_total %>% 
   mutate(sleep_under_net_last_night=ifelse(sleep_under_net_last_night=='dk', NA, sleep_under_net_last_night)) %>% 
@@ -291,9 +291,47 @@ kenya_efficacy_total %>%
   group_by(visit, sleep_under_net_last_night) %>% 
    tally 
 
+
 # Create the plot
-ggplot(diff_efficacy_long, aes(x = visit, y = value, fill = type)) +
+ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
   geom_col(position = "stack") +
-  scale_fill_manual(values = c("yes" = 'skyblue', "no" = "pink")) +
-  labs(y = "Slept Under Net Last Night", x = "Visit", fill = "Type") +
-  theme_minimal() 
+  scale_fill_manual(values = c("yes" = "skyblue", "no" = "pink")) +
+  labs(y = "Value", x = "Visit", fill = "Type") +
+  theme_minimal()
+
+# Create diff_total summary
+diff_total <- diff_efficacy_long %>%
+  group_by(visit) 
+# Combine with the original data
+diff_efficacy_total <- bind_rows(diff_efficacy_long, diff_total) %>%
+  mutate(sleep_under_net_last_night = factor(sleep_under_net_last_night, levels = c('yes', 'no')))
+
+# Create diff_efficacy_numt summary
+diff_efficacy_numt <- diff_efficacy_num %>%
+  group_by(visit, num_nights_sleep_under_net) %>%
+  tally
+
+# Combined plot
+ggplot() +
+  geom_col(data = diff_efficacy_total, aes(x = sleep_under_net_last_night, y = n, fill = sleep_under_net_last_night), alpha = 0.6) +
+  geom_line(data = diff_efficacy_numt, aes(x = num_nights_sleep_under_net, y = n, group = visit), color = "blue") +
+  facet_wrap(~visit) +
+  scale_fill_manual(values = c("total" = "grey", "yes" = "blue", "no" = "red")) +
+  labs(y = "Count", x = "Sleep Under Net Last Night", fill = "Type") +
+  theme_minimal()
+
+diff_efficacy_total_table <- diff_efficacy_total %>%
+  distinct() %>% 
+  pivot_wider(names_from = sleep_under_net_last_night, values_from = n) %>% 
+  distinct()
+
+diff_efficacy_numt_table <- diff_efficacy_numt %>%
+  pivot_wider(names_from = num_nights_sleep_under_net, values_from = n)
+
+print(diff_efficacy_total_table)
+print(diff_efficacy_numt_table)
+
+combined_table <- left_join(diff_efficacy_total_table, diff_efficacy_numt_table, by = "visit")
+
+# Print the final table
+print(combined_table)

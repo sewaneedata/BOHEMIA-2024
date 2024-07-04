@@ -259,4 +259,20 @@ healtheconmonthly_total <- healthecon_monthly %>%
          seek_care_other_ill_other_kes) %>% 
   left_join(kenya_ndemography, by='extid')
   
+kenya_saf<-kenya_safety_total %>% 
+  rename('sleep_ln_safety'=sleep_net_last_night) %>% 
+  rename('num_nights_safety'=nights_sleep_net) %>% 
+  rename('todays_date_safety'=todays_date) %>% 
+  select(
+    sleep_ln_safety,
+    num_nights_safety,
+    visit, 
+    todays_date_safety,
+    extid
+  )
+kenya_eff<-kenya_efficacy_total %>% 
+  rename('sleep_ln_eff'=sleep_under_net_last_night) %>% 
+  rename('num_nights_eff'=num_nights_sleep_under_net)
 
+kenya_safety_eff<-kenya_eff %>% 
+  left_join(kenya_saf, by=c('extid', 'visit'))
