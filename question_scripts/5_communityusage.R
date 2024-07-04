@@ -308,7 +308,8 @@ kenya_safety_eff_long <- kenya_safety_eff_summ %>%
                names_to = 'y_n', 
                values_to = 'number')
 
-ggplot(kenya_safety_eff_long, aes(x = visit, y = number, fill = y_n)) +
+ggplot(kenya_safety_eff_long, aes(x = visit, y = number, fill =y_n)) +
   geom_col(position = "dodge") +
   labs(x = "Visit", y = "Count", fill = "Category", title = "Safety and Efficiency by Visit") +
   theme_minimal()
+
