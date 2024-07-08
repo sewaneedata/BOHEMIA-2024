@@ -5,313 +5,60 @@ library(dplyr)
 library(gsheet)
 #Load data
 
-kenya_safetynew<- read_csv('../dataset/kenya_safetynew.csv')
-kenya_efficacy<- read_csv('../dataset/kenya_efficacy.csv')
-kenya_healthecon_baseline_new<- read_csv('../dataset/kenya_healthecon_baseline_new.csv')
-kenya_demography<- read_csv('../dataset/kenya_demography.csv')
-healthecon_monthly<- read_csv('../dataset/healthecon_monthly.csv')
-kenya_healthecon_baseline<- read_csv('../dataset/kenya_healthecon_baseline.csv')
-kenya_safety<- read_csv('../dataset/kenya_safety.csv')
-kenya_ae<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1dsc5m5abfSbttIgwPvukzi7ca-zA9iU2RpPifZsWA1Y/edit?usp=sharing')
-
-#creating new dataset with columns required from safety
-kenya_nsafety<-kenya_safety %>% 
-  mutate('type'='og') %>% #type of dataset (safety or new)
-  select(extid, visit, type, todays_date,
-         sleep_net_last_night, nights_sleep_net, ae_symptoms, 
-         pregnant_yn,
-         num_months_pregnant,
-         months_pregnant_dk,
-         anc, iptp)
-
-#creating new dataset with columns required from safetynew 
-kenya_nsafetynew<-kenya_safetynew %>%
-  mutate('type'='new') %>% #type of dataset (safety or new) 
-  mutate(ae_symptoms=NA) %>%  #ae_symptoms not present in the new one
-  mutate(months_pregnant_dk=NA) %>% #months_pregnant_dk not present in the new one
-  select(extid, visit, type, todays_date, 
-         sleep_net_last_night, nights_sleep_net, 
-         ae_symptoms, 
-         pregnant_yn,
-         num_months_pregnant,
-         months_pregnant_dk,
-         anc, iptp)
-
-#creating new dataset with columns required from demography
-kenya_ndemography<-kenya_demography %>% 
-  select(extid, ward, village, KEY, instanceID, Latitude, Longitude, Altitude ,hhid, 
-         corrected_age, geo_cluster_num, cluster, dob, sex, num_hh_members )
-
-#creating new dataset merging safety and safetynew and then adding required columns from demography
-kenya_safety_total<- rbind(kenya_nsafety, kenya_nsafetynew)  %>% 
-  left_join(kenya_ndemography, by='extid')
-
-# creating a dataset for adverse events in safety
-safety_nae <- left_join(kenya_safety_total, kenya_ae, by = c('KEY' = 'PARENT_KEY'))
-
-#selecting columns from healthecon baseline
-kenya_nhealthecon<-kenya_healthecon_baseline %>% 
-  mutate(type='og') %>% #type of dataset (baseline v new)
-  select(extid, #
-         type, 
-         todays_date,  
-         num_bed_nets, extid, #
-         todays_date,  
-         num_bed_nets, malaria_care_yn,
-         malaria_care_where,
-         malaria_care_where_specify,
-         num_visit_hf,
-         num_visit_hospital,
-         num_visit_pharmacy,
-         num_visit_informal_drug_vendor,
-         num_visit_other,
-         overnight_hf_hospital_healer,
-         num_overnight_hf_hospital_healer,
-         malaria_test_yn,
-         malaria_test_result,
-         malaria_treatment_yn,
-         malaria_consult_tests_kes,
-         malaria_hospitalization_kes,
-         malaria_medication_kes,
-         malaria_travel_to_clinic_kes,
-         malaria_food_kes,
-         malaria_other_kes,
-         malaria_miss_school,
-         num_malaria_miss_school_days,
-         malaria_miss_work,
-         num_malaria_miss_work_days,
-         malaria_away_pay,
-         malaria_away_pay_kes,
-         other_member_care,
-         other_member_care_select,
-         other_member_care_unlisted,
-         seek_care_other_ill,
-         seek_care_other_ill_where,
-         seek_care_other_ill_where_specify,
-         num_visit_hf_other_ill,
-         num_visit_hospital_other_ill,
-         num_visit_pharmacy_other_ill,
-         num_visit_informal_drug_vendor_other_ill,
-         num_visit_traditional_healer_other_ill,
-         num_visit_other_other_ill,
-         other_ill_overnight_hopsital,
-         num_nights_other_ill_hopsital,
-         seek_care_other_ill_malaria_test,
-         seek_care_other_ill_malaria_test_result,
-         seek_care_other_ill_malaria_treatment,
-         seek_care_other_ill_malaria_test_kes,
-         seek_care_other_ill_malaria_treatment_kes,
-         seek_care_other_ill_other_kes)
-
-#selecting columns from healthecon_new
-kenya_nhealtheconnew <- kenya_healthecon_baseline_new %>%
-  rowwise() %>%
-  mutate(num_bed_nets = ifelse(hhid %in% kenya_healthecon_baseline$hhid, 
-                               kenya_healthecon_baseline$num_bed_nets[which(kenya_healthecon_baseline$hhid == hhid)], 
-                               num_bed_nets)) %>% #adding num_bed_nets as it is not present in new dataset
-  ungroup() %>% 
-  mutate(type='new') %>% 
-  mutate(malaria_care_where_specify=NA) %>% #putting NA to columns that are not present in the new dataset
-  mutate(num_visit_hospital=NA) %>% 
-  mutate(num_visit_pharmacy=NA) %>% 
-  mutate(num_visit_informal_drug_vendor=NA) %>% 
-  mutate(num_visit_other=NA) %>%
-  mutate(num_overnight_hf_hospital_healer=NA) %>% 
-  mutate(other_member_care_select=NA) %>% 
-  mutate(other_member_care_unlisted=NA) %>% 
-  mutate(seek_care_other_ill_where_specify=NA) %>% 
-  mutate(num_visit_pharmacy_other_ill=NA) %>% 
-  mutate(num_visit_informal_drug_vendor_other_ill=NA) %>% 
-  mutate(num_visit_traditional_healer_other_ill=NA) %>% 
-  mutate(num_visit_other_other_ill=NA) %>% 
-  mutate(num_nights_other_ill_hopsital=NA) %>% 
-  mutate(seek_care_other_ill_malaria_treatment=NA) %>% 
-  mutate(seek_care_other_ill_malaria_test_kes=NA) %>% 
-  mutate(seek_care_other_ill_malaria_treatment_kes=NA) %>% 
-  mutate(seek_care_other_ill_other_kes=NA) %>% 
-  select(extid, #
-         type, 
-         todays_date,  
-         num_bed_nets, extid, #
-         todays_date,  
-         num_bed_nets, 
-         malaria_care_yn,
-         malaria_care_where,
-         malaria_care_where_specify,
-         num_visit_hf,
-         num_visit_hospital,
-         num_visit_pharmacy,
-         num_visit_informal_drug_vendor,
-         num_visit_other,
-         overnight_hf_hospital_healer,
-         num_overnight_hf_hospital_healer,
-         malaria_test_yn,
-         malaria_test_result,
-         malaria_treatment_yn,
-         malaria_consult_tests_kes,
-         malaria_hospitalization_kes,
-         malaria_medication_kes,
-         malaria_travel_to_clinic_kes,
-         malaria_food_kes,
-         malaria_other_kes,
-         malaria_miss_school,
-         num_malaria_miss_school_days,
-         malaria_miss_work,
-         num_malaria_miss_work_days,
-         malaria_away_pay,
-         malaria_away_pay_kes,
-         other_member_care,
-         other_member_care_select,
-         other_member_care_unlisted,
-         seek_care_other_ill,
-         seek_care_other_ill_where,
-         seek_care_other_ill_where_specify,
-         num_visit_hf_other_ill,
-         num_visit_hospital_other_ill,
-         num_visit_pharmacy_other_ill,
-         num_visit_informal_drug_vendor_other_ill,
-         num_visit_traditional_healer_other_ill,
-         num_visit_other_other_ill,
-         other_ill_overnight_hopsital,
-         num_nights_other_ill_hopsital,
-         seek_care_other_ill_malaria_test,
-         seek_care_other_ill_malaria_test_result,
-         seek_care_other_ill_malaria_treatment,
-         seek_care_other_ill_malaria_test_kes,
-         seek_care_other_ill_malaria_treatment_kes,
-         seek_care_other_ill_other_kes)
-
-#binding healthecon with healtheconnew and then joining demography
-kenya_healthecon_total<-rbind(kenya_nhealthecon, kenya_nhealtheconnew) %>% 
-  left_join(kenya_ndemography, by='extid')
-
-#selecting columns from efficacy and then joining demography
-kenya_efficacy_total<-kenya_efficacy %>% 
-  select(extid,
-         start_time,
-         end_time,
-         visit,
-         visits_done, 
-         malaria_fever_last_month,
-         treated_for_malaria_yn,
-         malaria_treatment,
-         sleep_under_net_last_night,
-         num_nights_sleep_under_net
-  ) %>% 
-  left_join(kenya_ndemography, by='extid')
-
-#selecting columns from healtheconmonthly and adding demography
-healtheconmonthly_total <- healthecon_monthly %>%
-  rowwise() %>%
-  mutate(num_bed_nets = ifelse(hhid %in% kenya_healthecon_baseline$hhid, 
-                               kenya_healthecon_baseline$num_bed_nets[which(kenya_healthecon_baseline$hhid == hhid)], 
-                               num_bed_nets)) %>% #adding num_bed_nets from baseline
-  select(extid, #
-         todays_date,  
-         num_bed_nets, extid, #
-         todays_date,  
-         num_bed_nets, 
-         new_bednets_past_month,
-         bed_nets_past_month_kes,
-         malaria_care_yn,
-         malaria_care_where,
-         malaria_care_where_specify,
-         num_visit_hf,
-         num_visit_hospital,
-         num_visit_pharmacy,
-         num_visit_informal_drug_vendor,
-         num_visit_other,
-         overnight_hospital,
-         num_overnight_hospital,
-         malaria_test_yn,
-         malaria_test_result,
-         malaria_treatment_yn,
-         malaria_consult_tests_kes,
-         malaria_hospitalization_kes,
-         malaria_medication_kes,
-         malaria_travel_to_clinic_kes,
-         malaria_food_kes,
-         malaria_other_kes,
-         malaria_miss_school,
-         num_malaria_miss_school_days,
-         malaria_miss_work,
-         num_malaria_miss_work_days,
-         malaria_away_pay,
-         malaria_away_pay_kes,
-         other_member_care,
-         other_member_care_select,
-         seek_care_other_ill,
-         seek_care_other_ill_where,
-         seek_care_other_ill_where_specify,
-         num_visit_hf_other_ill,
-         num_visit_hospital_other_ill,
-         num_visit_pharmacy_other_ill,
-         num_visit_informal_drug_vendor_other_ill,
-         num_visit_traditional_healer_other_ill,
-         num_visit_other_other_ill,
-         other_ill_overnight_hopsital,
-         num_nights_other_ill_hopsital,
-         seek_care_other_ill_malaria_test,
-         seek_care_other_ill_malaria_test_result,
-         seek_care_other_ill_malaria_treatment,
-         seek_care_other_ill_malaria_test_kes,
-         seek_care_other_ill_malaria_treatment_kes,
-         seek_care_other_ill_other_kes) %>% 
-  left_join(kenya_ndemography, by='extid')
-
-
-
-
+source('data.r')
 
 # PURPOSE:
 # Box plot of efficacy usage data by visit and discussion of statistical findings. 
 
+#table of number of nights slept under net last week for efficacy
 table(kenya_efficacy_total$num_nights_sleep_under_net)
 
+#changing dk to NA, dropping NA, and turning number of nights to numeric
 diff_efficacy_num<-kenya_efficacy_total %>% 
   mutate(num_nights_sleep_under_net=ifelse(num_nights_sleep_under_net=='dk', NA, num_nights_sleep_under_net)) %>% 
   drop_na(num_nights_sleep_under_net) %>%
   mutate( num_nights_sleep_under_net = as.numeric( num_nights_sleep_under_net ) )
 
-
+#Creating histogram of number of nights faceted by visit
 ggplot( diff_efficacy_num ) + 
   geom_histogram(aes(x=num_nights_sleep_under_net)) + 
   facet_wrap(~visit)
 
+#creating boxplot of number of nights
 ggplot(data=diff_efficacy_num, aes(y=num_nights_sleep_under_net, x=visit))+
   geom_boxplot()
 
+#creating table of slept under bed net last night
 table(kenya_efficacy_total$sleep_under_net_last_night)
 
-diff_efficacy_long<-
-  
-kenya_efficacy_total %>% 
+#changing dk to NA, dropping NA, and grouping by visit and sleep under net , then tally to see number of people in each visit who said y/n
+diff_efficacy_long<-kenya_efficacy_total %>% 
   mutate(sleep_under_net_last_night=ifelse(sleep_under_net_last_night=='dk', NA, sleep_under_net_last_night)) %>% 
   drop_na(sleep_under_net_last_night) %>% 
   group_by(visit, sleep_under_net_last_night) %>% 
    tally 
 
 
-# Create the plot
+# Creating the plot of sleep under bed net colored by y/n
 ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
   geom_col(position = "stack") +
   scale_fill_manual(values = c("yes" = "skyblue", "no" = "pink")) +
   labs(y = "Value", x = "Visit", fill = "Type") +
   theme_minimal()
 
-# Create diff_total summary
+# creating a new dataset which is grouped by visit
 diff_total <- diff_efficacy_long %>%
   group_by(visit) 
-# Combine with the original data
+# Combining this with the previous dataset and then reordering by y/n
 diff_efficacy_total <- bind_rows(diff_efficacy_long, diff_total) %>%
   mutate(sleep_under_net_last_night = factor(sleep_under_net_last_night, levels = c('yes', 'no')))
 
-# Create diff_efficacy_numt summary
+# Create a summary of grouped by visit and number of nights slept under bed net
 diff_efficacy_numt <- diff_efficacy_num %>%
   group_by(visit, num_nights_sleep_under_net) %>%
   tally
 
-# Combined plot
+# Combined plot of slept under bed net last night v number of nights slept under bed net
 ggplot() +
   geom_col(data = diff_efficacy_total, aes(x = sleep_under_net_last_night, y = n, fill = sleep_under_net_last_night), alpha = 0.6) +
   geom_line(data = diff_efficacy_numt, aes(x = num_nights_sleep_under_net, y = n, group = visit), color = "blue") +
@@ -320,18 +67,23 @@ ggplot() +
   labs(y = "Count", x = "Sleep Under Net Last Night", fill = "Type") +
   theme_minimal()
 
+#creating a new dataset with distinct rows and pivoting wide for sleep under net last night
 diff_efficacy_total_table <- diff_efficacy_total %>%
   distinct() %>% 
   pivot_wider(names_from = sleep_under_net_last_night, values_from = n) %>% 
   distinct()
 
+# creating a new datset with num_nights sleep under net and pivoting wide
 diff_efficacy_numt_table <- diff_efficacy_numt %>%
   pivot_wider(names_from = num_nights_sleep_under_net, values_from = n)
 
 print(diff_efficacy_total_table)
 print(diff_efficacy_numt_table)
 
+#combining both tables
+
 combined_table <- left_join(diff_efficacy_total_table, diff_efficacy_numt_table, by = "visit")
 
-# Print the final table
+# Print the final table to see the summary of both the variables in the efficacy dataset
 print(combined_table)
+
