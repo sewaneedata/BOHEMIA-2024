@@ -60,7 +60,7 @@ kenya_safety_eff_long$month <- factor(kenya_safety_eff_long$month,
 #creating a plot for the percentage of people
 ggplot(kenya_safety_eff_long, aes(x = month, y = number, fill =percent_y_n)) +
   geom_col(position = "dodge") +
-  labs(x = "Visit", y = "Count", fill = "Category", title = "Safety and Efficacy by Visit") +
+  labs(x = "Visit", y = "Percentage", fill = "Category", title = "Safety and Efficacy by Bi-Weekly Visit") +
   theme_minimal()+
   ylim(0,100)
 
@@ -90,7 +90,7 @@ weather_k<-weather_k %>%
 #getting sum of temp for each month
 weather_k_t<-weather_k %>% 
   group_by(month) %>% 
-  summarize(sum_temp=sum(TAVG))
+  summarize(avg_temp=mean(TAVG))
 #getting sum of prcp for each month
 weather_k_p<-weather_k %>% 
   group_by(month) %>% 
@@ -108,7 +108,7 @@ weather_t_p$month <- factor(weather_t_p$month,
 
 
 #creating graph for temp
-ggplot(weather_t_p, aes(x=month, y = sum_temp, group=1)) +
+ggplot(weather_t_p, aes(x=month, y = avg_temp, group=1)) +
   geom_line()
 
 #creating graph for prcp
@@ -150,31 +150,31 @@ library(scales)
 
 
 #rescaling prcp to temp
-weather_t_p$sum_prcp_rescaled <- rescale(weather_t_p$sum_prcp, to = range(weather_t_p$sum_temp))
+weather_t_p$avg_temp_rescaled <- rescale(weather_t_p$avg_temp, to = range(weather_t_p$sum_prcp))
 
 
 #creating the plot
 ggplot(weather_t_p, aes(x = month)) +
-  geom_line(aes(y = sum_temp, color='Temperature'), group=1) +
-  geom_line(aes(y = sum_prcp_rescaled, color='Precipitation'), group=1) +
+  geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
+  geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
   geom_col(
     data = kenya_safety_eff_long, 
-    aes(y = number / max(number) * max(weather_t_p$sum_temp),  # Rescale and normalize safety data
+    aes(y = number / max(number) * max(weather_t_p$sum_prcp),  # Rescale and normalize safety data
         fill = percent_y_n), 
     position = "dodge", 
     alpha=.5
   ) +
   scale_y_continuous(
-    name = "Temperature", 
+    name = "Sum of Precipitation", 
     sec.axis = sec_axis(
       trans = function(x) { 
-        x * max(weather_t_p$sum_prcp) / max(weather_t_p$sum_temp)
+        x * max(weather_t_p$avg_temp) / max(weather_t_p$sum_prcp)
       },
-      name = "Precipitation" 
+      name = "Average Temperature" 
     )
   ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
-  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time", subtitle = 'People Using Bed Nets is in percentage.') +
+  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in percentage.') +
   theme_minimal()
 
 
@@ -246,7 +246,7 @@ weather_e<-weather_e %>%
 #getting sum of temp for each month
 weather_e_t<-weather_e %>% 
   group_by(month) %>% 
-  summarize(sum_temp=sum(TAVG, na.rm=TRUE))
+  summarize(avg_temp=mean(TAVG, na.rm=TRUE))
 #getting sum of prcp for each month
 weather_e_p<-weather_e %>% 
   group_by(month) %>% 
@@ -260,77 +260,56 @@ weather_e_t_p<-weather_e_p %>%
 weather_e_t_p$month <- factor(weather_e_t_p$month, 
                             levels = c("October", "November", "December", "January", "February", "March", "April"))
 
-weather_e_t_p$sum_prcp_rescaled <- rescale(weather_e_t_p$sum_prcp, to = range(weather_e_t_p$sum_temp))
+weather_e_t_p$avg_temp_rescaled <- rescale(weather_e_t_p$avg_temp, to = range(weather_e_t_p$sum_prcp))
 
-
-ggplot(weather_e_t_p, aes(x = month)) +
-  geom_line(aes(y = sum_temp, color='Temperature'), group=1) +
-  geom_line(aes(y = sum_prcp_rescaled, color='Precipitation'), group=1) +
-  geom_col(
-    data=diff_efficacy_long,
-    aes(y = n / max(n) * max(weather_e_t_p$sum_temp),  # Rescale and normalize safety data
-        fill = sleep_under_net_last_night), 
-    position = "stack", 
-    alpha=.5
-  ) +
-  scale_y_continuous(
-    name = "Temperature", 
-    sec.axis = sec_axis(
-      trans = function(x) { 
-        x * max(weather_e_t_p$sum_prcp) / max(weather_e_t_p$sum_temp)
-      },
-      name = "Precipitation" 
-    )
-  ) +
-  scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
-  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time", subtitle = 'People Using Bed Nets is in percentage.') +
-  theme_minimal()
 
 #SUM GRAPH
 ggplot(weather_e_t_p, aes(x = month)) +
-  geom_line(aes(y = sum_temp, color='Temperature'), group=1) +
-  geom_line(aes(y = sum_prcp_rescaled, color='Precipitation'), group=1) +
+  geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
+  geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
   geom_col(
     data=diff_efficacy_long,
-    aes(y = n / max(n) * max(weather_e_t_p$sum_temp),  # Rescale and normalize safety data
+    aes(y = n / max(n) * max(weather_e_t_p$sum_prcp),  # Rescale and normalize safety data
         fill = sleep_under_net_last_night), 
     position = "stack", 
     alpha=.5
   ) +
   scale_y_continuous(
-    name = "Temperature", 
+    name = "Sum of Precipitation", 
     sec.axis = sec_axis(
       trans = function(x) { 
-        x * max(weather_e_t_p$sum_prcp) / max(weather_e_t_p$sum_temp)
+        x * max(weather_e_t_p$avg_temp) / max(weather_e_t_p$sum_prcp)
       },
-      name = "Precipitation" 
+      name = "Average Temperature" 
     )
   ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
-  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time", subtitle = 'People Using Bed Nets is in percentage.') +
+  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in Numbers (0-2000).') +
   theme_minimal()
+
 
 
 #PERCENTAGE GRAPH
 ggplot(weather_e_t_p, aes(x = month)) +
-  geom_line(aes(y = sum_temp, color='Temperature'), group=1) +
-  geom_line(aes(y = sum_prcp_rescaled, color='Precipitation'), group=1) +
+  geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
+  geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
   geom_col(
     data=kenya_effsum_long,
-    aes(y = n / max(n) * max(weather_e_t_p$sum_temp)),   
+    aes(y = number / max(number) * max(weather_e_t_p$sum_prcp)),   
 # Rescale and normalize safety data 
     position = "dodge", 
-    alpha=.5
+    alpha=.3, 
+    fill='blue'
   ) +
   scale_y_continuous(
-    name = "Temperature", 
+    name = "Sum of Precipitation", 
     sec.axis = sec_axis(
       trans = function(x) { 
-        x * max(weather_e_t_p$sum_prcp) / max(weather_e_t_p$sum_temp)
+        x * max(weather_e_t_p$avg_temp) / max(weather_e_t_p$sum_prcp)
       },
-      name = "Precipitation" 
+      name = "Average Temperature" 
     )
   ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
-  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time", subtitle = 'People Using Bed Nets is in percentage.') +
+  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in percentage.') +
   theme_minimal()

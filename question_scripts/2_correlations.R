@@ -54,11 +54,17 @@ hh_average_usage<-hh_usage %>%
 #graph of how many households used bed nets over the past week, faceted by visit
 ggplot(data=hh_average_usage,aes(x=average_nights_last_week))+
   geom_histogram()+
-  facet_wrap(~visit)
+  facet_wrap(~visit)+
+  labs(
+    title='histogram of average night slept under net last week from safety'
+  )
 #graph showing % of hh that slept under a bed last night 
 ggplot(data=hh_last_usage,aes(x=sleep_net_last_night,y=percent_last_usage))+
   geom_col()+
-  facet_wrap(~visit)
+  facet_wrap(~visit)+
+  labs(
+    title='bar chart of slept under net last night for each visit from safety'
+  )
 
 
 
@@ -83,9 +89,16 @@ effi_average_usage<-effi_usage %>%
 #graph of how many households used bed nets over the past week, faceted by visit
 ggplot(data=effi_average_usage,aes(x=average_nights_last_week))+
   geom_histogram()+
-  facet_wrap(~visit)
+  facet_wrap(~visit)+
+  labs(
+    title='histogram of average night slept under net last week from efficacy'
+  )
 #graph showing % of individual that slept under a bed last night 
 ggplot(data=effi_last_usage,aes(x=sleep_under_net_last_night,y=percent_last_usage))+
   geom_col()+
-  facet_wrap(~visit)
+  facet_wrap(~visit)+
+  labs(
+    title='bar chart of slept under net last night for each visit from efficacy'
+  )
+
 

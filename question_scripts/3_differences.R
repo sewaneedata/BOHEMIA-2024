@@ -22,11 +22,17 @@ diff_efficacy_num<-kenya_efficacy_total %>%
 #Creating histogram of number of nights faceted by visit
 ggplot( diff_efficacy_num ) + 
   geom_histogram(aes(x=num_nights_sleep_under_net)) + 
-  facet_wrap(~visit)
+  facet_wrap(~visit)+
+  labs(
+    title='Histogram of Number of Nights Slept Under Net for each Visit'
+  )
 
 #creating boxplot of number of nights
 ggplot(data=diff_efficacy_num, aes(y=num_nights_sleep_under_net, x=visit))+
-  geom_boxplot()
+  geom_boxplot()+
+  labs(
+    title='Boxplot of Number of Nights Slept Under Net for each Visit'
+  )
 
 #creating table of slept under bed net last night
 table(kenya_efficacy_total$sleep_under_net_last_night)
@@ -44,7 +50,10 @@ ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_nig
   geom_col(position = "stack") +
   scale_fill_manual(values = c("yes" = "skyblue", "no" = "pink")) +
   labs(y = "Value", x = "Visit", fill = "Type") +
-  theme_minimal()
+  theme_minimal()+
+  labs(
+    title='Bar Chart of Slept Under Net Last Night for each visit'
+  )
 
 # creating a new dataset which is grouped by visit
 diff_total <- diff_efficacy_long %>%
@@ -64,7 +73,7 @@ ggplot() +
   geom_line(data = diff_efficacy_numt, aes(x = num_nights_sleep_under_net, y = n, group = visit), color = "blue") +
   facet_wrap(~visit) +
   scale_fill_manual(values = c("total" = "grey", "yes" = "blue", "no" = "red")) +
-  labs(y = "Count", x = "Sleep Under Net Last Night", fill = "Type") +
+  labs(y = "Count", x = "Sleep Under Net Last Night", fill = "Type", title='slept under net last night vs last week') +
   theme_minimal()
 
 #creating a new dataset with distinct rows and pivoting wide for sleep under net last night
