@@ -33,5 +33,7 @@ safety_c_m<-safety_c %>%
 
 ggplot(data=safety_c_m, aes(x=incidents, y=percent_usage, color=cluster))+
   geom_point()+
-  facet_wrap(~visit)
+  facet_wrap(~visit)+
+  labs(title='scatter plot of malaria incidents vs percent usage for each visit')+
+  theme_minimal()
 

@@ -11,13 +11,15 @@ output: html_document
 - mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
 # Bed Nets
-- tabulate price in a five number summary 
-- tabulate # per household in five number summary 
-- stretch goal: most common source of bed nets
-
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/1_bednets.R')
+```
 # Ownership, Sufficiency, and Usage
 Within this section, we will have subsections going over each portion of our analysis:
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/2_correlations.R')
+```
 ## Relationship between ownership, sufficiency, and usage
 ### Safety
 - household data for each attribute over three months 

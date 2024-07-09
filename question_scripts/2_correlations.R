@@ -22,15 +22,21 @@ hh_ownership<-kenya_healthecon_total %>%
 #   drop_na(bednet_yn)
 # need visit data from monthly if want this
 
-hh_ownership %>% 
+print('Summary of Ownership of bednets in Safety')
+print(hh_ownership %>% 
   group_by(bednet_yn) %>% 
   tally() %>% 
-  mutate(total_percentage_ownership=(n/sum(n))*100)
+  mutate(total_percentage_ownership=(n/sum(n))*100))
 #Next is sufficiency, with has a standard 2:1 ratio people to bed nets
 hh_sufficiency <- hh_ownership %>% 
   filter(bednet_yn=='yes') %>% 
   distinct(hhid,.keep_all = TRUE) %>% 
-  mutate(sufficiency=(num_hh_members/num_bed_nets)) 
+  mutate(sufficiency=(num_hh_members/num_bed_nets)) %>% 
+  select(sufficiency, hhid, bednet_yn) %>% 
+  mutate(sufficient=ifelse(sufficiency>=2, 'yes', 'no'))
+
+
+
 # hh_sufficiency %>% 
 #   group_by(sufficiency) %>%
 #   tally() %>%

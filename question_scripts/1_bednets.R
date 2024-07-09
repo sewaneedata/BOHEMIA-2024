@@ -15,7 +15,9 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
   drop_na(bed_nets_past_month_kes)
 
 # distinct(hhid, .keep_all = TRUE)
-summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
+
+print('SUMMARY OF PRICE OF BEDNETS')
+print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
 
 ## Avg Number per hh
 kenya_healtheconn<-kenya_healthecon_total %>% 
@@ -23,11 +25,11 @@ kenya_healtheconn<-kenya_healthecon_total %>%
   group_by(hhid, num_bed_nets) %>% 
   tally() %>% 
   drop_na(num_bed_nets)
-summary(kenya_healtheconn$num_bed_nets)
+
+print('SUMMARY OF NUMBER OF BEDNETS PER HOUSEHOLD')
+print(summary(kenya_healtheconn$num_bed_nets))
 
 ## Avg Age of people based on usage of bednets
-table(kenya_safety_total$nights_sleep_net)
-
 # adding bednets yes or no column in a new safety bednets dataset and selecting required columns
 kenya_safety_bn<-kenya_safety_total %>% 
   mutate(bednetsyn=ifelse(nights_sleep_net>0, 1, 0)) %>% 
@@ -56,11 +58,8 @@ kenya_safety_sex_summary <- kenya_safety_bn %>%
 kenya_safety_summary<-kenya_safety_sex_summary %>% 
   left_join(kenya_safety_age_summary, by='bed_nets_yn')
 
-# finding the summary for the price of bednets
-summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
-#finding the summary for the number of bednets per household
-summary(kenya_healtheconn$num_bed_nets)
-kenya_safety_summary
+print('Summary of people using bednets considering age and sex')
+print(kenya_safety_summary)
 
 
 # FIELD WORKER NUMBER CODE
