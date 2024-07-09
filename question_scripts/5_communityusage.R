@@ -1,4 +1,4 @@
-#PURPOSE:Scatterplot of efficacy data where the x-axis is malaria incidents and y-axis is percent usage and coloured by villages. 
+#PURPOSE:Scatterplot of efficacy data where the x-axis is malaria incidents and y-axis is percent usage and coloured by clusters 
 
 #Load Libraries
 library(gsheet)
@@ -9,35 +9,29 @@ library(gsheet)
 
 source('data.r')
 
-kenya_safety_summary<-kenya_safety_eff %>% 
-  arrange((visit)) %>% 
-  group_by(visit, sleep_ln_safety) %>% 
+mal<-mal_incidence %>% 
+  group_by(cluster, visit) %>% 
+  mutate(incident_case=as.numeric(incident_case)) %>% 
+  drop_na(incident_case) %>% 
+  summarize('incidents'=sum(incident_case))
+
+safety_c<-kenya_safety_total %>%
+  group_by(cluster, visit, sleep_net_last_night) %>% 
   tally
 
-kenya_safety_summary<-na.omit(kenya_safety_summary) %>% 
-  pivot_wider(names_from = sleep_ln_safety, values_from=n) %>% 
-  rename('yes_safety'=yes) %>% 
-  rename('no_safety'=no)
+safety_c<-na.omit(safety_c)  
 
-kenya_effi_summary<-kenya_safety_eff %>% 
-  arrange((visit)) %>% 
-  group_by(visit, sleep_ln_eff) %>% 
-  tally
-kenya_effi_summary<-na.omit(kenya_effi_summary) %>% 
-  pivot_wider(names_from=sleep_ln_eff, values_from=n) %>% 
-  rename('yes_eff'=yes) %>% 
-  rename('no_eff'=no)
+safety_c<-safety_c %>% 
+  pivot_wider(names_from = sleep_net_last_night, values_from = n) 
 
-kenya_safety_eff_summ<-kenya_safety_summary %>% 
-  left_join(kenya_effi_summary, by='visit')
+safety_c[is.na(safety_c)] <- 0
 
-kenya_safety_eff_long <- kenya_safety_eff_summ %>%
-  pivot_longer(cols = c('no_safety', 'yes_safety', 'no_eff', 'yes_eff'), 
-               names_to = 'y_n', 
-               values_to = 'number')
+safety_c_m<-safety_c %>% 
+  mutate(sum=yes+no) %>% 
+  mutate(percent_usage=(yes/sum)*100) %>% 
+  left_join(mal, by=c('cluster', 'visit'))
 
-ggplot(kenya_safety_eff_long, aes(x = visit, y = number, fill =y_n)) +
-  geom_col(position = "dodge") +
-  labs(x = "Visit", y = "Count", fill = "Category", title = "Safety and Efficiency by Visit") +
-  theme_minimal()
+ggplot(data=safety_c_m, aes(x=incidents, y=percent_usage, color=cluster))+
+  geom_point()+
+  facet_wrap(~visit)
 
