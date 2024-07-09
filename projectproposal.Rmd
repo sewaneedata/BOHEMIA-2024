@@ -1,6 +1,6 @@
 ---
 title: "Project proposal"
-author: "Sam"
+author: "Reiner, Oysik, Solomon, Sam & Linn"
 date: "2024-07-01"
 output: html_document
 ---
