@@ -317,7 +317,7 @@ ggplot(weather_e_t_p, aes(x = month)) +
   geom_line(aes(y = sum_prcp_rescaled, color='Precipitation'), group=1) +
   geom_col(
     data=kenya_effsum_long,
-    aes(y = n / max(n) * max(weather_e_t_p$sum_temp)),  
+    aes(y = n / max(n) * max(weather_e_t_p$sum_temp)),   
 # Rescale and normalize safety data 
     position = "dodge", 
     alpha=.5

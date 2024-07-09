@@ -61,3 +61,33 @@ summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
 #finding the summary for the number of bednets per household
 summary(kenya_healtheconn$num_bed_nets)
 kenya_safety_summary
+
+
+# FIELD WORKER NUMBER CODE
+# wid_d<-kenya_demography %>% 
+#   group_by(wid_manual) %>% 
+#   tally 
+# 
+# wid_h<-kenya_healthecon_baseline %>% 
+#   group_by(wid_manual) %>%
+#   tally
+# 
+# wid_hn<-kenya_healthecon_baseline_new %>% 
+#   group_by(wid_manual) %>% 
+#   tally
+# 
+# wid_e<-kenya_efficacy %>% 
+#   group_by(wid_manual) %>% 
+#   tally
+# 
+# wid_hm<-healthecon_monthly %>%
+#   group_by(wid_manual) %>% 
+#   tally
+# 
+# 
+# wid<-rbind(wid_d, wid_e, wid_h, wid_hm, wid_hn)
+# 
+# wid<-wid %>% 
+#   distinct(wid_manual)
+# 
+# nrow(wid)
