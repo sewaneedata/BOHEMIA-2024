@@ -167,11 +167,10 @@ ggplot(weather_t_p, aes(x = month)) +
   scale_y_continuous(
     name = "Sum of Precipitation", 
     sec.axis = sec_axis(
-      trans = function(x) { 
-        x * max(weather_t_p$avg_temp) / max(weather_t_p$sum_prcp)
-      },
-      name = "Average Temperature" 
-    )
+      trans = ~ (((. /10)*.04)+26.8),
+      name = "Temperature (Celsius)"
+    ),
+    limits = c(0, max(weather_t_p$avg_temp_rescaled) * 1)
   ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
   labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in percentage.') +
@@ -264,6 +263,78 @@ weather_e_t_p$avg_temp_rescaled <- rescale(weather_e_t_p$avg_temp, to = range(we
 
 
 #SUM GRAPH
+diff_efficacy_long_filtered <- diff_efficacy_long %>%
+  filter(!is.na(n))
+         
+y_min <- min(diff_efficacy_long_filtered$n)
+y_max <- max(diff_efficacy_long_filtered$n)
+
+ggplot(weather_e_t_p, aes(x = month)) +
+  geom_line(aes(y = avg_temp_rescaled, color = 'Temperature'), group = 1, size = 1.2) +
+  geom_line(aes(y = sum_prcp, color = 'Precipitation'), group = 1, linetype = "dashed") + # Dashed line for precipitation
+  geom_col(
+    data = diff_efficacy_long_filtered,  # Use filtered data
+    aes(y = n / max(n) * max(weather_e_t_p$sum_prcp), 
+        fill = sleep_under_net_last_night), 
+    position = "stack",
+    alpha = 0.5
+  ) +
+  scale_y_continuous(
+    name = "Sum of Precipitation",
+    sec.axis = sec_axis(
+      trans = ~ (((. / 10) * .04) + 26.8),
+      name = "Temperature (Celsius)"
+    ),
+    limits = c(0, y_max * 1.2)  # Use calculated maximum with some buffer
+  ) +
+  scale_fill_manual(values = c("yes" = "skyblue", "no" = "pink"),   # Map colors to "yes" and "no"
+                    name = "Sleep Under Net Last Night") +            # Update legend title
+  scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black")) +
+  labs(x = "Month", title = "Weather, Safety, and Efficacy Over Time (monthly)",
+       subtitle = 'People Using Bed Nets in Numbers (0-2000)') +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10),
+    legend.title = element_text(size = 11),
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  )
+
+ggplot(weather_e_t_p, aes(x = month)) +
+  geom_line(aes(y = avg_temp_rescaled, color = "Temperature"), group = 1, size = 1.2) +
+  geom_line(aes(y = sum_prcp, color = "Precipitation"), group = 1, linetype = "dashed") + 
+  geom_col(
+    data = diff_efficacy_long,
+    aes(y = n / max(n) * max(weather_e_t_p$avg_temp_rescaled),  # Rescale to temperature
+        fill = sleep_under_net_last_night), 
+    position = "stack",  
+    alpha = 0.6
+  ) +
+  scale_y_continuous(
+    name = "Temperature (Celsius)",   # Primary axis is temperature
+    sec.axis = sec_axis(
+      trans = ~ . / (max(weather_e_t_p$avg_temp_rescaled) / max(weather_e_t_p$sum_prcp)),  # Transformation to precipitation
+      name = "Precipitation (mm)"      # Secondary axis is precipitation
+    )
+  ) +
+  scale_fill_manual(values = c("yes" = "#5C2D91", "no" = "#D6B2CC"),  # Sewanee purple shades
+                    name = "Slept Under Net Last Night",
+                    labels = c("Yes", "No")) +          # Explicit labels for the legend
+  scale_color_manual(values = c("Temperature" = "#9666B2", "Precipitation" = "#4B0082")) + # Adjusted line colors
+  labs(x = "Month", title = "Weather, Safety, and Efficacy Over Time (monthly)",
+       subtitle = 'People Using Bed Nets in Numbers (Rescaled)') + # Updated subtitle
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
+    axis.title = element_text(size = 12),  
+    axis.text = element_text(size = 10),  
+    legend.title = element_text(size = 11), 
+    legend.position = "bottom",           
+    panel.grid.minor = element_blank()    
+  )
+
 ggplot(weather_e_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
   geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
@@ -277,11 +348,10 @@ ggplot(weather_e_t_p, aes(x = month)) +
   scale_y_continuous(
     name = "Sum of Precipitation", 
     sec.axis = sec_axis(
-      trans = function(x) { 
-        x * max(weather_e_t_p$avg_temp) / max(weather_e_t_p$sum_prcp)
-      },
-      name = "Average Temperature" 
-    )
+      trans = ~ (((. /10)*.04)+26.8),
+      name = "Temperature (Celsius)"
+    ),
+    limits = c(0, max(weather_e_t_p$avg_temp_rescaled) * 1)
   ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
   labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in Numbers (0-2000).') +
@@ -289,27 +359,67 @@ ggplot(weather_e_t_p, aes(x = month)) +
 
 
 
+
+kenya_effsum_long$month <- factor(kenya_effsum_long$month, 
+                              levels = c("October", "November", "December", "January", "February", "March", "April"))
+
+
 #PERCENTAGE GRAPH
-ggplot(weather_e_t_p, aes(x = month)) +
+ggplot(weather_e_t_p, aes(x = kenya_effsum_long$month)) +
   geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
   geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
   geom_col(
     data=kenya_effsum_long,
     aes(y = number / max(number) * max(weather_e_t_p$sum_prcp)),   
-# Rescale and normalize safety data 
     position = "dodge", 
     alpha=.3, 
     fill='blue'
   ) +
   scale_y_continuous(
-    name = "Sum of Precipitation", 
+    name = "Precipitation (mm)", 
     sec.axis = sec_axis(
-      trans = function(x) { 
-        x * max(weather_e_t_p$avg_temp) / max(weather_e_t_p$sum_prcp)
-      },
-      name = "Average Temperature" 
-    )
-  ) +
+      trans = ~ (((. /10)*.04)+26.8),
+      name = "Temperature (Celsius)"
+    ),
+    limits = c(0, max(weather_e_t_p$avg_temp_rescaled) * 1)
+    ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
-  labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in percentage.') +
+  labs(x = "Month", fill = "Category", title = "Environmental Factors Vs. Bed Net Usage", color="") +
   theme_minimal()
+
+p<-ggplot(weather_e_t_p, aes(x = month)) +
+  geom_line(aes(y = avg_temp_rescaled, color = 'Temperature'), group = 1, size = 1.2) +
+  geom_line(aes(y = sum_prcp, color = 'Precipitation'), group = 1, linetype = "dashed") + # Dashed line for precipitation
+  geom_col(
+    data = kenya_effsum_long,
+    aes(y = number / max(number) * max(weather_e_t_p$sum_prcp)), 
+    position = position_dodge(width = 0.7),  
+    alpha = 0.6,                           
+    fill = "#5C2D91"                       
+  ) +
+  scale_y_continuous(
+    name = "Precipitation (mm)",
+    sec.axis = sec_axis(
+      trans = ~ (((. /10)*.04)+26.8),
+      name = "Temperature (Celsius)"
+    ),
+    limits = c(0, max(weather_e_t_p$avg_temp_rescaled) * 1)
+  ) +
+  scale_color_manual(values = c("Temperature" = "#9666B2", 
+                                "Precipitation" = "#000000")) + 
+  labs(x = "Month", fill = "Category", title = "Environmental Factors vs. Bed Net Usage", color='') +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
+    axis.title = element_text(size = 12),  
+    axis.text = element_text(size = 10),  
+    legend.title = element_text(size = 11), 
+    legend.position = "bottom",           
+    panel.grid.minor = element_blank()  
+  )
+
+labels<-c("October\n71.65%", "November\n68.32%", "December\n67.88%", "January\n67.22%", "February\n67.12%", "March\n67.20%", "April\n82.14%")
+
+p+scale_x_discrete(label=labels)
+
+

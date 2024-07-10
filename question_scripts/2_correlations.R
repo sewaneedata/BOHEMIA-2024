@@ -5,6 +5,7 @@ library(gsheet)
 library(tidyverse)
 library(dplyr)
 library(gsheet)
+library(RColorBrewer)
 #Load data from data.r
 
 source('data.r')
@@ -32,10 +33,8 @@ hh_sufficiency <- hh_ownership %>%
   filter(bednet_yn=='yes') %>% 
   distinct(hhid,.keep_all = TRUE) %>% 
   mutate(sufficiency=(num_hh_members/num_bed_nets)) %>% 
-  select(sufficiency, hhid, bednet_yn) %>% 
+  select(sufficiency, hhid, bednet_yn, visit) %>% 
   mutate(sufficient=ifelse(sufficiency>=2, 'yes', 'no'))
-
-
 
 # hh_sufficiency %>% 
 #   group_by(sufficiency) %>%
@@ -72,9 +71,60 @@ ggplot(data=hh_last_usage,aes(x=sleep_net_last_night,y=percent_last_usage))+
     title='bar chart of slept under net last night for each visit from safety'
   )
 
+hh_suffsum<-hh_sufficiency %>% 
+  group_by(sufficient) %>% 
+  tally %>% 
+  mutate(n=(n/sum(n)*100)) %>% 
+  mutate(index=ifelse(sufficient=='yes', 'yes', 'no')) %>% 
+  mutate(data='Sufficiency') %>% 
+  select(-sufficient)
+  
 
+hh_ownsum<-hh_ownership %>% 
+  group_by(bednet_yn) %>% 
+  tally %>% 
+  mutate(n=(n/sum(n))*100) %>% 
+  mutate(index=ifelse(bednet_yn=='yes', 'yes', 'no')) %>% 
+  mutate(data='Ownership') %>% 
+  select(-bednet_yn)
 
+hh_lastsum<-hh_last_usage %>% 
+  group_by(sleep_net_last_night) %>% 
+  summarize(n=sum(n)) %>% 
+  mutate(n=n/4) %>% 
+  mutate(n=(n/sum(n))*100) %>% 
+  mutate(sleep_net_last_night=ifelse(sleep_net_last_night==TRUE, 'yes', 'no')) %>% 
+  mutate(index=ifelse(sleep_net_last_night=='yes', 'yes', 'no')) %>% 
+  mutate(data='Usage') %>% 
+  select(-sleep_net_last_night)
 
+osu_sum<-rbind(hh_ownsum, hh_lastsum, hh_suffsum)
+
+osu_sum_t<-osu_sum %>% 
+  filter(index=='yes')
+
+ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
+  geom_col(alpha = 0.8) +                               
+  scale_fill_manual(values = c("Ownership" = "#5C2D91",  
+                               "Usage" = "#9666B2",
+                               "Sufficiency" = "#4B0082")) +
+  labs(y = "Count", x = "", fill = "") +              
+  ggtitle("Percentage of Households with Bed Nets:\nOwned, Used Last Night, and Sufficiency") + # More descriptive title
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"), 
+        axis.title.y = element_text(size = 12),  
+        axis.text = element_text(size = 10),  
+        panel.grid.major.x = element_blank(),  
+        legend.position = "none")  +
+  ylim(0, 100)
+
+osu_sum<-osu_sum %>% 
+  pivot_wider(names_from = 'index', values_from=n) %>% 
+  select(data, yes, no) %>% 
+  mutate(yes=round(yes, digits=2)) %>% 
+  mutate(no=round(no, digits=2))
+
+print(osu_sum)
 
 #Usage on an individual level needs to be found
 effi_usage<-kenya_efficacy_total %>%

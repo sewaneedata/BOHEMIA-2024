@@ -38,9 +38,9 @@ safety_c_m<-safety_c %>%
   left_join(mal, by=c('cluster', 'visit'))
 
 #make a plot showing the correlation between bednet usage and malaria incidence
-ggplot(data=safety_c_m, aes(x=incidents, y=percent_usage, color=cluster))+
+ggplot(data=safety_c_m, aes(x=incidents, y=percent_usage))+
   geom_point()+
-  facet_wrap(~visit)+
   labs(title='scatter plot of malaria incidents vs percent usage for each visit')+
-  theme_minimal()
+  theme_minimal()+
+  facet_wrap(~visit)
 

@@ -57,24 +57,58 @@ ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_nig
 
 # creating a new dataset which is grouped by visit
 diff_total <- diff_efficacy_long %>%
-  group_by(visit) 
+  group_by(visit)
 # Combining this with the previous dataset and then reordering by y/n
 diff_efficacy_total <- bind_rows(diff_efficacy_long, diff_total) %>%
-  mutate(sleep_under_net_last_night = factor(sleep_under_net_last_night, levels = c('yes', 'no')))
+  mutate(sleep_under_net_last_night = factor(sleep_under_net_last_night, levels = c('yes', 'no'))) %>% 
+  distinct() 
 
 # Create a summary of grouped by visit and number of nights slept under bed net
 diff_efficacy_numt <- diff_efficacy_num %>%
   group_by(visit, num_nights_sleep_under_net) %>%
   tally
 
+diff_eff_avg_n<-diff_efficacy_numt %>% 
+  group_by(num_nights_sleep_under_net) %>% 
+  summarize(avg_num=mean(n))
+
+diff_eff_avg<-diff_efficacy_total %>% 
+  group_by(sleep_under_net_last_night) %>% 
+  summarize(avg_visit=mean(n))
+
 # Combined plot of slept under bed net last night v number of nights slept under bed net
+
+
+library(RColorBrewer)  # For color palettes
 ggplot() +
-  geom_col(data = diff_efficacy_total, aes(x = sleep_under_net_last_night, y = n, fill = sleep_under_net_last_night), alpha = 0.6) +
-  geom_line(data = diff_efficacy_numt, aes(x = num_nights_sleep_under_net, y = n, group = visit), color = "blue") +
-  facet_wrap(~visit) +
-  scale_fill_manual(values = c("total" = "grey", "yes" = "blue", "no" = "red")) +
-  labs(y = "Count", x = "Sleep Under Net Last Night", fill = "Type", title='slept under net last night vs last week') +
-  theme_minimal()
+  geom_col(data = diff_eff_avg,
+           aes(x = ifelse(sleep_under_net_last_night == "yes", 7, 0),  # Swap x values
+               y = avg_visit, fill = sleep_under_net_last_night),
+           alpha = 0.8,
+           width = 0.8) +
+  geom_line(data = diff_eff_avg_n,
+            aes(x = num_nights_sleep_under_net, y = avg_num),
+            color = "#5C2D91",
+            size = 1.2) +
+  scale_fill_manual(values = c("yes" = "#9666B2", "no" = "#4B0082"),
+                    labels = c("Yes", "No"),  # Match legend labels to axis
+                    name = "") +   # Update legend title
+  scale_x_continuous(breaks = c(0, 7),
+                     labels = c("No", "Yes"),  # Swap labels to match bars
+                     sec.axis = sec_axis(~ .,
+                                         breaks = 0:7,
+                                         labels = 0:7)) +
+  labs(y = "Count",
+       x = "Sleep Under Net Last Night vs Last Week",
+       title = 'Nightly vs Weekly Bed Net Usage', 
+       fill='') +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        legend.title = element_text(size = 11),
+        legend.position = "bottom") 
+
 
 #creating a new dataset with distinct rows and pivoting wide for sleep under net last night
 diff_efficacy_total_table <- diff_efficacy_total %>%
