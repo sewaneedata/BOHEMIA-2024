@@ -1,4 +1,4 @@
-# PURPOSE:
+# PURPOSE: show the environmental factors on bednet usage
 
 
 #Load Libraries
@@ -221,7 +221,7 @@ diff_efficacy_long<-diff_efficacy_long %>%
                              visit=='V6' ~ "March", 
                              visit=='V7' ~ "April"))
 
-
+# changing month name
 weather_e <- weather %>%
   mutate(month = case_when(
     month(DATE) == 1  ~ "January",
@@ -238,6 +238,7 @@ weather_e <- weather %>%
     month(DATE) == 12 ~ "December"
   ))
 
+# taking specific months out from the dataset
 weather_e<-weather_e %>% 
   filter(month %in% c('October', 'November', 'December', 'January', 'February', 'March', 'April'))
 
@@ -266,9 +267,11 @@ weather_e_t_p$avg_temp_rescaled <- rescale(weather_e_t_p$avg_temp, to = range(we
 diff_efficacy_long_filtered <- diff_efficacy_long %>%
   filter(!is.na(n))
          
+#minimum/ maximum 
 y_min <- min(diff_efficacy_long_filtered$n)
 y_max <- max(diff_efficacy_long_filtered$n)
 
+# graph for 7 months with temperature, precipitation and bednet usage last night
 ggplot(weather_e_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color = 'Temperature'), group = 1, size = 1.2) +
   geom_line(aes(y = sum_prcp, color = 'Precipitation'), group = 1, linetype = "dashed") + # Dashed line for precipitation
@@ -302,6 +305,7 @@ ggplot(weather_e_t_p, aes(x = month)) +
     panel.grid.minor = element_blank()
   )
 
+# same thing but different dataset
 ggplot(weather_e_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color = "Temperature"), group = 1, size = 1.2) +
   geom_line(aes(y = sum_prcp, color = "Precipitation"), group = 1, linetype = "dashed") + 
@@ -335,6 +339,7 @@ ggplot(weather_e_t_p, aes(x = month)) +
     panel.grid.minor = element_blank()    
   )
 
+# 
 ggplot(weather_e_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
   geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
@@ -359,8 +364,9 @@ ggplot(weather_e_t_p, aes(x = month)) +
 
 
 
-
-kenya_effsum_long$month <- factor(kenya_effsum_long$month, 
+# 
+kenya_effsum_lo
+ng$month <- factor(kenya_effsum_long$month, 
                               levels = c("October", "November", "December", "January", "February", "March", "April"))
 
 
@@ -387,6 +393,7 @@ ggplot(weather_e_t_p, aes(x = kenya_effsum_long$month)) +
   labs(x = "Month", fill = "Category", title = "Environmental Factors Vs. Bed Net Usage", color="") +
   theme_minimal()
 
+# customizing ggplot
 p<-ggplot(weather_e_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color = 'Temperature'), group = 1, size = 1.2) +
   geom_line(aes(y = sum_prcp, color = 'Precipitation'), group = 1, linetype = "dashed") + # Dashed line for precipitation
@@ -418,8 +425,10 @@ p<-ggplot(weather_e_t_p, aes(x = month)) +
     panel.grid.minor = element_blank()  
   )
 
+# add labels to month
 labels<-c("October\n71.65%", "November\n68.32%", "December\n67.88%", "January\n67.22%", "February\n67.12%", "March\n67.20%", "April\n82.14%")
 
+# join the label in p(ggplot)
 p+scale_x_discrete(label=labels)
 
 

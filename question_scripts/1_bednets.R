@@ -11,7 +11,7 @@ library(RColorBrewer)
 source('data.r')
 
 #PURPOSE:Information describing bed nets, ex: Price, # of bednets per household, Defining LLIN’, and Age/Source
-## Avg price
+## Avg price- KES converted to $
 healtheconmonthly_totaln<- healtheconmonthly_total %>% 
   mutate(bed_nets_past_month_kes=(as.numeric(bed_nets_past_month_kes)*0.0078)) %>% 
   drop_na(bed_nets_past_month_kes)
@@ -21,11 +21,12 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
 print('SUMMARY OF PRICE OF BEDNETS')
 print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
 
+#make new dataset called bednets_price
 bednets_price<-healtheconmonthly_totaln %>% 
   group_by(bed_nets_past_month_kes) %>% 
   tally
   
-
+# make a graph about bednet price in $ (bought in past months)
 ggplot(data=bednets_price, aes(x=bed_nets_past_month_kes, y=n)) +
   geom_point() + 
   geom_segment(mapping=aes(x=bed_nets_past_month_kes,
@@ -36,11 +37,13 @@ ggplot(data=bednets_price, aes(x=bed_nets_past_month_kes, y=n)) +
   #scale_x_continuous(trans='log')
 #geom_col()
 
+#new dataset for free bednets
 bednets_free<-healtheconmonthly_totaln %>% 
   mutate(free_yn=ifelse(bed_nets_past_month_kes>0, 'not free', 'free')) %>% 
   group_by(free_yn) %>% 
   tally 
 
+# make graph for the free bednets 
 ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
   scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
@@ -73,7 +76,7 @@ kenya_safety_bn<-kenya_safety_total %>%
   select(bednetsyn, corrected_age, sex)
 
 
-# Doing a summary of the mean of age for people who use bednets
+# Doing a summary of the mean of age for people who use bednets/who don't
 
 kenya_safety_age_summary <- kenya_safety_bn %>%
   group_by(bednetsyn) %>%

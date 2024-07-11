@@ -7,7 +7,7 @@ library(gsheet)
 
 source('data.r')
 
-# PURPOSE:
+# PURPOSE:to know if people said yes to sleeping under net last night, they likely sleep more nights under net within last week
 # Box plot of efficacy usage data by visit and discussion of statistical findings. 
 
 #table of number of nights slept under net last week for efficacy
@@ -68,10 +68,12 @@ diff_efficacy_numt <- diff_efficacy_num %>%
   group_by(visit, num_nights_sleep_under_net) %>%
   tally
 
+#average for number of nights sleept under net within last week
 diff_eff_avg_n<-diff_efficacy_numt %>% 
   group_by(num_nights_sleep_under_net) %>% 
   summarize(avg_num=mean(n))
 
+# average for count of sleep under net last night
 diff_eff_avg<-diff_efficacy_total %>% 
   group_by(sleep_under_net_last_night) %>% 
   summarize(avg_visit=mean(n))
@@ -80,6 +82,8 @@ diff_eff_avg<-diff_efficacy_total %>%
 
 
 library(RColorBrewer)  # For color palettes
+
+# Graph for showing average count of sleep under a net last night and average number of nights sleep under net within last week
 ggplot() +
   geom_col(data = diff_eff_avg,
            aes(x = ifelse(sleep_under_net_last_night == "yes", 7, 0),  # Swap x values
