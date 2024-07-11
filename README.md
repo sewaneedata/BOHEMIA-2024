@@ -2,7 +2,7 @@
 
 ## Introduction
 
-We are working with BOHEMIA to assess the information on bed nets and find any possible relationships between the usage of bed nets and other factors. Our dataset is being provided by a clinical trial conducted by our client which has data on bed nets and malaria. The codes in this repository will be used to try and answer the following questions:
+The [BOHEMIA project](https://bohemiaconsortium.org) is studying the efficacy of ivermectin in reducing the transmission of malaria. We are working with BOHEMIA to explore the possible relationships between the usage of bed nets and other factors. Our dataset is being provided by a clinical trial conducted by our client which has data on bed nets and malaria. The codes in this repository will be used to try and answer the following questions:
 
 - Definitions of Bed Nets and information on Bed Nets including demographic information
 - Correlations between bednet Ownership, Sufficiency, and Usage (OSU)
