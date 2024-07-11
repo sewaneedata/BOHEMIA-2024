@@ -44,3 +44,49 @@ ggplot(data=safety_c_m, aes(x=incidents, y=percent_usage))+
   theme_minimal()+
   facet_wrap(~visit)
 
+safety_cv<-safety_c %>% 
+  group_by(cluster) %>% 
+  mutate(avg_yes=(sum(yes)/4)) %>% 
+  mutate(avg_no=(sum(no)/4)) %>% 
+  select(-yes, -no, -visit) %>% 
+  distinct
+
+mal_v<-mal %>% 
+  filter(visit %in% c('V1', 'V2', 'V3', 'V4')) %>% 
+  group_by(cluster) %>% 
+  mutate(total_incidents=sum(incidents)) %>% 
+  select(-visit, -incidents) %>% 
+  distinct
+
+village<-kenya_demography %>% 
+  select(cluster, village)
+
+safety_c_m_v<-mal_v %>% 
+  left_join(safety_cv, by='cluster') %>% 
+  left_join(village, by='cluster') %>% 
+  mutate(sum=avg_yes+avg_no) %>% 
+  mutate(percent_usage=(avg_yes/sum)*100) %>% 
+  distinct
+
+ggplot(data=safety_c_m_v, aes(x=total_incidents, y=percent_usage, color=village))+
+  geom_point()+
+  labs(title='scatter plot of malaria incidents vs percent usage for each visit')+
+  theme_minimal()
+
+
+ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
+  geom_point(size = 1.5, alpha = 0.8) + 
+  scale_color_manual(values = colorRampPalette(c("#4B0082", "#9666B2"))(length(unique(safety_c_m_v$village)))) +
+  labs(title = "Scatter Plot of Malaria Incidents vs. Percent Bed Net Usage",
+       x = "Total Malaria Incidents",
+       y = "Percent Bed Net Usage") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10),
+    legend.position = "none" 
+  )
+
+
+

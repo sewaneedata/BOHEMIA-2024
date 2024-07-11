@@ -4,7 +4,9 @@ library (tidyverse)
 library(gsheet)
 library(tidyverse)
 library(dplyr)
-library(gsheet)
+library(ggplot2)
+library(ggbreak)
+library(RColorBrewer)
 #Load data from data.r
 source('data.r')
 
@@ -18,6 +20,40 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
 
 print('SUMMARY OF PRICE OF BEDNETS')
 print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
+
+bednets_price<-healtheconmonthly_totaln %>% 
+  group_by(bed_nets_past_month_kes) %>% 
+  tally
+  
+
+ggplot(data=bednets_price, aes(x=bed_nets_past_month_kes, y=n)) +
+  geom_point() + 
+  geom_segment(mapping=aes(x=bed_nets_past_month_kes,
+                           y=n,
+                           xend = bed_nets_past_month_kes,
+                           yend = 0))+
+  scale_x_break(c(3000, 7000))
+  #scale_x_continuous(trans='log')
+#geom_col()
+
+bednets_free<-healtheconmonthly_totaln %>% 
+  mutate(free_yn=ifelse(bed_nets_past_month_kes>0, 'not free', 'free')) %>% 
+  group_by(free_yn) %>% 
+  tally 
+
+ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
+  geom_col(alpha = 0.8) +                                        
+  scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
+  labs(x = "Received Free Bed Net", y = "Count", fill = "") +             
+  ggtitle("Count of Households Receiving Free Bed Nets") +            
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"), 
+    axis.title = element_text(size = 12),                     
+    axis.text = element_text(size = 10),
+    panel.grid.major.x = element_blank(),                    
+    legend.position = "none"                                 
+  )
 
 ## Avg Number per hh
 kenya_healtheconn<-kenya_healthecon_total %>% 

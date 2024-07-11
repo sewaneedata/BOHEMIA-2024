@@ -90,7 +90,7 @@ ggplot() +
             aes(x = num_nights_sleep_under_net, y = avg_num),
             color = "#5C2D91",
             size = 1.2) +
-  scale_fill_manual(values = c("yes" = "#9666B2", "no" = "#4B0082"),
+  scale_fill_manual(values = c("yes" = "#4B0082", "no" = "#9666B2"),
                     labels = c("Yes", "No"),  # Match legend labels to axis
                     name = "") +   # Update legend title
   scale_x_continuous(breaks = c(0, 7),
@@ -98,6 +98,7 @@ ggplot() +
                      sec.axis = sec_axis(~ .,
                                          breaks = 0:7,
                                          labels = 0:7)) +
+  ##9666B2
   labs(y = "Count",
        x = "Sleep Under Net Last Night vs Last Week",
        title = 'Nightly vs Weekly Bed Net Usage', 
