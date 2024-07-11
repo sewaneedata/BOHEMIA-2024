@@ -27,11 +27,11 @@ We will be working with 10 datasets in total.
 
 ## Question Scripts
 
- * Repository Folder 
+ * Repository Folder :
     - data.r : R script used to load all datasets. We then clean the datasets by selecting the necessary columns, and merging the original datasets with the new datasets and adding demographic information.
     - aws_data_download.r : R script used to download datasets from AWS (Amazon Web Services).
   
- * question_scripts
+ * question_scripts :
    1. 1_bednets.r : R script for answering questions related to Bed Nets. Specifically, price of bed nets, number of bed nets per household, demographics of people who use bed nets.
    2. 2_correlations.r : R script for analyzing data on ownership, sufficiency, and usage of bed nets for both safety and efficacy dataset.
    3. 3_differences.r : R script creating histograms and bar charts showing the usage of bed nets for the efficacy dataset over 7 visits (6 months). Also, a layered bar chart showing the relation in columns: slept_under_net_last_night and num_nights_sleep_under_net (over last week).
