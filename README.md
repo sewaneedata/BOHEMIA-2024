@@ -40,7 +40,7 @@ We will be working with 10 datasets in total. Some of the datasets can be found 
   
 ## Instructions
 
-- Retrieve the datasets and place them in a seperate datasets folder inside the repository.
+- Retrieve the datasets and place them in a seperate dataset folder inside the repository.
 - Run the R scripts in the following order :
     1. `data.r`
     2. `1_bednets.r`
