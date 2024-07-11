@@ -2,17 +2,17 @@
 
 ## Introduction
 
-The [BOHEMIA project](https://bohemiaconsortium.org) is studying the efficacy of ivermectin in reducing the transmission of malaria. We are working with BOHEMIA to explore the possible relationships between the usage of bed nets and other factors. Our dataset is being provided by a clinical trial conducted by our client which has data on bed nets and malaria. The codes in this repository will be used to try and answer the following questions:
+The [BOHEMIA project](https://bohemiaconsortium.org) is studying the efficacy of ivermectin in reducing the transmission of malaria. We are working with BOHEMIA, who provided us with the data, to explore the possible relationships between the usage of bed nets and other factors. The codes in this repository will accomplish the followings:
 
-- Definitions of Bed Nets and information on Bed Nets including demographic information
-- Correlations between bednet Ownership, Sufficiency, and Usage (OSU)
-- Differences in bednet usage between V1 and V7 within the efficacy cohort
-- Effects of environmental factors on bednet usage
-- Effects of community usage on malaria data
+- Summarize bed net and demographic data
+- Analyze relationship between bednet Ownership, Sufficiency, and Usage of bed nets
+- Analyze differences in bednet usage over time within a specific (efficacy) dataset
+- Analyze the effects of environmental factors on bednet usage
+- Analyze the effects of community usage on malaria data
 
 ## Datasets
 
-We will be working with 10 datasets in total.
+We will be working with 10 datasets in total. The datasets could be found [here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs) and in the data.r script.
 
 1. kenya_demography.csv : has demographic information on the sample population.
 2. kenya_safety.csv : has information on usage of bed nets over 4 visits.
@@ -31,10 +31,20 @@ We will be working with 10 datasets in total.
     - data.r : R script used to load all datasets. We then clean the datasets by selecting the necessary columns, and merging the original datasets with the new datasets and adding demographic information.
     - aws_data_download.r : R script used to download datasets from AWS (Amazon Web Services).
   
- * question_scripts :
+ * question_scripts Folder :
    1. 1_bednets.r : R script for answering questions related to Bed Nets. Specifically, price of bed nets, number of bed nets per household, demographics of people who use bed nets.
    2. 2_correlations.r : R script for analyzing data on ownership, sufficiency, and usage of bed nets for both safety and efficacy dataset.
    3. 3_differences.r : R script creating histograms and bar charts showing the usage of bed nets for the efficacy dataset over 7 visits (6 months). Also, a layered bar chart showing the relation in columns: slept_under_net_last_night and num_nights_sleep_under_net (over last week).
    4. 4_effects.r : R script showing the relationship between bed net usage and environmental factors (temperature and precipitation) for both safety and efficacy datasets (over 4 months) along with only efficacy dataset (over 6 months).
    5. 5_communmityusage.r : R script trying to analyze if there is a relationship between malaria incidents and bed net usage for each cluster using a scatterplot.
+  
+## Instructins
+
+- Run the R scripts in the following order :
+    1. data.r
+    2. 1_bednets.r
+    3. 2_correlations.r
+    4. 3_differences.r
+    5. 4_effects.r
+    6. 5_communityusage.r
 
