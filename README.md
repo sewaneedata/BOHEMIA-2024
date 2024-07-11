@@ -27,6 +27,6 @@ We will be working with 10 datasets in total.
 
 ## Question Scripts
 
-- * Repository Folder 
+ * Repository Folder 
     - data.r : 
 
