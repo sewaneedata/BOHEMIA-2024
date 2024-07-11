@@ -13,7 +13,7 @@ source('data.r')
 #PURPOSE:Information describing bed nets, ex: Price, # of bednets per household, Defining LLIN’, and Age/Source
 ## Avg price
 healtheconmonthly_totaln<- healtheconmonthly_total %>% 
-  mutate(bed_nets_past_month_kes=as.numeric(bed_nets_past_month_kes)) %>% 
+  mutate(bed_nets_past_month_kes=(as.numeric(bed_nets_past_month_kes)*0.0078)) %>% 
   drop_na(bed_nets_past_month_kes)
 
 # distinct(hhid, .keep_all = TRUE)
@@ -32,7 +32,7 @@ ggplot(data=bednets_price, aes(x=bed_nets_past_month_kes, y=n)) +
                            y=n,
                            xend = bed_nets_past_month_kes,
                            yend = 0))+
-  scale_x_break(c(3000, 7000))
+  scale_x_break(c(25, 55))
   #scale_x_continuous(trans='log')
 #geom_col()
 

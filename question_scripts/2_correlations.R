@@ -24,16 +24,16 @@ hh_ownership<-kenya_healthecon_total %>%
 # need visit data from monthly if want this
 
 print('Summary of Ownership of bednets in Safety')
-print(hh_ownership %>% 
+hh_ownership %>% 
   group_by(bednet_yn) %>% 
   tally() %>% 
-  mutate(total_percentage_ownership=(n/sum(n))*100))
+  mutate(total_percentage_ownership=(n/sum(n))*100)
 #Next is sufficiency, with has a standard 2:1 ratio people to bed nets
 hh_sufficiency <- hh_ownership %>% 
   filter(bednet_yn=='yes') %>% 
   distinct(hhid,.keep_all = TRUE) %>% 
   mutate(sufficiency=(num_hh_members/num_bed_nets)) %>% 
-  select(sufficiency, hhid, bednet_yn, visit) %>% 
+  select(sufficiency, hhid, bednet_yn) %>% 
   mutate(sufficient=ifelse(sufficiency>=2, 'yes', 'no'))
 
 # hh_sufficiency %>% 
@@ -108,7 +108,7 @@ ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) +
   scale_fill_manual(values = c("Ownership" = "#5C2D91",  
                                "Usage" = "#9666B2",
                                "Sufficiency" = "#4B0082")) +
-  labs(y = "Count", x = "", fill = "") +              
+  labs(y = "Percentage", x = "", fill = "") +              
   ggtitle("Percentage of Households with Bed Nets:\nOwned, Used Last Night, and Sufficiency") + # More descriptive title
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"), 
