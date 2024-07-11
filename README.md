@@ -14,5 +14,16 @@ We are working with BOHEMIA to assess the information on bed nets and find any p
 
 We will be working with 10 datasets in total.
 
-1. 
+1. kenya_demography.csv : has demographic information on the sample population.
+2. kenya_safety.csv : has information on usage of bed nets over 4 visits.
+3. kenya_safety_new.csv: has information on usage of bed nets for people added in the survey after the initial visit (for kenya_demography). 
+4. kenya_efficacy.csv : has information on the usage of bed nets for children aged 5-15 over 7 visits. And the visits are 2 weeks before kenya_safety visits.
+5. kenya_healthecon_baseline.csv : has information on the ownership of bed nets.
+6. kenya_healthecon_baseline_new.csv : has information on the ownership of bed nets for people added in  the survey after the initial visit (for kenya_demography)
+7. healthecon_monthly.csv : has monthly information on the price of bed nets.
+8. malaria_incidence : has information on malaria incidents over 7 visits for each cluster.
+9. kenya_ae : has information on the adverse event symptoms.
+10. weather : has information on the weather data for Kwale in 2022.
+
+## Folders
 
