@@ -28,5 +28,9 @@ We will be working with 10 datasets in total.
 ## Question Scripts
 
  * Repository Folder 
-    - data.r : 
+    - data.r : R script used to load all datasets. We then clean the datasets by selecting the necessary columns, and merging the original datasets with the new datasets and adding demographic information.
+    - aws_data_download.r : R script used to download datasets from AWS (Amazon Web Services).
+  
+ * question_scripts
+    - 1_bednets.r
 
