@@ -79,7 +79,8 @@ ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village
   scale_color_manual(values = colorRampPalette(c("#4B0082", "#9666B2"))(length(unique(safety_c_m_v$village)))) +
   labs(title = "Scatter Plot of Malaria Incidents vs. Percent Bed Net Usage",
        x = "Total Malaria Incidents",
-       y = "Percent Bed Net Usage") +
+       y = "Percent Bed Net Usage",
+       caption='Colored by Villages') +
   theme_minimal() +
   theme(
     plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
