@@ -2,28 +2,28 @@
 
 ## Introduction
 
-The [BOHEMIA project](https://bohemiaconsortium.org) is studying the efficacy of ivermectin in reducing the transmission of malaria. We are working with BOHEMIA, who provided us with the data, to explore the possible relationships between the usage of bed nets and other factors. The codes in this repository will accomplish the followings:
+The [BOHEMIA project](https://bohemiaconsortium.org) is studying the efficacy of ivermectin in reducing the transmission of malaria. We are working with BOHEMIA, who provided us with the data, to explore the possible relationships between the usage of bed nets and other factors. The codes in this repository will accomplish the following:
 
 - Summarize bed net and demographic data
-- Analyze relationship between bednet Ownership, Sufficiency, and Usage of bed nets
-- Analyze differences in bednet usage over time within a specific (efficacy) dataset
+- Analyze relationship between Ownership, Sufficiency, and Usage of bed nets
+- Analyze differences in bednet usage over time within a specific dataset (efficacy)
 - Analyze the effects of environmental factors on bednet usage
 - Analyze the effects of community usage on malaria data
 
 ## Datasets
 
-We will be working with 10 datasets in total. The datasets could be found [here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs) and in the data.r script.
+We will be working with 10 datasets in total. Some of the datasets can be found [here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs), and the remaining datasets are retrieved by the `data.r` script.
 
-1. kenya_demography.csv : has demographic information on the sample population.
-2. kenya_safety.csv : has information on usage of bed nets over 4 visits.
-3. kenya_safety_new.csv: has information on usage of bed nets for people added in the survey after the initial visit (for kenya_demography). 
-4. kenya_efficacy.csv : has information on the usage of bed nets for children aged 5-15 over 7 visits. And the visits are 2 weeks before kenya_safety visits.
-5. kenya_healthecon_baseline.csv : has information on the ownership of bed nets.
-6. kenya_healthecon_baseline_new.csv : has information on the ownership of bed nets for people added in  the survey after the initial visit (for kenya_demography)
-7. healthecon_monthly.csv : has monthly information on the price of bed nets.
-8. malaria_incidence : has information on malaria incidents over 7 visits for each cluster.
-9. kenya_ae : has information on the adverse event symptoms.
-10. weather : has information on the weather data for Kwale in 2022.
+1. `kenya_demography.csv` : has demographic information on the sample population.
+2. `kenya_safety.csv` : has information on usage of bed nets over 4 visits.
+3. `kenya_safety_new.csv`: has information on usage of bed nets for people added in the survey after the initial visit (for kenya_demography). 
+4. `kenya_efficacy.csv` : has information on the usage of bed nets for children aged 5-15 over 7 visits. And the visits are 2 weeks before kenya_safety visits.
+5. `kenya_healthecon_baseline.csv` : has information on the ownership of bed nets.
+6. `kenya_healthecon_baseline_new.csv` : has information on the ownership of bed nets for people added in  the survey after the initial visit (for kenya_demography)
+7. `healthecon_monthly.csv` : has monthly information on the price of bed nets.
+8. `malaria_incidence` : has information on malaria incidents over 7 visits for each cluster.
+9. `kenya_ae` : has information on the adverse event symptoms.
+10. `weather` : has information on the weather data for Kwale in 2022.
 
 ## Question Scripts
 
