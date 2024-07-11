@@ -25,5 +25,8 @@ We will be working with 10 datasets in total.
 9. kenya_ae : has information on the adverse event symptoms.
 10. weather : has information on the weather data for Kwale in 2022.
 
-## Folders
+## Question Scripts
+
+- * Repository Folder *
+    - 
 
