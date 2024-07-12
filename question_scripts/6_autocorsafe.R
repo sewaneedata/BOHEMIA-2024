@@ -278,13 +278,4 @@ kenya_eff<-kenya_efficacy_total %>%
 kenya_safety_eff<-kenya_eff %>% 
   left_join(kenya_saf, by=c('extid', 'visit'))
 
-ac_safety <- kenya_safety_total %>%
-  group_by(visit, sleep_net_last_night) %>%
-  tally() %>%
-  drop_na(sleep_net_last_night)
-ac_safety<-ac_safety %>%
-  dplyr::filter(sleep_net_last_night == 'yes')
-ts_data <- timeSeries::timeSeries(ac_safety$n, start = 1, units = "V")
-ts_data <- ts(ts_data, start = 1)
-autocorr_result <- acf(ts_data, plot = FALSE)
-autocorr_result
+ggplot( consistency ) + geom_col( aes(x=visit, y=pct_unchanged, fill=prev_net), position='dodge')+ylim(0, 100)
