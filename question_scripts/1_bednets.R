@@ -44,7 +44,8 @@ bednets_free<-healtheconmonthly_totaln %>%
   tally 
 
 # make graph for the free bednets 
-ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
+print("Households receiving free bed nets")
+print(ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
   scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
   labs(x = "Received Free Bed Net", y = "Count", fill = "") +             
@@ -56,7 +57,7 @@ ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) +
     axis.text = element_text(size = 10),
     panel.grid.major.x = element_blank(),                    
     legend.position = "none"                                 
-  )
+  ))
 
 ## Avg Number per hh
 kenya_healtheconn<-kenya_healthecon_total %>% 

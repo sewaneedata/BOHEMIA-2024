@@ -87,7 +87,7 @@ weather_k<-weather_k %>%
   filter(month %in% c('October', 'November', 'December', 'January'))
 
 
-#getting sum of temp for each month
+#getting average temp for each month
 weather_k_t<-weather_k %>% 
   group_by(month) %>% 
   summarize(avg_temp=mean(TAVG))
@@ -100,7 +100,6 @@ weather_k_p<-weather_k %>%
 weather_t_p<-weather_k_p %>% 
   left_join(weather_k_t, by='month')
 
-str(weather_t_p)
 
 #arranging months in order
 weather_t_p$month <- factor(weather_t_p$month, 
@@ -112,6 +111,7 @@ ggplot(weather_t_p, aes(x=month, y = avg_temp, group=1)) +
   geom_line()
 
 #creating graph for prcp
+
 ggplot(weather_t_p, aes(x=month, y = sum_prcp, group=1)) +
   geom_line()
 
@@ -154,7 +154,7 @@ weather_t_p$avg_temp_rescaled <- rescale(weather_t_p$avg_temp, to = range(weathe
 
 
 #creating the plot
-ggplot(weather_t_p, aes(x = month)) +
+print(ggplot(weather_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
   geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
   geom_col(
@@ -174,7 +174,7 @@ ggplot(weather_t_p, aes(x = month)) +
   ) +
   scale_color_manual(values = c("Temperature" = "red", "Precipitation" = "black"))+
   labs(x = "Month", fill = "Category", title = "Weather, Safety, and Efficacy Over Time (monthly)", subtitle = 'People Using Bed Nets in percentage.') +
-  theme_minimal()
+  theme_minimal())
 
 
 #The same thing for efficacy over 6 months
@@ -365,8 +365,7 @@ ggplot(weather_e_t_p, aes(x = month)) +
 
 
 # 
-kenya_effsum_lo
-ng$month <- factor(kenya_effsum_long$month, 
+kenya_effsum_long$month <- factor(kenya_effsum_long$month, 
                               levels = c("October", "November", "December", "January", "February", "March", "April"))
 
 
@@ -429,6 +428,7 @@ p<-ggplot(weather_e_t_p, aes(x = month)) +
 labels<-c("October\n71.65%", "November\n68.32%", "December\n67.88%", "January\n67.22%", "February\n67.12%", "March\n67.20%", "April\n82.14%")
 
 # join the label in p(ggplot)
-p+scale_x_discrete(label=labels)
+print("Environmental Effects on Bed Nets:Temperature and Precipitation ")
+print(p+scale_x_discrete(label=labels))
 
 

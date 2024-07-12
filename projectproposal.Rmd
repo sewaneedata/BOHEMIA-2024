@@ -17,33 +17,37 @@ source('question_scripts/1_bednets.R')
 # Ownership, Sufficiency, and Usage
 Within this section, we will have subsections going over each portion of our analysis:
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source('question_scripts/2_correlations.R')
-```
 ## Relationship between ownership, sufficiency, and usage
-### Safety
+
 - household data for each attribute over three months 
 - bar graphs for visit V1 through V4 with all three attributes
 - tabulate data for each attribute in five number summary
 
-### Efficacy
-- children ages 5-15 data for each attribute over six months
-- bar graphs for visit V1 through V7 with all three attributes
-- tabulate data for each attribute in five number summary
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/2_correlations.R')
+```
+
+
 
 ## Differences in usage between V1 through V7 within the efficacy cohort
-- box plot of efficacy usage data by visit
-- discussion of statistical findings (null hypothesis)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/3_differences.R')
+```
+
 
 ## Effects of environmental factors on bed net usage
-- scatter plot of efficacy data, faceted by visit
-- x = average temperature (of previous month), y = % usage, points = villages
-- discussion of findings 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/4_effects.R')
+```
+
 
 ## Effects of community usage on malaria incidence 
-- scatter plot of safety data, averaging visits into total % usage
-- x = malaria incidence, y = % usage, points = villages
-- discussion of findings
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/5_communityusage.R')
+```
 
 ## Possible auto correlations
 ### Safety

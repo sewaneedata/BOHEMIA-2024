@@ -46,14 +46,15 @@ diff_efficacy_long<-kenya_efficacy_total %>%
 
 
 # Creating the plot of sleep under bed net colored by y/n
-ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
+print('Bar Graph of sleep under bed net')
+print(ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
   geom_col(position = "stack") +
   scale_fill_manual(values = c("yes" = "skyblue", "no" = "pink")) +
   labs(y = "Value", x = "Visit", fill = "Type") +
   theme_minimal()+
   labs(
     title='Bar Chart of Slept Under Net Last Night for each visit'
-  )
+  ))
 
 # creating a new dataset which is grouped by visit
 diff_total <- diff_efficacy_long %>%
@@ -84,7 +85,8 @@ diff_eff_avg<-diff_efficacy_total %>%
 library(RColorBrewer)  # For color palettes
 
 # Graph for showing average count of sleep under a net last night and average number of nights sleep under net within last week
-ggplot() +
+print('Average count of sleep under a net last night vs last week for each visit')
+print(ggplot() +
   geom_col(data = diff_eff_avg,
            aes(x = ifelse(sleep_under_net_last_night == "yes", 7, 0),  # Swap x values
                y = avg_visit, fill = sleep_under_net_last_night),
@@ -112,7 +114,7 @@ ggplot() +
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
         legend.title = element_text(size = 11),
-        legend.position = "bottom") 
+        legend.position = "bottom") )
 
 
 #creating a new dataset with distinct rows and pivoting wide for sleep under net last night
@@ -125,8 +127,6 @@ diff_efficacy_total_table <- diff_efficacy_total %>%
 diff_efficacy_numt_table <- diff_efficacy_numt %>%
   pivot_wider(names_from = num_nights_sleep_under_net, values_from = n)
 
-print(diff_efficacy_total_table)
-print(diff_efficacy_numt_table)
 
 #combining both tables
 

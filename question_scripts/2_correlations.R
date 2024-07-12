@@ -23,7 +23,8 @@ hh_ownership<-kenya_healthecon_total %>%
 #   drop_na(bednet_yn)
 # need visit data from monthly if want this
 
-print('Summary of Ownership of bednets in Safety')
+print('Summary of household data for each attribute over three months')
+
 
 # get percentage for bednet ownership
 hh_ownership %>% 
@@ -114,8 +115,18 @@ osu_sum<-rbind(hh_ownsum, hh_lastsum, hh_suffsum)
 osu_sum_t<-osu_sum %>% 
   filter(index=='yes')
 
+# take values for yes/ no columns from n column
+osu_sum<-osu_sum %>% 
+  pivot_wider(names_from = 'index', values_from=n) %>% 
+  select(data, yes, no) %>% 
+  mutate(yes=round(yes, digits=2)) %>% 
+  mutate(no=round(no, digits=2))
+
+print(osu_sum)
+
 # make graph on bednet ownership, sufficiency and usage 
-ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
+print("Bar graph for visit V1 through V4 with all three attributes")
+print(ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
   geom_col(alpha = 0.8) +                               
   scale_fill_manual(values = c("Ownership" = "#5C2D91",  
                                "Usage" = "#9666B2",
@@ -128,16 +139,10 @@ ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) +
         axis.text = element_text(size = 10),  
         panel.grid.major.x = element_blank(),  
         legend.position = "none")  +
-  ylim(0, 100)
+  ylim(0, 100))
 
-# take values for yes/ no columns from n column
-osu_sum<-osu_sum %>% 
-  pivot_wider(names_from = 'index', values_from=n) %>% 
-  select(data, yes, no) %>% 
-  mutate(yes=round(yes, digits=2)) %>% 
-  mutate(no=round(no, digits=2))
 
-print(osu_sum)
+
 
 #Usage on an individual level needs to be found
 effi_usage<-kenya_efficacy_total %>%
