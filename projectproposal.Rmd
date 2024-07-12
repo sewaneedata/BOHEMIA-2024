@@ -51,10 +51,14 @@ source('question_scripts/5_communityusage.R')
 
 ## Possible auto correlations
 ### Safety
-- household data over three months 
-- tabulate data showing net usage and changes over time
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/6_autocorsafe.R')
+```
 
 ### Efficacy
-- children ages 5-15 data over six months
-- tabulate data showing net usage and changes over time
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/7_autocoreff.R')
+```
 
