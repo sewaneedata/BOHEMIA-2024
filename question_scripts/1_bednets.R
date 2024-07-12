@@ -18,7 +18,7 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
 
 # distinct(hhid, .keep_all = TRUE)
 
-print('SUMMARY OF PRICE OF BEDNETS')
+print('SUMMARY OF PRICE OF BEDNETS \n')
 print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
 
 #make new dataset called bednets_price

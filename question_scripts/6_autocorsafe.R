@@ -19,6 +19,9 @@ test_a <- test %>%
   mutate(same_ans=(sleep_net_last_night==prev_ans)) %>% 
   group_by( visit, prev_ans ) %>%
   summarize( pct_unchanged = 100*mean( same_ans, na.rm=TRUE ) )
+
+test_a$prev_ans <- factor(test_a$prev_ans, 
+                                      levels = c("yes", "no"))
   
 #creating a ggplot
 
@@ -27,9 +30,10 @@ print(ggplot(test_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percentage Usage Unchanged from Previous Visit",
+    title = "Percent Usage Unchanged from Previous Visit",
     x = "Visit",
-    y = "Percentage Unchanged"
+    y = "Percentage Unchanged",
+    fill=''
   ) +
   theme_minimal() + 
   theme(

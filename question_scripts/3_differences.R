@@ -49,8 +49,10 @@ diff_efficacy_long<-kenya_efficacy_total %>%
 print('Bar Graph of sleep under bed net')
 print(ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
   geom_col(position = "stack") +
-  scale_fill_manual(values = c("yes" = "skyblue", "no" = "pink")) +
-  labs(y = "Value", x = "Visit", fill = "Type") +
+  scale_fill_manual(values = c("yes" = "#4B0082", "no" = "#9666B2"),
+                    labels = c("Yes", "No"),  # Match legend labels to axis
+                    name = "") +
+  labs(y = "Count", x = "Visit", fill = "Type") +
   theme_minimal()+
   labs(
     title='Bar Chart of Slept Under Net Last Night for each visit'

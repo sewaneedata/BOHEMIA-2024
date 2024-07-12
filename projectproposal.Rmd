@@ -12,7 +12,7 @@ output: html_document
 
 # Bed Nets
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source('question_scripts/1_bednets.R')
+knitr::kable(source('question_scripts/1_bednets.R'))
 ```
 # Ownership, Sufficiency, and Usage
 Within this section, we will have subsections going over each portion of our analysis:

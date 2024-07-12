@@ -23,6 +23,8 @@ test_e_a <- test_e %>%
   group_by( visit, prev_ans ) %>%
   summarize( pct_unchanged = 100*mean( same_ans, na.rm=TRUE ) )
 
+test_e_a$prev_ans <- factor(test_e_a$prev_ans, 
+                          levels = c("yes", "no"))
 
 #creating a ggplot
 print(ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
@@ -30,7 +32,7 @@ print(ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percentage Usage Unchanged from Previous Visit",
+    title = "Percent Usage Unchanged from Previous Visit",
     x = "Visit",
     y = "Percentage Unchanged"
   ) +
