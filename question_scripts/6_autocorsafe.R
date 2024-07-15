@@ -30,9 +30,9 @@ print(ggplot(test_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percent Usage Unchanged from Previous Visit",
-    x = "Visit",
-    y = "Percentage Unchanged",
+    title = "Percent Usage Unchanged from Previous Visits",
+    x = "Visits",
+    y = "Percentage Unchanged %",
     fill=''
   ) +
   theme_minimal() + 
