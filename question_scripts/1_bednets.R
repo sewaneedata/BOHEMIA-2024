@@ -7,6 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(ggbreak)
 library(RColorBrewer)
+library(knitr)
 library(markdown) #install.packages('markdown')
 #Load data from data.r
 source('data.r')
@@ -19,9 +20,11 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
 
 # distinct(hhid, .keep_all = TRUE)
 
-cat("**Summary of Bed Nets**")
+cat("Summary of Bed Nets \n \n")
 
 print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
+
+cat('\n')
 
 #make new dataset called bednets_price
 bednets_price<-healtheconmonthly_totaln %>% 
@@ -47,7 +50,7 @@ bednets_free<-healtheconmonthly_totaln %>%
 
 # make graph for the free bednets 
 
-cat("\033[1mHouseholds receiving free bed nets\033[0m")
+
 print(ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
   scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
@@ -70,8 +73,9 @@ kenya_healtheconn<-kenya_healthecon_total %>%
   drop_na(num_bed_nets)
 
 
-cat("\033[1mSummary of Number of Bed Nets per Household\033[0m")
+cat("\n Summary of Number of Bed Nets per Household \n")
 print(summary(kenya_healtheconn$num_bed_nets))
+cat('\n')
 
 ## Avg Age of people based on usage of bednets
 # adding bednets yes or no column in a new safety bednets dataset and selecting required columns
@@ -103,8 +107,11 @@ kenya_safety_summary<-kenya_safety_sex_summary %>%
   left_join(kenya_safety_age_summary, by='bed_nets_yn')
 
 
-cat("\033[1mSummary of People Using Bed Nets based on Age and Sex\033[0m")
-print(kenya_safety_summary)
+cat("\n Summary of People Using Bed Nets based on Age and Sex \n")
+
+# print(kenya_safety_summary, n=Inf, width=Inf)
+
+cat('\n')
 
 
 # FIELD WORKER NUMBER CODE

@@ -10,6 +10,77 @@ library(RColorBrewer)
 
 source('data.r')
 
+### CODE CHUNK FROM 3_differences.R. for justifying the use of sleep_under_net_last_night.
+diff_efficacy_num<-kenya_efficacy_total %>% 
+  mutate(num_nights_sleep_under_net=ifelse(num_nights_sleep_under_net=='dk', NA, num_nights_sleep_under_net)) %>% 
+  drop_na(num_nights_sleep_under_net) %>%
+  mutate( num_nights_sleep_under_net = as.numeric( num_nights_sleep_under_net ) )
+
+diff_efficacy_long<-kenya_efficacy_total %>% 
+  mutate(sleep_under_net_last_night=ifelse(sleep_under_net_last_night=='dk', NA, sleep_under_net_last_night)) %>% 
+  drop_na(sleep_under_net_last_night) %>% 
+  group_by(visit, sleep_under_net_last_night) %>% 
+  tally 
+
+diff_total <- diff_efficacy_long %>%
+  group_by(visit)
+# Combining this with the previous dataset and then reordering by y/n
+diff_efficacy_total <- bind_rows(diff_efficacy_long, diff_total) %>%
+  mutate(sleep_under_net_last_night = factor(sleep_under_net_last_night, levels = c('yes', 'no'))) %>% 
+  distinct() 
+
+# Create a summary of grouped by visit and number of nights slept under bed net
+diff_efficacy_numt <- diff_efficacy_num %>%
+  group_by(visit, num_nights_sleep_under_net) %>%
+  tally
+
+#average for number of nights sleept under net within last week
+diff_eff_avg_n<-diff_efficacy_numt %>% 
+  group_by(num_nights_sleep_under_net) %>% 
+  summarize(avg_num=mean(n))
+
+# average for count of sleep under net last night
+diff_eff_avg<-diff_efficacy_total %>% 
+  group_by(sleep_under_net_last_night) %>% 
+  summarize(avg_visit=mean(n))
+
+# Combined plot of slept under bed net last night v number of nights slept under bed net
+
+
+library(RColorBrewer)  # For color palettes
+
+# Graph for showing average count of sleep under a net last night and average number of nights sleep under net within last week
+print(ggplot() +
+  geom_col(data = diff_eff_avg,
+           aes(x = ifelse(sleep_under_net_last_night == "yes", 7, 0),  # Swap x values
+               y = avg_visit, fill = sleep_under_net_last_night),
+           alpha = 0.8,
+           width = 0.8) +
+  geom_line(data = diff_eff_avg_n,
+            aes(x = num_nights_sleep_under_net, y = avg_num),
+            color = "#5C2D91",
+            size = 1.2) +
+  scale_fill_manual(values = c("yes" = "#4B0082", "no" = "#9666B2"),
+                    labels = c("Yes", "No"),  # Match legend labels to axis
+                    name = "") +   # Update legend title
+  scale_x_continuous(breaks = c(0, 7),
+                     labels = c("No", "Yes"),  # Swap labels to match bars
+                     sec.axis = sec_axis(~ .,
+                                         breaks = 0:7,
+                                         labels = 0:7)) +
+  ##9666B2
+  labs(y = "Count",
+       x = "Sleep Under Net Last Night vs Last Week",
+       title = 'Nightly vs Weekly Bed Net Usage', 
+       fill='') +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        legend.title = element_text(size = 11),
+        legend.position = "bottom") )
+### END OF CODE CHUNK FROM ANOTHER QUESTION
+
 
 #Starting with average ownership data
 hh_ownership<-kenya_healthecon_total %>% 
@@ -23,7 +94,6 @@ hh_ownership<-kenya_healthecon_total %>%
 #   drop_na(bednet_yn)
 # need visit data from monthly if want this
 
-print('Summary of household data for each attribute over three months')
 
 
 # get percentage for bednet ownership
@@ -122,10 +192,11 @@ osu_sum<-osu_sum %>%
   mutate(yes=round(yes, digits=2)) %>% 
   mutate(no=round(no, digits=2))
 
+
+cat('\n Table showing Ownership, Sufficiency and Usage Data \n')
 print(osu_sum)
 
 # make graph on bednet ownership, sufficiency and usage 
-print("Bar graph for visit V1 through V4 with all three attributes")
 print(ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
   geom_col(alpha = 0.8) +                               
   scale_fill_manual(values = c("Ownership" = "#5C2D91",  
@@ -145,37 +216,41 @@ print(ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) +
 
 
 #Usage on an individual level needs to be found
-effi_usage<-kenya_efficacy_total %>%
-  group_by(hhid,visit) %>% 
-  mutate(sleep_under_net_last_night=(sleep_under_net_last_night=='yes'))
+# effi_usage<-kenya_efficacy_total %>%
+#   group_by(hhid,visit) %>% 
+#   mutate(sleep_under_net_last_night=(sleep_under_net_last_night=='yes'))
 
 
 # new dataset for usage percentage
-effi_last_usage<-effi_usage %>% 
-  group_by(visit,sleep_under_net_last_night) %>% 
-  filter(!is.na(sleep_under_net_last_night)) %>%
-  tally() %>% 
-  mutate(percent_last_usage=(n/sum(n))*100)
+# effi_last_usage<-effi_usage %>% 
+#   group_by(visit,sleep_under_net_last_night) %>% 
+#   filter(!is.na(sleep_under_net_last_night)) %>%
+#   tally() %>% 
+#   mutate(percent_last_usage=(n/sum(n))*100)
 
 # average 
-effi_average_usage<-effi_usage %>%
-  mutate(num_nights_sleep_under_net=ifelse(num_nights_sleep_under_net=='dk',NA,num_nights_sleep_under_net)) %>%
-  mutate(num_nights_sleep_under_net=as.numeric(num_nights_sleep_under_net)) %>% 
-  group_by(hhid,visit) %>% 
-  summarise(average_nights_last_week=median(num_nights_sleep_under_net,na.rm = TRUE))
+# effi_average_usage<-effi_usage %>%
+#   mutate(num_nights_sleep_under_net=ifelse(num_nights_sleep_under_net=='dk',NA,num_nights_sleep_under_net)) %>%
+#   mutate(num_nights_sleep_under_net=as.numeric(num_nights_sleep_under_net)) %>% 
+#   group_by(hhid,visit) %>% 
+#   summarise(average_nights_last_week=median(num_nights_sleep_under_net,na.rm = TRUE))
+
 #graph of how many households used bed nets over the past week, faceted by visit
-ggplot(data=effi_average_usage,aes(x=average_nights_last_week))+
-  geom_histogram()+
-  facet_wrap(~visit)+
-  labs(
-    title='histogram of average night slept under net last week from efficacy'
-  )
+
+# ggplot(data=effi_average_usage,aes(x=average_nights_last_week))+
+#   geom_histogram()+
+#   facet_wrap(~visit)+
+#   labs(
+#     title='histogram of average night slept under net last week from efficacy'
+#   )
+
 #graph showing % of individual that slept under a bed last night 
-ggplot(data=effi_last_usage,aes(x=sleep_under_net_last_night,y=percent_last_usage))+
-  geom_col()+
-  facet_wrap(~visit)+
-  labs(
-    title='bar chart of slept under net last night for each visit from efficacy'
-  )
+
+# ggplot(data=effi_last_usage,aes(x=sleep_under_net_last_night,y=percent_last_usage))+
+#   geom_col()+
+#   facet_wrap(~visit)+
+#   labs(
+#     title='bar chart of slept under net last night for each visit from efficacy'
+#   )
 
 

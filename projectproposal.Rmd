@@ -4,6 +4,11 @@ author: "Reiner, Oysik, Solomon, Sam & Linn"
 date: "2024-07-01"
 output: html_document
 ---
+
+```{r, include=FALSE}
+library(reactable)
+```
+
 # Introduction
 - give our problem statement
 - state our goals for the report
@@ -11,8 +16,11 @@ output: html_document
 - mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
 # Bed Nets
-```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='asis'}
-knitr::kable(source('question_scripts/1_bednets.R'))
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+source('question_scripts/1_bednets.R')
+
+# printing bednet table
+reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
 ```
 # Ownership, Sufficiency, and Usage
 Within this section, we will have subsections going over each portion of our analysis:
@@ -23,7 +31,7 @@ Within this section, we will have subsections going over each portion of our ana
 - bar graphs for visit V1 through V4 with all three attributes
 - tabulate data for each attribute in five number summary
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 source('question_scripts/2_correlations.R')
 ```
 
@@ -31,7 +39,7 @@ source('question_scripts/2_correlations.R')
 
 ## Differences in usage between V1 through V7 within the efficacy cohort
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=FALSE}
 source('question_scripts/3_differences.R')
 ```
 
