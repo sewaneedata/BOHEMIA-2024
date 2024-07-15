@@ -9,14 +9,21 @@ library(ggbreak)
 library(RColorBrewer)
 library(knitr)
 library(markdown) #install.packages('markdown')
+
 #Load data from data.r
 source('data.r')
 
 #PURPOSE:Information describing bed nets, ex: Price, # of bednets per household, Defining LLIN’, and Age/Source
 ## Avg price- KES converted to $
+
+# create a table that shows the cost of bed nets obtained by each household over the entire trial which requires the use of the following question:
+# 2a. [If yes to 2. Has the household obtained any bed nets in the past 4 weeks? □ Yes □ No] What was the cost for each net obtained (per bed net obtained)?
 healtheconmonthly_totaln<- healtheconmonthly_total %>% 
+  # create a column that has the price of bed nets in usd
   mutate(bed_nets_past_month_kes=(as.numeric(bed_nets_past_month_kes)*0.0078)) %>% 
   drop_na(bed_nets_past_month_kes)
+
+bed_net_cost <- summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
 
 # distinct(hhid, .keep_all = TRUE)
 

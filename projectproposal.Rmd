@@ -1,12 +1,19 @@
 ---
-title: "Project proposal"
-author: "Reiner, Oysik, Solomon, Sam & Linn"
-date: "2024-07-01"
-output: html_document
+title: "Stopping the Swarm: Bed Nets in Kwale"
+author: "Reiner, Oysik, Solomon, Sam & Linn (add full names in alphabetical order)"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: true
+    theme: cerulean
 ---
 
 ```{r, include=FALSE}
+# load in libraries
 library(reactable)
+library(ggbreak)
 ```
 
 # Introduction
@@ -22,6 +29,7 @@ source('question_scripts/1_bednets.R')
 # printing bednet table
 reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
 ```
+
 # Ownership, Sufficiency, and Usage
 Within this section, we will have subsections going over each portion of our analysis:
 
