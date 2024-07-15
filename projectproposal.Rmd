@@ -11,7 +11,7 @@ output: html_document
 - mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
 
 # Bed Nets
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='asis'}
 knitr::kable(source('question_scripts/1_bednets.R'))
 ```
 # Ownership, Sufficiency, and Usage

@@ -69,10 +69,6 @@ safety_c_m_v<-mal_v %>%
   mutate(percent_usage=(avg_yes/sum)*100) %>% 
   distinct
 
-ggplot(data=safety_c_m_v, aes(x=total_incidents, y=percent_usage, color=village))+
-  geom_point()+
-  labs(title='scatter plot of malaria incidents vs percent usage for each visit')+
-  theme_minimal()
 
 print('Scatter plot of safety data, averaging visits into total % usage')
 print(ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +

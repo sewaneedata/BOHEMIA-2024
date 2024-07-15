@@ -7,6 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(ggbreak)
 library(RColorBrewer)
+library(markdown) #install.packages('markdown')
 #Load data from data.r
 source('data.r')
 
@@ -18,7 +19,8 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
 
 # distinct(hhid, .keep_all = TRUE)
 
-print('SUMMARY OF PRICE OF BEDNETS \n')
+cat("**Summary of Bed Nets**")
+
 print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
 
 #make new dataset called bednets_price
@@ -44,7 +46,8 @@ bednets_free<-healtheconmonthly_totaln %>%
   tally 
 
 # make graph for the free bednets 
-print("Households receiving free bed nets")
+
+cat("\033[1mHouseholds receiving free bed nets\033[0m")
 print(ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
   scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
@@ -66,7 +69,8 @@ kenya_healtheconn<-kenya_healthecon_total %>%
   tally() %>% 
   drop_na(num_bed_nets)
 
-print('SUMMARY OF NUMBER OF BEDNETS PER HOUSEHOLD')
+
+cat("\033[1mSummary of Number of Bed Nets per Household\033[0m")
 print(summary(kenya_healtheconn$num_bed_nets))
 
 ## Avg Age of people based on usage of bednets
@@ -98,7 +102,8 @@ kenya_safety_sex_summary <- kenya_safety_bn %>%
 kenya_safety_summary<-kenya_safety_sex_summary %>% 
   left_join(kenya_safety_age_summary, by='bed_nets_yn')
 
-print('Summary of people using bednets considering age and sex')
+
+cat("\033[1mSummary of People Using Bed Nets based on Age and Sex\033[0m")
 print(kenya_safety_summary)
 
 
