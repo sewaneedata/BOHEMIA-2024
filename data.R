@@ -1,20 +1,32 @@
+# PURPOSE: load in original data from aws_download.R, keep the necessary columns, merge when necessary, and create new csvs
+
 #Load Libraries
 library(gsheet)
 library(tidyverse)
 library(dplyr)
 library(gsheet)
-#Load data
 
+#Load data that came from the aws_data_download.R
 kenya_safetynew<- read_csv('dataset/kenya_safetynew.csv')
-kenya_efficacy<- read_csv('dataset/kenya_efficacy.csv')
-kenya_healthecon_baseline_new<- read_csv('dataset/kenya_healthecon_baseline_new.csv')
-kenya_demography<- read_csv('dataset/kenya_demography.csv')
-healthecon_monthly<- read_csv('dataset/healthecon_monthly.csv')
-kenya_healthecon_baseline<- read_csv('dataset/kenya_healthecon_baseline.csv')
 kenya_safety<- read_csv('dataset/kenya_safety.csv')
 kenya_ae<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1dsc5m5abfSbttIgwPvukzi7ca-zA9iU2RpPifZsWA1Y/edit?usp=sharing')
+
+kenya_efficacy<- read_csv('dataset/kenya_efficacy.csv')
+
+kenya_demography<- read_csv('dataset/kenya_demography.csv')
+
+kenya_healthecon_baseline_new<- read_csv('dataset/kenya_healthecon_baseline_new.csv')
+healthecon_monthly<- read_csv('dataset/healthecon_monthly.csv')
+kenya_healthecon_baseline<- read_csv('dataset/kenya_healthecon_baseline.csv')
+
 weather<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1bPHIG0lXM_tecNekRBjAyyRKXobziBaLCFUEHRSFs8c/edit?usp=sharing')
+
+# this dataset came from Matthew Rudd 
 mal_incidence<-gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1w0--SRKOplXMDi5wxxpBWuANmtIEq8lYQbG7Zk0_A_A/edit?usp=sharing')
+
+
+# MERGE THE DATASETS
+
 #creating new dataset with columns required from safety
 kenya_nsafety<-kenya_safety %>% 
   mutate('type'='og') %>% #type of dataset (safety or new)
@@ -260,6 +272,7 @@ healtheconmonthly_total <- healthecon_monthly %>%
          seek_care_other_ill_other_kes) %>% 
   left_join(kenya_ndemography, by='extid')
   
+# selecting columns from safety that are related to bed net usage
 kenya_saf<-kenya_safety_total %>% 
   rename('sleep_ln_safety'=sleep_net_last_night) %>% 
   rename('num_nights_safety'=nights_sleep_net) %>% 
@@ -271,10 +284,13 @@ kenya_saf<-kenya_safety_total %>%
     todays_date_safety,
     extid
   )
+
+# selecting columns from efficacy that are related to bed net usage
 kenya_eff<-kenya_efficacy_total %>% 
   rename('sleep_ln_eff'=sleep_under_net_last_night) %>% 
   rename('num_nights_eff'=num_nights_sleep_under_net)
 
+# joining the above two datasets
 kenya_safety_eff<-kenya_eff %>% 
   left_join(kenya_saf, by=c('extid', 'visit'))
 

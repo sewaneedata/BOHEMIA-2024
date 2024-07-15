@@ -6,8 +6,8 @@ library(tidyverse)
 library(dplyr)
 library(gsheet)
 library(RColorBrewer)
-#Load data from data.r
 
+#Load data from data.r
 source('data.r')
 
 ### CODE CHUNK FROM 3_differences.R. for justifying the use of sleep_under_net_last_night.
