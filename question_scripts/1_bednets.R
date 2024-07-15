@@ -1,3 +1,4 @@
+
 # load libraries
 
 library (tidyverse)
@@ -16,6 +17,8 @@ source('data.r')
 
 #PURPOSE:Information describing bed nets, ex: Price, # of bednets per household, Defining LLIN’, and Age/Source
 
+# Outputs: bed_net_cost_df, receive_free_bed_nets, bed_net_number_df, kenya_safety_summary
+
 ## making a table of Avg price- KES converted to $
 # create a table that shows the cost of bed nets obtained by each household over the entire trial which requires the use of the following question:
 # 2a. from healthecon_monthly questionnaire [If yes to 2. Has the household obtained any bed nets in the past 4 weeks? □ Yes □ No] What was the cost for each net obtained (per bed net obtained)?
@@ -30,8 +33,13 @@ healtheconmonthly_totaln<- healtheconmonthly_total %>%
 
 bed_net_cost<-summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
 bed_net_cost_df <- as.data.frame(t(as.matrix(bed_net_cost)))
-bed_net_cost_df<-bed_net_cost
-reactable(bed_net_cost, columns=list(), pagination=FALSE)
+bed_net_cost_df <- bed_net_cost_df %>%
+  mutate(across(everything(), ~ format(.x, digits = 3, scientific = FALSE))) %>% 
+  rename('Minimum'='Min.') %>% 
+  rename('1st Quartile'='1st Qu.') %>% 
+  rename('3rd Quartile'='3rd Qu.') %>% 
+  rename('Maximum'='Max.')
+reactable(bed_net_cost_df, columns=list(), pagination=FALSE)
 
 
 #make new dataset called bednets_price
@@ -81,9 +89,16 @@ kenya_healtheconn<-kenya_healthecon_total %>%
   drop_na(num_bed_nets)
 
 # change names of column and assign a name to the summary below
-cat("\n Summary of Number of Bed Nets per Household \n")
-print(summary(kenya_healtheconn$num_bed_nets))
-cat('\n')
+
+bed_net_number<-summary(kenya_healtheconn$num_bed_nets)
+bed_net_number_df <- as.data.frame(t(as.matrix(bed_net_number)))
+bed_net_number_df <- bed_net_number_df %>%
+  mutate(across(everything(), ~ format(.x, digits = 3, scientific = FALSE))) %>% 
+  rename('Minimum'='Min.') %>% 
+  rename('1st Quartile'='1st Qu.') %>% 
+  rename('3rd Quartile'='3rd Qu.') %>% 
+  rename('Maximum'='Max.')
+reactable(bed_net_number_df, columns=list(), pagination=FALSE)
 
 
 ## Avg Age of people based on usage of bednets
@@ -116,6 +131,9 @@ kenya_safety_summary<-kenya_safety_sex_summary %>%
   left_join(kenya_safety_age_summary, by='bed_nets_yn')
 
 
+kenya_safety_summary <-kenya_safety_summary %>% 
+  rename('Bed Net Yes/No'=bed_nets_yn) %>% 
+  rename('Average Age'=average_age)
 
 # FIELD WORKER NUMBER CODE
 # wid_d<-kenya_demography %>% 
