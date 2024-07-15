@@ -1,4 +1,5 @@
 #PURPOSE: Make scatterplot of efficacy data where the x-axis is malaria incidents and y-axis is percent usage and this is coloured by clusters 
+
 # OUTPUTS: mal_inc_vs_usage and scatter_usage
 
 #Load Libraries
