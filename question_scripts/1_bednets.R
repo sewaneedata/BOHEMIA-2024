@@ -39,7 +39,6 @@ bed_net_cost_df <- bed_net_cost_df %>%
   rename('1st Quartile'='1st Qu.') %>% 
   rename('3rd Quartile'='3rd Qu.') %>% 
   rename('Maximum'='Max.')
-reactable(bed_net_cost_df, columns=list(), pagination=FALSE)
 
 
 #make new dataset called bednets_price
@@ -98,7 +97,7 @@ bed_net_number_df <- bed_net_number_df %>%
   rename('1st Quartile'='1st Qu.') %>% 
   rename('3rd Quartile'='3rd Qu.') %>% 
   rename('Maximum'='Max.')
-reactable(bed_net_number_df, columns=list(), pagination=FALSE)
+
 
 
 ## Avg Age of people based on usage of bednets

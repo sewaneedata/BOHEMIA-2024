@@ -24,14 +24,35 @@ library(ggbreak)
 
 # Bed Nets
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-#source('question_scripts/1_bednets.R')
-
-# printing bednet table
-#reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
-
-# print the receive free bed nets graph
-#receive_free_bed_nets
+source('question_scripts/1_bednets.R')
 ```
+
+## Summary of Bed Net Prices
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+reactable(bed_net_cost_df, columns=list(), pagination=FALSE)
+```
+
+## Graph of Free Bed Nets vs Not Free Bed Nets
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+print(receive_free_bed_nets)
+```
+
+This graph compares the number of households who received nets for free to the number of nets who bought nets. There were more households that had to pay for their nets with the study than there were those who got them for free. 
+
+## Summary of Number of Bed Nets per Household
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+reactable(bed_net_number_df, columns=list(), pagination=FALSE)
+```
+
+## Summary of Age and Sex of People Using Bed Nets in Kwale
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
+```
+
+This table shows the counts for men and women who slept under a bed net last night, along with the average age of respondents who said yes and no, respectively. Although the sample sizes are slightly different, women were more likely to sleep under a net than men. Additionally, the average age of people who used a net was slightly higher than those who did not.
 
 # Ownership, Sufficiency, and Usage
 Within this section, we will have subsections going over each portion of our analysis:
@@ -43,7 +64,6 @@ Within this section, we will have subsections going over each portion of our ana
 - tabulate data for each attribute in five number summary
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-source('question_scripts/2_correlations.R')
 ```
 
 
@@ -51,14 +71,12 @@ source('question_scripts/2_correlations.R')
 ## Differences in usage between V1 through V7 within the efficacy cohort
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=FALSE}
-source('question_scripts/3_differences.R')
 ```
 
 
 ## Effects of environmental factors on bed net usage
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#source('question_scripts/4_effects.R')
 ```
 
 
@@ -83,12 +101,10 @@ scatter_usage
 ### Safety
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source('question_scripts/6_autocorsafe.R')
 ```
 
 ### Efficacy
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source('question_scripts/7_autocoreff.R')
 ```
 

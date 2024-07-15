@@ -1,4 +1,5 @@
 # PURPOSE:The goal here is to get ownership, sufficiency, and usage data from safety/ healthecon/ efficacy
+# Output
 # Creating a bar chart,  showing OSU over seven visits for efficacy dataset and over 4 visits for safety data set. Additionally, creating a tabulated format of five number summary of sufficiency
 #Load Libraries
 library(gsheet)
