@@ -1,12 +1,12 @@
-#PURPOSE:Scatterplot of efficacy data where the x-axis is malaria incidents and y-axis is percent usage and coloured by clusters 
+#PURPOSE: Make scatterplot of efficacy data where the x-axis is malaria incidents and y-axis is percent usage and this is coloured by clusters 
 
 #Load Libraries
 library(gsheet)
 library(tidyverse)
 library(dplyr)
 library(gsheet)
-#Load data
 
+#Load data
 source('data.r')
 
 # make a new data set called Malaria incidence 
@@ -16,7 +16,7 @@ mal<-mal_incidence %>%
   drop_na(incident_case) %>% 
   summarize('incidents'=sum(incident_case))
 
-# take out cluster, visit and sleep_net_last_night from kenya_safety_total
+# look at cluster, visit and sleep_net_last_night from kenya_safety_total
 safety_c<-kenya_safety_total %>%
   group_by(cluster, visit, sleep_net_last_night) %>% 
   tally
@@ -31,20 +31,31 @@ safety_c<-safety_c %>%
 # if na, put zero
 safety_c[is.na(safety_c)] <- 0
 
-#make safety_c_m from safety_c
+#make safety_c_m from safety_c which tells us the percentage of people who did use a bed net last night
 safety_c_m<-safety_c %>% 
   mutate(sum=yes+no) %>% 
   mutate(percent_usage=(yes/sum)*100) %>% 
-  left_join(mal, by=c('cluster', 'visit'))
+  left_join(mal, by=c('cluster', 'visit')) %>% 
+  # edit the x and y axis names
+  rename(Incidents = incidents,
+         'Percent Usage (%)' = percent_usage)
 
 #make a plot showing the correlation between bednet usage and malaria incidence
-print('Bed Net Usage and Malaria Incidence by each visit in safety data')
-print(ggplot(data=safety_c_m, aes(x=incidents, y=percent_usage))+
-  geom_point()+
-  labs(title='scatter plot of malaria incidents vs percent usage for each visit')+
+#print('Bed Net Usage and Malaria Incidence by each visit in safety data')
+mal_inc_vs_usage <- ggplot(data=safety_c_m, aes(x=Incidents, y=`Percent Usage (%)`))+
+  geom_point(color="#4B0082") +
+  labs(title='Scatter plot of malaria incidents against percent usage for each visit')+
   theme_minimal()+
-  facet_wrap(~visit))
+  facet_wrap(~visit) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10),
+    legend.position = "none" 
+  )
 
+
+# create a dataset that says the average amount of people who did and did not use bednet last night
 safety_cv<-safety_c %>% 
   group_by(cluster) %>% 
   mutate(avg_yes=(sum(yes)/4)) %>% 
@@ -52,6 +63,8 @@ safety_cv<-safety_c %>%
   select(-yes, -no, -visit) %>% 
   distinct
 
+
+# create a dataset that says how many incidents there were
 mal_v<-mal %>% 
   filter(visit %in% c('V1', 'V2', 'V3', 'V4')) %>% 
   group_by(cluster) %>% 
@@ -59,9 +72,11 @@ mal_v<-mal %>%
   select(-visit, -incidents) %>% 
   distinct
 
+# make a dataset that says what cluster is a part of each village
 village<-kenya_demography %>% 
   select(cluster, village)
 
+# join the above to find the incidents and bed net usage in each village
 safety_c_m_v<-mal_v %>% 
   left_join(safety_cv, by='cluster') %>% 
   left_join(village, by='cluster') %>% 
@@ -70,8 +85,8 @@ safety_c_m_v<-mal_v %>%
   distinct
 
 
-print('Scatter plot of safety data, averaging visits into total % usage')
-print(ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
+#print('Scatter plot of safety data, averaging visits into total % usage')
+ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
   geom_point(size = 1.5, alpha = 0.8) + 
   scale_color_manual(values = colorRampPalette(c("#4B0082", "#9666B2"))(length(unique(safety_c_m_v$village)))) +
   labs(title = "Scatter Plot of Malaria Incidents vs. Percent Bed Net Usage",
@@ -84,7 +99,7 @@ print(ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = v
     axis.title = element_text(size = 12),
     axis.text = element_text(size = 10),
     legend.position = "none" 
-  ))
+  )
 
 
 
