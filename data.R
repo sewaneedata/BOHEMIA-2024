@@ -13,7 +13,7 @@ healthecon_monthly<- read_csv('dataset/healthecon_monthly.csv')
 kenya_healthecon_baseline<- read_csv('dataset/kenya_healthecon_baseline.csv')
 kenya_safety<- read_csv('dataset/kenya_safety.csv')
 kenya_ae<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1dsc5m5abfSbttIgwPvukzi7ca-zA9iU2RpPifZsWA1Y/edit?usp=sharing')
-weather<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1CYuQ6_QZGaLft1zuRRdy-WxARICRzbGL9P7MSxd9Klk/edit?usp=sharing')
+weather<- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1bPHIG0lXM_tecNekRBjAyyRKXobziBaLCFUEHRSFs8c/edit?usp=sharing')
 mal_incidence<-gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1w0--SRKOplXMDi5wxxpBWuANmtIEq8lYQbG7Zk0_A_A/edit?usp=sharing')
 #creating new dataset with columns required from safety
 kenya_nsafety<-kenya_safety %>% 

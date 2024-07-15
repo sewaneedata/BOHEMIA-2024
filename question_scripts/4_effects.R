@@ -6,6 +6,7 @@ library(gsheet)
 library(tidyverse)
 library(dplyr)
 library(gsheet)
+library(lubridate)
 #Load data
 
 source('data.r')
@@ -67,19 +68,20 @@ ggplot(kenya_safety_eff_long, aes(x = month, y = number, fill =percent_y_n)) +
 
 #getting weather data and adding month
 weather_k <- weather %>%
+  mutate(month1 = ymd(paste0(month, "-01"))) %>% 
   mutate(month = case_when(
-    month(DATE) == 1  ~ "January",
-    month(DATE) == 2  ~ "February",
-    month(DATE) == 3  ~ "March",
-    month(DATE) == 4  ~ "April",
-    month(DATE) == 5  ~ "May",
-    month(DATE) == 6  ~ "June",
-    month(DATE) == 7  ~ "July",
-    month(DATE) == 8  ~ "August",
-    month(DATE) == 9  ~ "September",
-    month(DATE) == 10 ~ "October",
-    month(DATE) == 11 ~ "November",
-    month(DATE) == 12 ~ "December"
+    month(month1) == 1  ~ "January",
+    month(month1) == 2  ~ "February",
+    month(month1) == 3  ~ "March",
+    month(month1) == 4  ~ "April",
+    month(month1) == 5  ~ "May",
+    month(month1) == 6  ~ "June",
+    month(month1) == 7  ~ "July",
+    month(month1) == 8  ~ "August",
+    month(month1) == 9  ~ "September",
+    month(month1) == 10 ~ "October",
+    month(month1) == 11 ~ "November",
+    month(month1) == 12 ~ "December"
   ))
 
 #selecting only the months from the survey
@@ -90,11 +92,11 @@ weather_k<-weather_k %>%
 #getting average temp for each month
 weather_k_t<-weather_k %>% 
   group_by(month) %>% 
-  summarize(avg_temp=mean(TAVG))
+  summarize(avg_temp=mean(((LST_Day+LST_Night)/2)-273.15))
 #getting sum of prcp for each month
 weather_k_p<-weather_k %>% 
   group_by(month) %>% 
-  summarize(sum_prcp=sum(PRCP, na.rm=TRUE))
+  summarize(sum_prcp=mean(rain.mm.accum, na.rm=TRUE))
 
 #adding the two tables
 weather_t_p<-weather_k_p %>% 
@@ -167,7 +169,7 @@ print(ggplot(weather_t_p, aes(x = month)) +
   scale_y_continuous(
     name = "Precipitation (mm)", 
     sec.axis = sec_axis(
-      trans = ~ (((. /10)*.04)+26.8),
+      trans = ~ (((. /100*.2))+26.4),
       name = "Temperature (Celsius)"
     ),
     limits = c(0, max(weather_t_p$avg_temp_rescaled) * 1)
@@ -227,19 +229,20 @@ diff_efficacy_long<-diff_efficacy_long %>%
 
 # changing month name
 weather_e <- weather %>%
+  mutate(month1 = ymd(paste0(month, "-01"))) %>% 
   mutate(month = case_when(
-    month(DATE) == 1  ~ "January",
-    month(DATE) == 2  ~ "February",
-    month(DATE) == 3  ~ "March",
-    month(DATE) == 4  ~ "April",
-    month(DATE) == 5  ~ "May",
-    month(DATE) == 6  ~ "June",
-    month(DATE) == 7  ~ "July",
-    month(DATE) == 8  ~ "August",
-    month(DATE) == 9  ~ "September",
-    month(DATE) == 10 ~ "October",
-    month(DATE) == 11 ~ "November",
-    month(DATE) == 12 ~ "December"
+    month(month1) == 1  ~ "January",
+    month(month1) == 2  ~ "February",
+    month(month1) == 3  ~ "March",
+    month(month1) == 4  ~ "April",
+    month(month1) == 5  ~ "May",
+    month(month1) == 6  ~ "June",
+    month(month1) == 7  ~ "July",
+    month(month1) == 8  ~ "August",
+    month(month1) == 9  ~ "September",
+    month(month1) == 10 ~ "October",
+    month(month1) == 11 ~ "November",
+    month(month1) == 12 ~ "December"
   ))
 
 # taking specific months out from the dataset
@@ -250,11 +253,16 @@ weather_e<-weather_e %>%
 #getting sum of temp for each month
 weather_e_t<-weather_e %>% 
   group_by(month) %>% 
-  summarize(avg_temp=mean(TAVG, na.rm=TRUE))
+  summarize(avg_temp=mean(((LST_Day+LST_Night)/2), na.rm=TRUE))
+
+weather_e %>% 
+  filter(month=='April') %>% 
+  group_by(month, rain.mm.accum) %>% 
+  tally
 #getting sum of prcp for each month
 weather_e_p<-weather_e %>% 
   group_by(month) %>% 
-  summarize(sum_prcp=sum(PRCP, na.rm=TRUE))
+  summarize(sum_prcp=mean(rain.mm.accum, na.rm=TRUE))
 
 #adding the two tables
 weather_e_t_p<-weather_e_p %>% 
