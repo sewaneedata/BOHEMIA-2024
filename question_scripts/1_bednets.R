@@ -9,29 +9,30 @@ library(ggbreak)
 library(RColorBrewer)
 library(knitr)
 library(markdown) #install.packages('markdown')
+library(reactable)
 
 #Load data from data.r
 source('data.r')
 
 #PURPOSE:Information describing bed nets, ex: Price, # of bednets per household, Defining LLIN’, and Age/Source
-## Avg price- KES converted to $
 
+## making a table of Avg price- KES converted to $
 # create a table that shows the cost of bed nets obtained by each household over the entire trial which requires the use of the following question:
-# 2a. [If yes to 2. Has the household obtained any bed nets in the past 4 weeks? □ Yes □ No] What was the cost for each net obtained (per bed net obtained)?
+# 2a. from healthecon_monthly questionnaire [If yes to 2. Has the household obtained any bed nets in the past 4 weeks? □ Yes □ No] What was the cost for each net obtained (per bed net obtained)?
 healtheconmonthly_totaln<- healtheconmonthly_total %>% 
   # create a column that has the price of bed nets in usd
   mutate(bed_nets_past_month_kes=(as.numeric(bed_nets_past_month_kes)*0.0078)) %>% 
   drop_na(bed_nets_past_month_kes)
 
-bed_net_cost <- summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
+#bed_net_cost_2<-gsub('1st Qu.', '1st Quartile', bed_net_cost)
+# ??? use gsub to change the names of the columns to better words
+# make bed_net_cost into a dataframe --  bed_net_cost<-as.data.frame(bed_net_cost)
 
-# distinct(hhid, .keep_all = TRUE)
+bed_net_cost<-summary(healtheconmonthly_totaln$bed_nets_past_month_kes)
+bed_net_cost_df <- as.data.frame(t(as.matrix(bed_net_cost)))
+bed_net_cost_df<-bed_net_cost
+reactable(bed_net_cost, columns=list(), pagination=FALSE)
 
-cat("Summary of Bed Nets \n \n")
-
-print(summary(healtheconmonthly_totaln$bed_nets_past_month_kes))
-
-cat('\n')
 
 #make new dataset called bednets_price
 bednets_price<-healtheconmonthly_totaln %>% 
@@ -58,7 +59,7 @@ bednets_free<-healtheconmonthly_totaln %>%
 # make graph for the free bednets 
 
 
-print(ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
+receive_free_bed_nets <- ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
   scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
   labs(x = "Received Free Bed Net", y = "Count", fill = "") +             
@@ -70,19 +71,20 @@ print(ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) +
     axis.text = element_text(size = 10),
     panel.grid.major.x = element_blank(),                    
     legend.position = "none"                                 
-  ))
+  )
 
-## Avg Number per hh
+## Avg Number of bed nets per hh
 kenya_healtheconn<-kenya_healthecon_total %>% 
   distinct(hhid, .keep_all = TRUE) %>% 
   group_by(hhid, num_bed_nets) %>% 
   tally() %>% 
   drop_na(num_bed_nets)
 
-
+# change names of column and assign a name to the summary below
 cat("\n Summary of Number of Bed Nets per Household \n")
 print(summary(kenya_healtheconn$num_bed_nets))
 cat('\n')
+
 
 ## Avg Age of people based on usage of bednets
 # adding bednets yes or no column in a new safety bednets dataset and selecting required columns
@@ -113,12 +115,6 @@ kenya_safety_sex_summary <- kenya_safety_bn %>%
 kenya_safety_summary<-kenya_safety_sex_summary %>% 
   left_join(kenya_safety_age_summary, by='bed_nets_yn')
 
-
-cat("\n Summary of People Using Bed Nets based on Age and Sex \n")
-
-# print(kenya_safety_summary, n=Inf, width=Inf)
-
-cat('\n')
 
 
 # FIELD WORKER NUMBER CODE

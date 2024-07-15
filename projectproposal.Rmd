@@ -28,6 +28,9 @@ source('question_scripts/1_bednets.R')
 
 # printing bednet table
 reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
+
+# print the receive free bed nets graph
+receive_free_bed_nets
 ```
 
 # Ownership, Sufficiency, and Usage
@@ -55,7 +58,7 @@ source('question_scripts/3_differences.R')
 ## Effects of environmental factors on bed net usage
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-source('question_scripts/4_effects.R')
+#source('question_scripts/4_effects.R')
 ```
 
 
