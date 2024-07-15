@@ -30,6 +30,7 @@ We worked with 10 datasets in total. Some of the datasets can be found [here](ht
  * Repository Folder :
     - `data.r` : R script used to load all datasets. We then clean the datasets by selecting the necessary columns, and merging the original datasets with the new datasets and adding demographic information.
     - `aws_data_download.r` : R script used to download datasets from AWS (Amazon Web Services).
+    - `projectproposal.Rmd` : R markdown that contains the report we sent to our client.
   
  * question_scripts Folder :
    1. `1_bednets.r` : R script for answering questions related to Bed Nets. Specifically, price of bed nets, number of bed nets per household, demographics of people who use bed nets.
@@ -52,4 +53,5 @@ We worked with 10 datasets in total. Some of the datasets can be found [here](ht
     6. `5_communityusage.r`
     7. `6_autocorsafe.R`
     8. `7_autocoreff.R`
+    9. `projectproposal.Rmd`
 
