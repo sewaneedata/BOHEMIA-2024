@@ -24,13 +24,13 @@ library(ggbreak)
 
 # Bed Nets
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-source('question_scripts/1_bednets.R')
+#source('question_scripts/1_bednets.R')
 
 # printing bednet table
-reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
+#reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
 
 # print the receive free bed nets graph
-receive_free_bed_nets
+#receive_free_bed_nets
 ```
 
 # Ownership, Sufficiency, and Usage
@@ -66,7 +66,18 @@ source('question_scripts/3_differences.R')
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source('question_scripts/5_communityusage.R')
+
+# Print plot of Bed Net Usage and Malaria Incidence by each visit in safety data
+mal_inc_vs_usage
 ```
+
+write some words then print another graph
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Print scatter plot of safety data, averaging visits into total % usage
+scatter_usage
+```
+
 
 ## Possible auto correlations
 ### Safety

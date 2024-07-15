@@ -1,4 +1,5 @@
 #PURPOSE: Make scatterplot of efficacy data where the x-axis is malaria incidents and y-axis is percent usage and this is coloured by clusters 
+# OUTPUTS: mal_inc_vs_usage and scatter_usage
 
 #Load Libraries
 library(gsheet)
@@ -86,7 +87,7 @@ safety_c_m_v<-mal_v %>%
 
 
 #print('Scatter plot of safety data, averaging visits into total % usage')
-ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
+scatter_usage <- ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
   geom_point(size = 1.5, alpha = 0.8) + 
   scale_color_manual(values = colorRampPalette(c("#4B0082", "#9666B2"))(length(unique(safety_c_m_v$village)))) +
   labs(title = "Scatter Plot of Malaria Incidents vs. Percent Bed Net Usage",
