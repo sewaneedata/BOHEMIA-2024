@@ -13,6 +13,8 @@ source('data.r')
 #table of number of nights slept under net last week for efficacy
 table(kenya_efficacy_total$num_nights_sleep_under_net)
 
+
+
 #changing dk to NA, dropping NA, and turning number of nights to numeric
 diff_efficacy_num<-kenya_efficacy_total %>% 
   mutate(num_nights_sleep_under_net=ifelse(num_nights_sleep_under_net=='dk', NA, num_nights_sleep_under_net)) %>% 
@@ -45,17 +47,18 @@ diff_efficacy_long<-kenya_efficacy_total %>%
    tally 
 
 
+
 # Creating the plot of sleep under bed net colored by y/n
 print('Bar Graph of sleep under bed net')
-print(ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
+differences_usage <- (ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
   geom_col(position = "stack") +
   scale_fill_manual(values = c("yes" = "#4B0082", "no" = "#9666B2"),
                     labels = c("Yes", "No"),  # Match legend labels to axis
                     name = "") +
-  labs(y = "Count", x = "Visit", fill = "Type") +
+  labs(y = "Count", x = "Visits", fill = "Type") +
   theme_minimal()+
   labs(
-    title='Bar Chart of Slept Under Net Last Night for each visit'
+    title=' Slept under bed net last night for each visit'
   ))
 
 # creating a new dataset which is grouped by visit
