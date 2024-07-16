@@ -202,7 +202,7 @@ osu_sum<-osu_sum %>%
 
 
 # make graph on bednet ownership, sufficiency and usage 
-ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
+osu_graph<-ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
   geom_col(alpha = 0.8) +                               
   scale_fill_manual(values = c("Ownership" = "#5C2D91",  
                                "Usage" = "#9666B2",
