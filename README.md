@@ -45,13 +45,13 @@ We worked with 10 datasets in total. Some of the datasets can be found [here](ht
 ## Instructions
 - Retrieve the datasets using `aws_data_download.R` (*only use this if you have aws access through BOHEMIA*) and place them in a separate dataset folder inside the repository. If you do not have AWS access, retrieve the data from the BOHEMIA team.
 - Run the R scripts in the following order :
-    2. `data.R` (*start here if you cannot run the `aws_data_download.R`*)
-    3. `1_bednets.R`
-    4. `2_correlations.R`
-    5. `3_differences.R`
-    6. `4_effects.R`
-    7. `5_communityusage.R`
-    8. `6_autocorsafe.R`
-    9. `7_autocoreff.R`
-    10. `projectproposal.Rmd`
+    1. `data.R` (*start here if you cannot run the `aws_data_download.R`*)
+    2. `1_bednets.R`
+    3. `2_correlations.R`
+    4. `3_differences.R`
+    5. `4_effects.R`
+    6. `5_communityusage.R`
+    7. `6_autocorsafe.R`
+    8. `7_autocoreff.R`
+    9. `projectproposal.Rmd`
 
