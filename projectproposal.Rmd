@@ -78,6 +78,13 @@ reactable(osu_sum, columns=list(), pagination=FALSE)
 ## Differences in usage between V1 through V7 within the efficacy cohort
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=FALSE}
+source('question_scripts/3_differences.R')
+
+# summary of both the variables in the efficacy dataset
+combined_table
+
+# Print bar chart of Slept under bed net last night for each visit
+differences_usage
 ```
 This bar chart shows changes in usage responses between visits one through seven. Usage is on a steady decline over the course of the trial, until the last visit where there is an increase. But with that being said, the total number of respondents decreases over the course of the trial as well. 
 ```{r}

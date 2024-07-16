@@ -7,7 +7,7 @@ library(gsheet)
 
 #Load data
 
-source('data.r')
+source('data.R')
 
 
 #selecting necessary columns and then creating previous answer column using lag and dropping NAs
@@ -28,7 +28,7 @@ test_e_a$prev_ans <- factor(test_e_a$prev_ans,
                           levels = c("yes", "no"))
 
 #creating a ggplot
-autocoreff_usage<- (ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
+autocoreff_usage<- ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
   geom_col(position = position_dodge()) + 
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
@@ -42,4 +42,5 @@ autocoreff_usage<- (ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = pr
     plot.title = element_text(hjust = 0.5),
     legend.title = element_text(face = "bold"),
     axis.title = element_text(face = "bold") 
-  ))
+  )
+

@@ -49,7 +49,6 @@ diff_efficacy_long<-kenya_efficacy_total %>%
 
 
 # Creating the plot of sleep under bed net colored by y/n
-print('Bar Graph of sleep under bed net')
 differences_usage <- (ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sleep_under_net_last_night)) +
   geom_col(position = "stack") +
   scale_fill_manual(values = c("yes" = "#4B0082", "no" = "#9666B2"),
@@ -137,5 +136,5 @@ diff_efficacy_numt_table <- diff_efficacy_numt %>%
 combined_table <- left_join(diff_efficacy_total_table, diff_efficacy_numt_table, by = "visit")
 
 # Print the final table to see the summary of both the variables in the efficacy dataset
-print(combined_table)
+
 
