@@ -47,6 +47,8 @@ reactable(bed_net_number_df, columns=list(), pagination=FALSE)
 ```
 
 ## Summary of Age and Sex of People Using Bed Nets in Kwale
+***This table shows the counts for men and women who slept under a bed net last night, along with the average age of respondents who said yes and no, respectively. Although the sample sizes are slightly different, women were more likely to sleep under a net than men. Additionally, the average age of people who used a net was slightly higher than those who did not.
+
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
@@ -72,7 +74,12 @@ Within this section, we will have subsections going over each portion of our ana
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=FALSE}
 ```
+This bar chart shows changes in usage responses between visits one through seven. Usage is on a steady decline over the course of the trial, until the last visit where there is an increase. But with that being said, the total number of respondents decreases over the course of the trial as well. 
+```{r}
 
+```
+
+This layered graph shows the relationship between the two metrics used to measure usage, last night and number of nights over the last week. The similarity between the ratios of yes and no within the last night data set, and seven and zero within the nights over the last week data set, allows for the application of last night usage as an accurate measurement of usage overall.
 
 ## Effects of environmental factors on bed net usage
 
