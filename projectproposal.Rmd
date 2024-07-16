@@ -117,5 +117,9 @@ percent_usage_visits
 ### Efficacy
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/7_autocoreff.R')
+
+# Print plot of percentage usage unchanged from previous visits
+autocoreff_usage
 ```
 

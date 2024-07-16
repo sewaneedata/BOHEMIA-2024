@@ -4,6 +4,7 @@ library(gsheet)
 library(tidyverse)
 library(dplyr)
 library(gsheet)
+
 #Load data
 
 source('data.r')
@@ -27,14 +28,14 @@ test_e_a$prev_ans <- factor(test_e_a$prev_ans,
                           levels = c("yes", "no"))
 
 #creating a ggplot
-print(ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
+autocoreff_usage<- (ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
   geom_col(position = position_dodge()) + 
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percent Usage Unchanged from Previous Visit",
-    x = "Visit",
-    y = "Percentage Unchanged"
+    title = "Percent usage unchanged from previous visits",
+    x = "Visits",
+    y = "Percentage Unchanged %"
   ) +
   theme_minimal() + 
   theme(
