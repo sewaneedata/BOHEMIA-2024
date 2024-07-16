@@ -9,7 +9,7 @@ library(gsheet)
 library(lubridate)
 #Load data
 
-source('data.r')
+source('data.R')
 
 # Scatterplot of efficacy data where the x-axis is temperature and y-axis is percent usage, Coloured by villages and faceted by visits. 
 

@@ -9,7 +9,7 @@ library(gsheet)
 library(RColorBrewer)
 
 #Load data from data.r
-source('data.r')
+source('data.R')
 
 ### CODE CHUNK FROM 3_differences.R. for justifying the use of sleep_under_net_last_night.
 diff_efficacy_num<-kenya_efficacy_total %>% 
@@ -51,7 +51,7 @@ diff_eff_avg<-diff_efficacy_total %>%
 library(RColorBrewer)  # For color palettes
 
 # Graph for showing average count of sleep under a net last night and average number of nights sleep under net within last week
-print(ggplot() +
+perc_osu <- ggplot() +
   geom_col(data = diff_eff_avg,
            aes(x = ifelse(sleep_under_net_last_night == "yes", 7, 0),  # Swap x values
                y = avg_visit, fill = sleep_under_net_last_night),
@@ -79,7 +79,7 @@ print(ggplot() +
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
         legend.title = element_text(size = 11),
-        legend.position = "bottom") )
+        legend.position = "bottom")
 ### END OF CODE CHUNK FROM ANOTHER QUESTION
 
 
@@ -194,8 +194,8 @@ osu_sum<-osu_sum %>%
   mutate(no=round(no, digits=2))
 
 
-cat('\n Table showing Ownership, Sufficiency and Usage Data \n')
-print(osu_sum)
+#cat('\n Table showing Ownership, Sufficiency and Usage Data \n')
+
 
 # make graph on bednet ownership, sufficiency and usage 
 print(ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
