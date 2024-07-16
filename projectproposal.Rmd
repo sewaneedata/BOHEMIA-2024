@@ -17,10 +17,8 @@ library(ggbreak)
 ```
 
 # Introduction
-- give our problem statement
-- state our goals for the report
-- introduce bed nets, more specfically LLINs and define issues
-- mention BOHEMIA's interest in bed nets as a way to prevent childhood malaria 
+In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best way to reduce malaria related deaths is to prevent transmission through  mosquito bites. The Broad One Health Endectocide based Malaria Intervention in Africa (BOHEMIA) project concluded a large scale clinical trial to determine if ivermectin, an anti-parasitic drug, is an effective tool to decrease malaria rates within rural communities in Africa, specifically Kenya and Mozambique. Despite interest in new ways to decrease malaria rates, the current most effective way to prevent malaria is the long lasting insecticidal net (LLIN), which is an insecticide treated mesh net that keeps mosquitoes from biting during the night. Using data collected from BOHEMIA’s most recent clinical trial, our goal was to examine bed net usage on an individual and community level, along with its relationship to various factors. This report includes visualizations of our data, in both tabular and graphical formats, along with written descriptions of each visualization.
+
 
 # Bed Nets
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
@@ -66,6 +64,13 @@ Within this section, we will have subsections going over each portion of our ana
 - tabulate data for each attribute in five number summary
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+source('question_scripts/2_correlations.R')
+
+#Percentage of OSU
+perc_osu
+
+# Table showing Ownership, Sufficiency and Usage Data
+reactable(osu_sum, columns=list(), pagination=FALSE)
 ```
 
 

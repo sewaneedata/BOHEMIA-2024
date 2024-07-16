@@ -191,19 +191,23 @@ osu_sum<-osu_sum %>%
   pivot_wider(names_from = 'index', values_from=n) %>% 
   select(data, yes, no) %>% 
   mutate(yes=round(yes, digits=2)) %>% 
-  mutate(no=round(no, digits=2))
+  mutate(no=round(no, digits=2)) %>% 
+  rename("Yes (%)" = yes,
+         "No  (%)"= no,
+        "Category"= data)
+
 
 
 #cat('\n Table showing Ownership, Sufficiency and Usage Data \n')
 
 
 # make graph on bednet ownership, sufficiency and usage 
-print(ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
+ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) + 
   geom_col(alpha = 0.8) +                               
   scale_fill_manual(values = c("Ownership" = "#5C2D91",  
                                "Usage" = "#9666B2",
                                "Sufficiency" = "#4B0082")) +
-  labs(y = "Percentage", x = "", fill = "") +              
+  labs(y = "Percentage (%)", x = "", fill = "") +              
   ggtitle("Percentage of Households with Bed Nets:\nOwned, Used Last Night, and Sufficiency") + # More descriptive title
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"), 
@@ -211,7 +215,7 @@ print(ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) +
         axis.text = element_text(size = 10),  
         panel.grid.major.x = element_blank(),  
         legend.position = "none")  +
-  ylim(0, 100))
+  ylim(0, 100)
 
 
 
