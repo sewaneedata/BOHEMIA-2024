@@ -12,7 +12,7 @@ library(lubridate)
 source('data.R')
 
 # Scatterplot of efficacy data where the x-axis is temperature and y-axis is percent usage, Coloured by villages and faceted by visits. 
-
+ 
 #getting data on the number of people slept under bed nets from safety
 kenya_safety_summary<-kenya_safety_eff %>% 
   arrange((visit)) %>% 
@@ -251,7 +251,7 @@ kenya_safety_eff_long$month <- factor(kenya_safety_eff_long$month,
 
 
 #getting weather data and adding month
-weather_k_p <- weather %>%
+weather_k_p <- weather_p %>%
   mutate(month = case_when(
     month(DATE) == 1  ~ "January",
     month(DATE) == 2  ~ "February",
@@ -412,7 +412,7 @@ diff_efficacy_long<-diff_efficacy_long %>%
                              visit=='V7' ~ "April"))
 
 # changing month name
-weather_e_p <- weather %>%
+weather_e_p <- weather_p %>%
   mutate(month = case_when(
     month(DATE) == 1  ~ "January",
     month(DATE) == 2  ~ "February",
@@ -494,7 +494,6 @@ p<-ggplot(weather_e_t_p_p, aes(x = month)) +
 labels<-c("October\n71.65%", "November\n68.32%", "December\n67.88%", "January\n67.22%", "February\n67.12%", "March\n67.20%", "April\n82.14%")
 
 # join the label in p(ggplot)
-print("Environmental Effects on Bed Nets:Temperature and Precipitation ")
 weather_graph<-p+scale_x_discrete(label=labels)
 
 
