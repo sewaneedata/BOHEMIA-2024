@@ -9,7 +9,7 @@ library(dplyr)
 library(gsheet)
 
 #Load data
-source('data.r')
+source('data.R')
 
 # make a new data set called Malaria incidence 
 mal<-mal_incidence %>% 

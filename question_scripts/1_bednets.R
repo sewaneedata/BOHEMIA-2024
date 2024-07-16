@@ -13,7 +13,7 @@ library(markdown) #install.packages('markdown')
 library(reactable)
 
 #Load data from data.r
-source('data.r')
+source('data.R')
 
 #PURPOSE:Information describing bed nets, ex: Price, # of bednets per household, Defining LLIN’, and Age/Source
 
@@ -60,7 +60,9 @@ ggplot(data=bednets_price, aes(x=bed_nets_past_month_kes, y=n)) +
 #new dataset for free bednets
 bednets_free<-healtheconmonthly_totaln %>% 
   mutate(free_yn=ifelse(bed_nets_past_month_kes>0, 'not free', 'free')) %>% 
-  group_by(free_yn) %>% 
+  group_by(free_yn)%>% 
+  mutate(free_yn = case_when(free_yn == 'free' ~ 'Free',
+                             free_yn == 'not free' ~ 'Not free')) %>% 
   tally 
 
 # make graph for the free bednets 
@@ -68,9 +70,9 @@ bednets_free<-healtheconmonthly_totaln %>%
 
 receive_free_bed_nets <- ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
-  scale_fill_manual(values = c("free" = "#5C2D91", "not free" = "#9666B2")) +   
-  labs(x = "Received Free Bed Net", y = "Count", fill = "") +             
-  ggtitle("Count of Households Receiving Free Bed Nets") +            
+  scale_fill_manual(values = c("Free" = "#5C2D91", "Not free" = "#9666B2")) +   
+  labs(x = '', y = "Count", fill = "") +             
+  ggtitle("The amount of households who did or did not pay for a bed net") +            
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"), 
