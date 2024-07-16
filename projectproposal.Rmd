@@ -71,6 +71,9 @@ perc_osu
 
 # Table showing Ownership, Sufficiency and Usage Data
 reactable(osu_sum, columns=list(), pagination=FALSE)
+
+# created name for graph on ownership, sufficiency, and usage
+osu_graph
 ```
 
 
