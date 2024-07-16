@@ -25,12 +25,12 @@ test_a$prev_ans <- factor(test_a$prev_ans,
   
 #creating a ggplot
 
-print(ggplot(test_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
+percent_usage_visits <- ggplot(test_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
   geom_col(position = position_dodge()) + 
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percent Usage Unchanged from Previous Visits",
+    title = "Percent usage unchanged from previous visits",
     x = "Visits",
     y = "Percentage Unchanged %",
     fill=''
@@ -40,5 +40,5 @@ print(ggplot(test_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
     plot.title = element_text(hjust = 0.5),
     legend.title = element_text(face = "bold"),
     axis.title = element_text(face = "bold") 
-  ))
+  )
 

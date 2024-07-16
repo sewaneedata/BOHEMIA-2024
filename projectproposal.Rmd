@@ -1,6 +1,6 @@
 ---
 title: "Stopping the Swarm: Bed Nets in Kwale"
-author: "Reiner, Oysik, Solomon, Sam & Linn (add full names in alphabetical order)"
+author: "Linn Lett Moe, Oysik Saif, Reiner Adakole-Okopi, Samuel Grace Conyers & Solomon Sakakeeny-Smith"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -101,6 +101,10 @@ scatter_usage
 ### Safety
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source('question_scripts/6_autocorsafe.R')
+
+# Print plot of percentage usage unchanged from previous visits
+percent_usage_visits
 ```
 
 ### Efficacy
