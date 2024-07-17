@@ -71,8 +71,8 @@ perc_osu <- ggplot() +
                                          labels = 0:7)) +
   ##9666B2
   labs(y = "Count",
-       x = "Sleep under net last night vs last week",
-       title = 'Nightly vs weekly bed net usage', 
+       x = "Sleep under net last night vs.. last week",
+       title = 'Nightly vs. weekly bed net usage', 
        fill='') +
   theme_minimal() +
   theme(plot.title = element_text(face = "bold", size = 14, hjust = 0.5),

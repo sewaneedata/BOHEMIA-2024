@@ -46,7 +46,7 @@ safety_c_m<-safety_c %>%
 #print('Bed Net Usage and Malaria Incidence by each visit in safety data')
 mal_inc_vs_usage <- ggplot(data=safety_c_m, aes(x=Incidents, y=`Percent usage (%)`))+
   geom_point(color="#4B0082") +
-  labs(title='Scatter plot of malaria incidents against percent usage for each visit')+
+  labs(title='Malaria incidents vs. bed net usage by visit')+
   theme_minimal()+
   facet_wrap(~visit) +
   theme(
@@ -91,7 +91,7 @@ safety_c_m_v<-mal_v %>%
 scatter_usage <- ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
   geom_point(size = 1.5, alpha = 0.8) + 
   scale_color_manual(values = colorRampPalette(c("#4B0082", "#9666B2"))(length(unique(safety_c_m_v$village)))) +
-  labs(title = "Scatter plot of malaria incidents vs. percent bed net usage",
+  labs(title = "Malaria incidents vs. bed net usage",
        x = "Total Malaria Incidents",
        y = "Percent usage (%)",
        caption='Colored by Villages') +

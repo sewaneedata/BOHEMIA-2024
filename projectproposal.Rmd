@@ -18,33 +18,33 @@ library(ggbreak)
 
 # Introduction
 
-In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best way to reduce malaria related deaths is to prevent transmission through  mosquito bites. The [Broad One Health Endectocide based Malaria Intervention in Africa (BOHEMIA)](https://bohemiaconsortium.org) project concluded a large scale clinical trial to determine if ivermectin, an anti-parasitic drug, is an effective tool to decrease malaria rates within rural communities in Africa, specifically Kenya and Mozambique. Despite interest in new ways to decrease malaria rates, the current most effective way to prevent malaria is the long lasting insecticidal net (LLIN), which is an insecticide treated mesh net that keeps mosquitoes from biting during the night. Using data collected from BOHEMIA’s most recent clinical trial, our goal was to examine bed net usage on an individual and community level, along with its relationship to various factors. This report includes visualizations of our data, in both tabular and graphical formats, along with written descriptions of each visualization.
+In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best way to reduce malaria related deaths is to prevent transmission through  mosquito bites. The [ Broad One Health Endectocide based Malaria Intervention in Africa (BOHEMIA)](https://bohemiaconsortium.org) project concluded a large scale clinical trial to determine if ivermectin, an anti-parasitic drug, is an effective tool to decrease malaria rates within rural communities in Africa, specifically Kenya and Mozambique. Despite interest in new ways to decrease malaria rates, the current most effective way to prevent malaria is the long lasting insecticidal net (LLIN), which is an insecticide treated mesh net that keeps mosquitoes from biting during the night. Using data collected from BOHEMIA’s most recent clinical trial, our goal was to examine bed net usage on an individual and community level, along with its relationship to various factors. This report includes visualizations of our data, in both tabular and graphical formats, along with written descriptions of each visualization.
 
 # Datasets
 
-The code that creates this work can be found [here](https://github.com/sewaneedata/BOHEMIA-2024). We worked with 10 datasets in total. Some of the datasets can be found [here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs), and the remaining datasets are retrieved by the `data.R` script.
+The code that creates this work can be found [here](https://github.com/sewaneedata/BOHEMIA-2024). We worked with 10 datasets in total. Some of the datasets can be found [here](), and the remaining datasets are retrieved by the `data.R` script.
 
-1. `kenya_demography.csv` : has demographic information on the sample population.
+1. `kenya_demography.csv` : demographic information on the sample population
 
-2. `kenya_safety.csv` : has information on usage of bed nets over 4 visits.
+2. `kenya_safety.csv` : information on usage of bed nets over 4 visits
 
-3. `kenya_safety_new.csv`: has information on usage of bed nets for people added in the survey after the initial visit (for kenya_demography).
+3. `kenya_safety_new.csv`: information on usage of bed nets for people added in the survey after the initial visit (for kenya_demography)
 
-4. `kenya_efficacy.csv` : has information on the usage of bed nets for children aged 5-15 over 7 visits. And the visits are 2 weeks before kenya_safety visits.
+4. `kenya_efficacy.csv` : information on the usage of bed nets for children aged 5-15 over 7 visits. And the visits are 2 weeks before kenya_safety visits
 
-5. `kenya_healthecon_baseline.csv` : has information on the ownership of bed nets.
+5. `kenya_healthecon_baseline.csv` : information on the ownership of bed nets
 
-6. `kenya_healthecon_baseline_new.csv` : has information on the ownership of bed nets for people added in the survey after the initial visit (for kenya_demography)
+6. `kenya_healthecon_baseline_new.csv` : information on the ownership of bed nets for people added in the survey after the initial visit (for kenya_demography)
 
-7. `healthecon_monthly.csv` : has monthly information on the price of bed nets.
+7. `healthecon_monthly.csv` : monthly information on the price of bed nets
 
-8. `malaria_incidence` : has information on malaria incidents over 7 visits for each cluster.
+8. `malaria_incidence` : information on malaria incidents over 7 visits for each cluster
 
-9. `kenya_ae` : has information on the adverse event symptoms.
+9. `kenya_ae` : information on the adverse event symptoms
 
-10. `weather` : has information on the weather data for Mombasa in 2023-2024.
+10. `weather` : information on the weather data for Mombasa in 2023-2024
 
-11. `kwale_weather` : has information on the weather data for Kwale in 2023-2024.
+11. `kwale_weather` : information on the weather data for Kwale in 2023-2024
 
 
 # Bed nets
@@ -81,7 +81,7 @@ reactable(bed_net_cost_df, columns=list(), pagination=FALSE)
 print(receive_free_bed_nets)
 ```
 
-This graph compares the number of households who received nets for free to the number of people who bought nets. There were more households that had to pay for their nets with the study than there were those who got them for free. 
+This graph compares the percentage of households who received nets for free to the percentage of people who bought nets. There were more households that had to pay for their nets with the study than there were those who got them for free. 
 
 <br /> 
 <br />
@@ -115,11 +115,11 @@ This section uses the `kenya_healthecon`, `kenya_safety`, and `kenya_efficacy` d
   + Did the subject sleep under a mosquito net last night?
   + In the last week, how many nights did the subject sleep under a bed net?
 
-**Ownership** : Ownership is whether or not a household own a bed net.
+**Ownership** : whether or not a household own a bed net
 
-**Sufficiency** : Sufficiency measures if a home has enough bed nets for  the amount of people in the house hold. The standard sufficiency level is 2 people per bed net. 
+**Sufficiency** : measures if a home has enough bed nets for  the amount of people in the house hold. The standard sufficiency level is 2 people per bed net
 
-**Usage** : Usage is whether or not a subject used a bed net last night. 
+**Usage** : whether or not a subject used a bed net last night
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 source('question_scripts/2_correlations.R')
@@ -260,7 +260,7 @@ These two graphs both display the likelihood of each subject sleeping or not sle
 
 # Conclusion
 
-65 people are dying each hour from malaria in Africa. To decrease this number, research must be done to inform policy and our work with BOHEMIA is a key step in this process. The next step is for BOHEMIA to publish the results of their clinical trial, which will include our analysis. Then in conjunction with other publications, BOHEMIA’s trial will hopefully be used by the World Health Organization to inform malaria policy in Sub-Saharan Africa.
+65 people are dying each hour from malaria in Africa. To decrease this number, research must be done to inform policy and our work with BOHEMIA is a key step in this process. In conjunction with other publications, BOHEMIA’s trial will hopefully be used by the World Health Organization to inform malaria policy in Sub-Saharan Africa.
 
 <br />
 <br />
@@ -270,3 +270,4 @@ This report is created in partnership with the Sewanee DataLab and the BOHEMIA p
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlOe8nXAKTTdh4lrtlEVER4g3Io4C9jcZDOA&s" style="float: right; margin-left: 20px;" alt="Sewanee DataLab" />
 
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRamh50hTztU9aKFX1GMpFEU1qdjz4OrCnHjg&s" style="float: left; margin-right: 20px;" alt="The BOHEMIA project" />
+

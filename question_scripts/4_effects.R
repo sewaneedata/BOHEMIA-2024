@@ -179,7 +179,7 @@ weather_new_data<-ggplot(weather_t_p, aes(x = month)) +
   scale_fill_manual(values = c("percent_yes_eff" = "#4B0082", "percent_yes_safety" = "#9666B2"),
                       labels = c("Percent Usage in Efficacy", "Percent Usage in Safety"),  # Match legend labels to axis
                       name = "") +   # Update legend title
-  labs(title = "Environmental factors vs usage for safety and efficacy", color='', x = "Month", fill = "Category") +
+  labs(title = "Environmental factors vs.. usage in safety and efficacy", color='', x = "Month", fill = "Category") +
   theme_minimal()+
   theme(
     plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
@@ -370,7 +370,7 @@ weather_graph_twodata<-ggplot(weather_t_p_p, aes(x = month)) +
         scale_fill_manual(values = c("percent_yes_eff" = "#4B0082", "percent_yes_safety" = "#9666B2"),
                           labels = c("Percent Usage in Efficacy", "Percent Usage in Safety"),  # Match legend labels to axis
                           name = "") +   # Update legend title
-        labs(color='', x = "Month", fill = "Category", title = "Environmental Factors vs Usage") +
+        labs(color='', x = "Month", fill = "Category", title = "Environmental Factors vs. Usage") +
         theme_minimal()
 
 
@@ -487,7 +487,7 @@ p<-ggplot(weather_e_t_p_p, aes(x = month)) +
   ) +
   scale_color_manual(values = c("Temperature" = "#9666B2", 
                                 "Precipitation" = "#000000")) + 
-  labs(x = "Month", fill = "Category", title = "Environmental factors vs. bed net usage for efficacy", color='') +
+  labs(x = "Month", fill = "Category", title = "Environmental factors vs.. bed net usage", color='') +
   theme_minimal() +
   theme(
     plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
