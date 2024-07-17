@@ -22,7 +22,7 @@ In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best w
 
 # Datasets
 
-The code that creates this work can be found [here](https://github.com/sewaneedata/BOHEMIA-2024). We worked with 10 datasets in total. Some of the datasets can be found [here](), and the remaining datasets are retrieved by the `data.R` script.
+The code that creates this work can be found [here](https://github.com/sewaneedata/BOHEMIA-2024). We worked with 11 datasets in total. Some of the datasets can be found [here](), and the remaining datasets are retrieved by the `data.R` script.
 
 1. `kenya_demography.csv` : demographic information on the sample population
 
@@ -147,7 +147,7 @@ reactable(osu_sum, columns=list(), pagination=FALSE)
 osu_graph
 ```
 
-This bar chart shows the percentage values of ownership, sufficiency, and usage within the safety cohort. Ownership represents the percentage of households that own at least one bed net, whereas sufficiency and usage are percentages of the households who own bed nets that have a sufficient amount (2:1 person:net ratio) or that use bed nets, respectively. Out of 85% of the households who own bed nets, 63% are sufficient and 77% use their bed nets. The relationship between sufficiency and usage shows that there are people using bed nets when they don't have sufficient bed nets in their households. This discrepancy could be for one of two reasons. Either there are more than two people sleeping under each bed net or respondents are lying about using bed nets. 
+This bar chart shows the percentage values of ownership, sufficiency, and usage within the safety cohort. Ownership represents the percentage of households that own at least one bed net, whereas sufficiency and usage are percentages of the households who own bed nets that have a sufficient amount (2:1 person:net ratio) or that use bed nets, respectively. Out of 85% of the households who own bed nets, 63% are sufficient and 77% use their bed nets. The relationship between sufficiency and usage shows that there are people using bed nets when they don't have sufficient bed nets in their households. This discrepancy could be for one of two reasons: either there are more than two people sleeping under each bed net or respondents are overestimating about using bed nets. 
 
 <br />
 <br />
