@@ -3,7 +3,6 @@
 
 library (tidyverse)
 library(gsheet)
-library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(ggbreak)
@@ -133,9 +132,13 @@ kenya_safety_summary<-kenya_safety_sex_summary %>%
 
 
 kenya_safety_summary <-kenya_safety_summary %>% 
-  rename('Bed Net Yes/No'=bed_nets_yn) %>% 
-  rename('Average Age'=average_age)
+  rename('Bed net yes/no'=bed_nets_yn) %>% 
+  rename('Average age'=average_age) %>% 
+  mutate(`Bed net yes/no`=str_to_title(`Bed net yes/no`)) %>% 
+  mutate(`Average age`= format(`Average age`, digits=3)) %>% 
+  arrange(desc(`Bed net yes/no`))
 
+kenya_safety_summary
 # FIELD WORKER NUMBER CODE
 # wid_d<-kenya_demography %>% 
 #   group_by(wid_manual) %>% 

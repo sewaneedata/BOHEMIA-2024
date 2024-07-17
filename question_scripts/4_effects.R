@@ -158,7 +158,7 @@ weather_t_p$avg_temp_rescaled <- rescale(weather_t_p$avg_temp, to = range(weathe
 #creating the plot
 weather_new_data<-ggplot(weather_t_p, aes(x = month)) +
   geom_line(aes(y = avg_temp_rescaled, color='Temperature'), group=1) +
-  geom_line(aes(y = sum_prcp, color='Precipitation'), group=1) +
+  geom_line(aes(y = sum_prcp, color='Precipitation'), group = 1, linetype = "dashed") +
   geom_col(
     data = kenya_safety_eff_long, 
     aes(y = number / max(number) * max(weather_t_p$sum_prcp),  # Rescale and normalize safety data
@@ -179,8 +179,16 @@ weather_new_data<-ggplot(weather_t_p, aes(x = month)) +
   scale_fill_manual(values = c("percent_yes_eff" = "#4B0082", "percent_yes_safety" = "#9666B2"),
                       labels = c("Percent Usage in Efficacy", "Percent Usage in Safety"),  # Match legend labels to axis
                       name = "") +   # Update legend title
-  labs(color='', x = "Month", fill = "Category", title = "Environmental Factors vs Usage") +
-  theme_minimal()
+  labs(title = "Environmental factors vs usage for safety and efficacy", color='', x = "Month", fill = "Category") +
+  theme_minimal()+
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
+    axis.title = element_text(size = 12),  
+    axis.text = element_text(size = 10),  
+    legend.title = element_text(size = 11), 
+    legend.position = "bottom",           
+    panel.grid.minor = element_blank()  
+  )
 
 
  #The same thing for efficacy over 6 months
@@ -479,7 +487,7 @@ p<-ggplot(weather_e_t_p_p, aes(x = month)) +
   ) +
   scale_color_manual(values = c("Temperature" = "#9666B2", 
                                 "Precipitation" = "#000000")) + 
-  labs(x = "Month", fill = "Category", title = "Environmental Factors vs. Bed Net Usage", color='') +
+  labs(x = "Month", fill = "Category", title = "Environmental factors vs. bed net usage for efficacy", color='') +
   theme_minimal() +
   theme(
     plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
@@ -495,7 +503,6 @@ labels<-c("October\n71.65%", "November\n68.32%", "December\n67.88%", "January\n6
 
 # join the label in p(ggplot)
 weather_graph<-p+scale_x_discrete(label=labels)
-
 
 
 

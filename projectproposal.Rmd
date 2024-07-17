@@ -17,26 +17,65 @@ library(ggbreak)
 ```
 
 # Introduction
+
 In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best way to reduce malaria related deaths is to prevent transmission through  mosquito bites. The Broad One Health Endectocide based Malaria Intervention in Africa (BOHEMIA) project concluded a large scale clinical trial to determine if ivermectin, an anti-parasitic drug, is an effective tool to decrease malaria rates within rural communities in Africa, specifically Kenya and Mozambique. Despite interest in new ways to decrease malaria rates, the current most effective way to prevent malaria is the long lasting insecticidal net (LLIN), which is an insecticide treated mesh net that keeps mosquitoes from biting during the night. Using data collected from BOHEMIA’s most recent clinical trial, our goal was to examine bed net usage on an individual and community level, along with its relationship to various factors. This report includes visualizations of our data, in both tabular and graphical formats, along with written descriptions of each visualization.
 
+# Datasets
 
-# Bed Nets
-This section will give us information about the following: 
+We worked with 10 datasets in total. Some of the datasets can be found here, and the remaining datasets are retrieved by the data.R script.
 
-- Price of Bed Nets
-- Number of Bed Nets per household
-- Demographic information of people using Bed Nets
+1. `kenya_demography.csv` : has demographic information on the sample population.
+
+2. `kenya_safety.csv` : has information on usage of bed nets over 4 visits.
+
+3. `kenya_safety_new.csv`: has information on usage of bed nets for people added in the survey after the initial visit (for kenya_demography).
+
+4. `kenya_efficacy.csv` : has information on the usage of bed nets for children aged 5-15 over 7 visits. And the visits are 2 weeks before kenya_safety visits.
+
+5. `kenya_healthecon_baseline.csv` : has information on the ownership of bed nets.
+
+6. `kenya_healthecon_baseline_new.csv` : has information on the ownership of bed nets for people added in the survey after the initial visit (for kenya_demography)
+
+7. `healthecon_monthly.csv` : has monthly information on the price of bed nets.
+
+8. `malaria_incidence` : has information on malaria incidents over 7 visits for each cluster.
+
+9. `kenya_ae` : has information on the adverse event symptoms.
+
+10. `weather` : has information on the weather data for Mombasa in 2023-2024.
+
+11. `kwale_weather` : has information on the weather data for Kwale in 2023-2024.
+
+
+# Bed nets
+
+This section uses  the `healthecon_monthly`, `kenya_healthecon`, `kenya_safety`, and `kenya_demography` datasets. Our analysis utilizes data from the following questions, grouped by dataset:
+
+- `healthecon_monthly`
+  + What is the cost for each net obtained in Kenyan Shillings?
+
+- `kenya_healthecon`
+  + How many bed nets does the household currently own?
+
+- `kenya_safety`
+  + Did the subject sleep under a mosquito net last night?
+  + In the last week, how many nights did the subject sleep under a bed net?
+
+- `kenya_demography`
+  + What is the age of the subject?
+  + What is the sex of the subject?
+
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 source('question_scripts/1_bednets.R')
 ```
 
-### Summary of Bed Net Prices
+**Summary of bed net prices (USD)**
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 reactable(bed_net_cost_df, columns=list(), pagination=FALSE)
 ```
 
-### Graph of Free Bed Nets vs Not Free Bed Nets
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 print(receive_free_bed_nets)
@@ -44,13 +83,16 @@ print(receive_free_bed_nets)
 
 This graph compares the number of households who received nets for free to the number of people who bought nets. There were more households that had to pay for their nets with the study than there were those who got them for free. 
 
-### Summary of Number of Bed Nets per Household
+<br /> 
+<br />
+
+**Summary of number of bed nets per household**
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 reactable(bed_net_number_df, columns=list(), pagination=FALSE)
 ```
 
-### Summary of Age and Sex of People Using Bed Nets in Kwale
+**Summary of age and sex of people using bed nets in Kwale**
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
@@ -59,20 +101,29 @@ reactable(kenya_safety_summary, columns=list(), pagination=FALSE)
 
 This table shows the counts for men and women who slept under a bed net last night, along with the average age of respondents who said yes and no, respectively. Although the sample sizes are slightly different, women were more likely to sleep under a net than men. Additionally, the average age of people who used a net was slightly higher than those who did not.
 
+<br />
+<br />
+
 # Ownership, Sufficiency, and Usage
-Within this section, we will have subsections going over each portion of our analysis:
 
-### Relationship between ownership, sufficiency, and usage
+This section uses the `kenya_healthecon`, `kenya_safety`, and `kenya_efficacy` datasets. Our analysis utilizes data from the following questions, grouped by dataset:
 
-- household data for each attribute over three months 
-- bar graphs for visit V1 through V4 with all three attributes
-- tabulate data for each attribute in five number summary
+- `kenya_healthecon`
+  + How many bed nets does the household currently own?
+
+- `kenya_safety`/ `kenya_efficacy`
+  + Did the subject sleep under a mosquito net last night?
+  + In the last week, how many nights did the subject sleep under a bed net?
+
+**Ownership** : Ownership is whether or not a household own a bed net.
+
+**Sufficiency** : Sufficiency measures if a home has enough bed nets for  the amount of people in the house hold. The standard sufficiency level is 2 people per bed net. 
+
+**Usage** : Usage is whether or not a subject used a bed net last night. 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 source('question_scripts/2_correlations.R')
 ```
-
-### Percent Bed Net Usage Last Night vs Last week Graph
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 #Percentage of OSU
@@ -81,7 +132,11 @@ perc_osu
 
 This layered graph shows the relationship between the two metrics used to measure usage, last night and number of nights over the last week. The similarity between the ratios of yes and no within the last night data set, and seven and zero within the nights over the last week data set, allows for the application of last night usage as an accurate measurement of usage overall. 
 
-### Summary of Ownership, Sufficienct,and Usage Data
+<br />
+<br />
+
+**Summary of ownership, sufficiency, and usage data**
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 # Table showing Ownership, Sufficiency and Usage Data
 reactable(osu_sum, columns=list(), pagination=FALSE)
@@ -94,16 +149,20 @@ osu_graph
 
 This bar chart shows the percentage values of ownership, sufficiency, and usage within the safety cohort. Ownership represents the percentage of households that own at least one bed net, whereas sufficiency and usage are percentages of the households who own bed nets that have a sufficient amount (2:1 person:net ratio) or that use bed nets, respectively. Out of 85% of the households who own bed nets, 63% are sufficient and 77% use their bed nets. The relationship between sufficiency and usage shows that there are people using bed nets when they don't have sufficient bed nets in their households. This discrepancy could be for one of two reasons. Either there are more than two people sleeping under each bed net or respondents are lying about using bed nets. 
 
+<br />
+<br />
+
 # Differences in usage between V1 through V7 within the efficacy cohort
+
+This section uses the `kenya_efficacy` dataset. Our analysis utilizes data from the following questions, grouped by dataset:
+
+- `kenya_efficacy`
+  + Did the subject sleep under a mosquito net last night?
+  + In the last week, how many nights did the subject sleep under a bed net?
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=FALSE}
 source('question_scripts/3_differences.R')
-
-# summary of both the variables in the efficacy dataset
-reactable(combined_table, columns=list(), pagination=FALSE)
 ```
-
-This table shows us the number of people who slept under bed net for each visit in both questions: slept under bed net last night and number of nights slept under bed net last week.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, comment=FALSE}
 # Print bar chart of Slept under bed net last night for each visit
@@ -112,9 +171,20 @@ differences_usage
 
 This bar chart shows changes in usage responses between visits one through seven. Usage is on a steady decline over the course of the trial, until the last visit where there is an increase. But with that being said, the total number of respondents decreases over the course of the trial as well.
 
+<br />
+<br />
+
 # Effects of environmental factors on bed net usage
 
-### Graph of environmental factors vs. bed net usage for both datasets
+This section uses the `kenya_efficacy`, `kenya_safety`, `kwale_weather`, and `weather` datasets. Our analysis utilizes data from the following questions, grouped by dataset:
+
+- `kenya_safety`/ `kenya_efficacy`
+  + Did the subject sleep under a mosquito net last night?
+
+- `weather`/ `kwale_weather`
+  + What was the temperature on that day?
+  + What was the precipitation on that day?
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source('question_scripts/4_effects.R')
 weather_new_data
@@ -122,8 +192,8 @@ weather_new_data
 
 This layered graph shows the relationship between two environmental factors, temperature and precipitation, and the usage of bed nets over four months. The usage data is bi-weekly from two different datasets, efficacy and safety where each bar represents the percent usage for each survey. The line shows the change in temperature for each month in celsius while the dotted line shows precipitation in millimeters. This graph shows that there is very little change in percent usage over four months. 
 
-
-### Graph of environmental factors vs. bed net usage for efficacy dataset.
+<br />
+<br />
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 p
@@ -131,8 +201,19 @@ p
 
 This layered bar graph shows the relationship between the environmental factors and the usage of bed nets from an efficacy dataset over six months. The line in the graph represents the temperature in celsius for each month, while the dotted line represents the precipitation in millimeters. The usage of bed nets is represented by each bar in a percent usage format. This graph shows that, even though precipitation does not affect the usage of bed nets, temperature has a possible effect on the usage of bed nets as usage increases by almost 15% as temperature decreases by approximately 0.8 degrees celsius between March and April.
 
+<br />
+<br />
 
 # Effects of community usage on malaria incidents
+
+This section uses the `kenya_safety` and `mal_incidence` datasets. Our analysis utilizes data from the following questions, grouped by dataset:
+
+- `kenya_efficacy`
+  + Did the subject sleep under a mosquito net last night?
+
+- `mal_incidence`
+  + How many new malaria incidents have been detected in the cluster?
+
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source('question_scripts/5_communityusage.R')
@@ -147,8 +228,15 @@ scatter_usage
 
 These two graphs both display the relationship between percent usage at a community level and malaria incidence, displayed in two different manners. On both graphs, the x and y axes are percent usage and malaria incidence, respectively, and each point represents a trial cluster. The first graph is faceted by visit and the second graph is colored by villages.
 
+<br />
+<br />
 
 # Likelihood of bed net usage
+
+This section uses the `kenya_safety` and `kenya_efficacy` datasets. Our analysis utilizes data from the following questions, grouped by dataset:
+
+- `kenya_safety`/ `kenya_efficacy`
+  + Did the subject sleep under a mosquito net last night?
 
 ### Safety
 
@@ -158,6 +246,7 @@ source('question_scripts/6_autocorsafe.R')
 # Print plot of percentage usage unchanged from previous visits
 percent_usage_visits
 ```
+
 ### Efficacy
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}

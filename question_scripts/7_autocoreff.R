@@ -22,10 +22,11 @@ test_e <- kenya_efficacy_total %>%
 test_e_a <- test_e %>% 
   mutate(same_ans=(sleep_under_net_last_night==prev_ans)) %>% 
   group_by( visit, prev_ans ) %>%
-  summarize( pct_unchanged = 100*mean( same_ans, na.rm=TRUE ) )
+  summarize( pct_unchanged = 100*mean( same_ans, na.rm=TRUE ) ) %>% 
+  mutate(prev_ans=str_to_title(prev_ans))
 
 test_e_a$prev_ans <- factor(test_e_a$prev_ans, 
-                          levels = c("yes", "no"))
+                          levels = c("Yes", "No"))
 
 #creating a ggplot
 autocoreff_usage<- ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = prev_ans)) +
@@ -33,14 +34,18 @@ autocoreff_usage<- ggplot(test_e_a, aes(x = visit, y = pct_unchanged, fill = pre
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percent usage unchanged from previous visits",
+    title = "Percent usage unchanged from previous visit",
     x = "Visits",
-    y = "Percentage Unchanged %"
+    y = "Percentage unchanged (%)",
+    fill='Previous answer'
   ) +
   theme_minimal() + 
   theme(
-    plot.title = element_text(hjust = 0.5),
-    legend.title = element_text(face = "bold"),
-    axis.title = element_text(face = "bold") 
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
+    axis.title = element_text(size = 12),  
+    axis.text = element_text(size = 10),  
+    legend.title = element_text(size = 11), 
+    legend.position = "bottom",           
+    panel.grid.minor = element_blank()  
   )
 

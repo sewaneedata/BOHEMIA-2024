@@ -71,8 +71,8 @@ perc_osu <- ggplot() +
                                          labels = 0:7)) +
   ##9666B2
   labs(y = "Count",
-       x = "Sleep Under Net Last Night vs Last Week",
-       title = 'Nightly vs Weekly Bed Net Usage', 
+       x = "Sleep under net last night vs last week",
+       title = 'Nightly vs weekly bed net usage', 
        fill='') +
   theme_minimal() +
   theme(plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
@@ -208,7 +208,7 @@ osu_graph<-ggplot(osu_sum_t, aes(x = data, y = n, fill = data)) +
                                "Usage" = "#9666B2",
                                "Sufficiency" = "#4B0082")) +
   labs(y = "Percentage (%)", x = "", fill = "") +              
-  ggtitle("Percentage of Households with Bed Nets:\nOwned, Used Last Night, and Sufficiency") + # More descriptive title
+  ggtitle("Percentage of households with bed nets:\nowned, used last night, and sufficiency") + # More descriptive title
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"), 
         axis.title.y = element_text(size = 12),  

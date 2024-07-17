@@ -58,7 +58,15 @@ differences_usage <- (ggplot(diff_efficacy_long, aes(x = visit, y = n, fill = sl
   theme_minimal()+
   labs(
     title=' Slept under bed net last night for each visit'
-  ))
+  )+
+    theme(
+      plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
+      axis.title = element_text(size = 12),  
+      axis.text = element_text(size = 10),  
+      legend.title = element_text(size = 11), 
+      legend.position = "bottom",           
+      panel.grid.minor = element_blank()  
+    ))
 
 # creating a new dataset which is grouped by visit
 diff_total <- diff_efficacy_long %>%

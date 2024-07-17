@@ -40,11 +40,11 @@ safety_c_m<-safety_c %>%
   left_join(mal, by=c('cluster', 'visit')) %>% 
   # edit the x and y axis names
   rename(Incidents = incidents,
-         'Percent Usage (%)' = percent_usage)
+         'Percent usage (%)' = percent_usage)
 
 #make a plot showing the correlation between bednet usage and malaria incidence
 #print('Bed Net Usage and Malaria Incidence by each visit in safety data')
-mal_inc_vs_usage <- ggplot(data=safety_c_m, aes(x=Incidents, y=`Percent Usage (%)`))+
+mal_inc_vs_usage <- ggplot(data=safety_c_m, aes(x=Incidents, y=`Percent usage (%)`))+
   geom_point(color="#4B0082") +
   labs(title='Scatter plot of malaria incidents against percent usage for each visit')+
   theme_minimal()+
@@ -91,9 +91,9 @@ safety_c_m_v<-mal_v %>%
 scatter_usage <- ggplot(safety_c_m_v, aes(x = total_incidents, y = percent_usage, color = village)) +
   geom_point(size = 1.5, alpha = 0.8) + 
   scale_color_manual(values = colorRampPalette(c("#4B0082", "#9666B2"))(length(unique(safety_c_m_v$village)))) +
-  labs(title = "Scatter Plot of Malaria Incidents vs. Percent Bed Net Usage",
+  labs(title = "Scatter plot of malaria incidents vs. percent bed net usage",
        x = "Total Malaria Incidents",
-       y = "Percent Bed Net Usage",
+       y = "Percent usage (%)",
        caption='Colored by Villages') +
   theme_minimal() +
   theme(

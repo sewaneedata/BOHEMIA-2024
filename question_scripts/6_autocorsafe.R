@@ -18,10 +18,11 @@ test <- kenya_safety_total %>%
 test_a <- test %>% 
   mutate(same_ans=(sleep_net_last_night==prev_ans)) %>% 
   group_by( visit, prev_ans ) %>%
-  summarize( pct_unchanged = 100*mean( same_ans, na.rm=TRUE ) )
+  summarize( pct_unchanged = 100*mean( same_ans, na.rm=TRUE ) ) %>% 
+  mutate(prev_ans=str_to_title(prev_ans))
 
 test_a$prev_ans <- factor(test_a$prev_ans, 
-                                      levels = c("yes", "no"))
+                                      levels = c("Yes", "No"))
   
 #creating a ggplot
 
@@ -30,15 +31,18 @@ percent_usage_visits <- ggplot(test_a, aes(x = visit, y = pct_unchanged, fill = 
   ylim(0, 100) +
   scale_fill_manual(values = c("#4B0082", "#9666B2")) +
   labs(
-    title = "Percent usage unchanged from previous visits",
+    title = "Percent usage unchanged from previous visit",
     x = "Visits",
-    y = "Percentage Unchanged %",
-    fill=''
+    y = "Percentage unchanged (%)",
+    fill='Previous answer'
   ) +
   theme_minimal() + 
   theme(
-    plot.title = element_text(hjust = 0.5),
-    legend.title = element_text(face = "bold"),
-    axis.title = element_text(face = "bold") 
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5), 
+    axis.title = element_text(size = 12),  
+    axis.text = element_text(size = 10),  
+    legend.title = element_text(size = 11), 
+    legend.position = "bottom",           
+    panel.grid.minor = element_blank()  
   )
 
