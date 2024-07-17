@@ -43,8 +43,8 @@ We worked with 11 datasets in total. Some of the datasets can be found [here](ht
    7. `7_autocoreff.R`: R script analysing the likelihood of someone using or not using a bed net based on their previous answers for the efficacy dataset.
   
 ## Instructions
-- Make sure you have git installed (Learn how to do that here).
-- Install R Studio (Learn how to do that [here](https://github.com/git-guides/install-git)).
+- Make sure you have git installed (Learn how to do that [here](https://github.com/git-guides/install-git)).
+- Install R Studio (Learn how to do that [here](https://posit.co/download/rstudio-desktop/)).
 - Create a file that will hold all the files for this project.
 - Open RStudio.
 - In RStudio click on file tab and then new project.
