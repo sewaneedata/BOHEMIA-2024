@@ -12,7 +12,7 @@ The [BOHEMIA project](https://bohemiaconsortium.org) is studying the efficacy of
 
 ## Datasets
 
-We worked with 10 datasets in total. Some of the datasets can be found [here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs), and the remaining datasets are retrieved by the `data.R` script.
+We worked with 11 datasets in total. Some of the datasets can be found [here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs), and the remaining datasets are retrieved by the `data.R` script.
 
 1. `kenya_demography.csv` : has demographic information on the sample population.
 2. `kenya_safety.csv` : has information on usage of bed nets over 4 visits.
@@ -26,7 +26,7 @@ We worked with 10 datasets in total. Some of the datasets can be found [here](ht
 10. `weather` : has information on the weather data for Mombasa in 2023-2024.
 11. `kwale_weather` : has information on the weather data for Kwale in 2023-2024.
 
-## Question Scripts
+## Code Scripts
 
  * Repository Folder :
     - `aws_data_download.R` : R script used to download datasets from AWS (Amazon Web Services).
@@ -43,9 +43,21 @@ We worked with 10 datasets in total. Some of the datasets can be found [here](ht
    7. `7_autocoreff.R`: R script analysing the likelihood of someone using or not using a bed net based on their previous answers for the efficacy dataset.
   
 ## Instructions
-- Retrieve the datasets using `aws_data_download.R` (*only use this if you have aws access through BOHEMIA*) and place them in a separate dataset folder inside the repository. If you do not have AWS access, retrieve the data from the BOHEMIA team.
-- Run the R scripts in the following order :
-    1. `data.R` (*start here if you cannot run the `aws_data_download.R`*)
+- Make sure you have git installed (Learn how to do that here).
+- Install R Studio (Learn how to do that [here](https://github.com/git-guides/install-git)).
+- Create a file that will hold all the files for this project.
+- Open RStudio.
+- In RStudio click on file tab and then new project.
+- Then press Version Control.
+- Then press Git.
+- Now in Github find the repository and go to the code tab.
+- Press the green code button and copy the URL.
+- Paste the URL in the repository URL selection.
+- You can either leave the Project directory name blank to auto fill or add whatever you want to name it then press create project.
+- Retrieve the datasets using `aws_data_download.R` (*only use this if you have aws access through BOHEMIA*) and place them in a separate `dataset` folder inside the repository. If you do not have AWS access, retrieve the data from the BOHEMIA team. ([here](https://drive.google.com/drive/u/0/folders/1jq1dtoTScgSA9h5vtEtLAtdjp_tF-Nxs) is a link to the Drive if you have access to it).
+- Open the installpackages.R then click the button in the code section that says Source.
+- Open the `projectproposal.Rmd` then click the button in the code section that says Source. The  `projectproposal.Rmd` file runs the code scripts in the following order :
+    1. `data.R` 
     2. `1_bednets.R`
     3. `2_correlations.R`
     4. `3_differences.R`
@@ -53,5 +65,4 @@ We worked with 10 datasets in total. Some of the datasets can be found [here](ht
     6. `5_communityusage.R`
     7. `6_autocorsafe.R`
     8. `7_autocoreff.R`
-    9. `projectproposal.Rmd`
 
