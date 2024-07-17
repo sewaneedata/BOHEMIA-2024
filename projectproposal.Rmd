@@ -18,11 +18,11 @@ library(ggbreak)
 
 # Introduction
 
-In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best way to reduce malaria related deaths is to prevent transmission through  mosquito bites. The Broad One Health Endectocide based Malaria Intervention in Africa (BOHEMIA) project concluded a large scale clinical trial to determine if ivermectin, an anti-parasitic drug, is an effective tool to decrease malaria rates within rural communities in Africa, specifically Kenya and Mozambique. Despite interest in new ways to decrease malaria rates, the current most effective way to prevent malaria is the long lasting insecticidal net (LLIN), which is an insecticide treated mesh net that keeps mosquitoes from biting during the night. Using data collected from BOHEMIA’s most recent clinical trial, our goal was to examine bed net usage on an individual and community level, along with its relationship to various factors. This report includes visualizations of our data, in both tabular and graphical formats, along with written descriptions of each visualization.
+In 2022, 608,000 people died of malaria, of which 95% were in Africa. The best way to reduce malaria related deaths is to prevent transmission through  mosquito bites. The {r} [ Broad One Health Endectocide based Malaria Intervention in Africa (BOHEMIA)] ('https://bohemiaconsortium.org') project concluded a large scale clinical trial to determine if ivermectin, an anti-parasitic drug, is an effective tool to decrease malaria rates within rural communities in Africa, specifically Kenya and Mozambique. Despite interest in new ways to decrease malaria rates, the current most effective way to prevent malaria is the long lasting insecticidal net (LLIN), which is an insecticide treated mesh net that keeps mosquitoes from biting during the night. Using data collected from BOHEMIA’s most recent clinical trial, our goal was to examine bed net usage on an individual and community level, along with its relationship to various factors. This report includes visualizations of our data, in both tabular and graphical formats, along with written descriptions of each visualization.
 
 # Datasets
 
-We worked with 10 datasets in total. Some of the datasets can be found here, and the remaining datasets are retrieved by the data.R script.
+The code that creates this work can be found {r} [here] ('https://github.com/sewaneedata/BOHEMIA-2024'). We worked with 10 datasets in total. Some of the datasets can be found here, and the remaining datasets are retrieved by the `data.R` script.
 
 1. `kenya_demography.csv` : has demographic information on the sample population.
 
@@ -257,3 +257,16 @@ autocoreff_usage
 ```
 
 These two graphs both display the likelihood of each subject sleeping or not sleeping under a bed net in a visit if they slept under a bed net during the last visit of the survey. The bars show the likelihood in a percentage format and the graph is then colored by yes or no.
+
+# Conclusion
+
+65 people are dying each hour from malaria in Africa. To decrease this number, research must be done to inform policy and our work with BOHEMIA is a key step in this process. The next step is for BOHEMIA to publish the results of their clinical trial, which will include our analysis. Then in conjunction with other publications, BOHEMIA’s trial will hopefully be used by the World Health Organization to inform malaria policy in Sub-Saharan Africa.
+
+<br />
+<br />
+
+This report is created in partnership with the Sewanee DataLab and the BOHEMIA project.
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlOe8nXAKTTdh4lrtlEVER4g3Io4C9jcZDOA&s" style="float: right; margin-left: 20px;" alt="Sewanee DataLab" />
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRamh50hTztU9aKFX1GMpFEU1qdjz4OrCnHjg&s" style="float: left; margin-right: 20px;" alt="The BOHEMIA project" />

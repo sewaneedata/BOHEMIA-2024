@@ -62,17 +62,19 @@ bednets_free<-healtheconmonthly_totaln %>%
   group_by(free_yn)%>% 
   mutate(free_yn = case_when(free_yn == 'free' ~ 'Free',
                              free_yn == 'not free' ~ 'Not free')) %>% 
-  tally 
+  tally %>% 
+  mutate(percentage=(n/sum(n))*100)
 
 # make graph for the free bednets 
 
 
-receive_free_bed_nets <- ggplot(data = bednets_free, aes(x = free_yn, y = n, fill = free_yn)) + 
+receive_free_bed_nets <- ggplot(data = bednets_free, aes(x = free_yn, y = percentage, fill = free_yn)) + 
   geom_col(alpha = 0.8) +                                        
   scale_fill_manual(values = c("Free" = "#5C2D91", "Not free" = "#9666B2")) +   
-  labs(x = '', y = "Count", fill = "") +             
+  labs(x = '', y = "Percentage", fill = "") +             
   ggtitle("The amount of households who did or did not pay for a bed net") +            
   theme_minimal() +
+  ylim(0,100)+
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"), 
     axis.title = element_text(size = 12),                     
