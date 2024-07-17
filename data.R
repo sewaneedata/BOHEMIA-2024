@@ -4,7 +4,6 @@
 library(gsheet)
 library(tidyverse)
 library(dplyr)
-library(gsheet)
 
 #Load data that came from the aws_data_download.R
 kenya_safetynew<- read_csv('dataset/kenya_safetynew.csv')
